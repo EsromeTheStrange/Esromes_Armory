@@ -1,5 +1,8 @@
 package net.esromethestrange.esromes_armory;
 
+import net.esromethestrange.esromes_armory.block.ModBlocks;
+import net.esromethestrange.esromes_armory.item.ModItemGroups;
+import net.esromethestrange.esromes_armory.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -11,6 +14,9 @@ public class EsromesArmory implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Hello Fabric world!");
+		ModItemGroups.RegisterItemGroups();
+
+		ModItems.RegisterModItems();
+		ModBlocks.registerModBlocks();
 	}
 }

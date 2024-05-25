@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "esromes_armory:block/steel_block"
+  }
+}
