@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "esromes_armory",
+	"version": "${version}",
+	"name": "Esrome's Armory",
+	"description": "Esrome's Armory adds tools, weapons, and armor into the game. Unlike vanilla Minecraft,these items have pros and cons, making the progression less linear and giving the player multiple valid options for tools.",
+	"authors": [
+		"Esrome the Strange"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": "https://github.com/EsromeTheStrange/Esromes_Armory"
+	},
+	"license": "MIT",
+	"icon": "assets/esromes_armory/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.esromethestrange.esromes_armory.EsromesArmory"
+		],
+		"client": [
+			"net.esromethestrange.esromes_armory.EsromesArmoryClient"
+		],
+		"fabric-datagen": [
+			"net.esromethestrange.esromes_armory.EsromesArmoryDataGenerator"
+		]
+	},
+	"mixins": [
+		"esromes_armory.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
