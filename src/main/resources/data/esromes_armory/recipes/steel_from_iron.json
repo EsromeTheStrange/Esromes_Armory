@@ -1,0 +1,5 @@
+{
+  "type": "esromes_armory:forging",
+  "input": { "item": "minecraft:iron_ingot" },
+  "output": { "item": "esromes_armory:steel_ingot" }
+}

@@ -3,5 +3,8 @@
 
   "item.esromes_armory.steel_ingot": "Steel Ingot",
 
-  "block.esromes_armory.steel_block": "Block of Steel"
+  "block.esromes_armory.steel_block": "Block of Steel",
+  "block.esromes_armory.forge": "Forge",
+
+  "container.esromes_armory.forge": "Forge"
 }

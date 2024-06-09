@@ -12,8 +12,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModBlocks {
+    public static final Block FORGE = registerBlock("forge",
+            new ForgeBlock(FabricBlockSettings.copyOf(Blocks.TERRACOTTA)));
+
     public static final Block STEEL_BLOCK = registerBlock("steel_block",
-            new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
+            new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
 
     private static Item registerBlockItem(String name, Block block){
         return Registry.register(Registries.ITEM, new Identifier(EsromesArmory.MOD_ID, name),
@@ -26,8 +29,6 @@ public class ModBlocks {
     }
 
     public static void registerModBlocks(){
-        EsromesArmory.LOGGER.info(EsromesArmory.MOD_ID+": registering blocks...");
-
-
+        EsromesArmory.LOGGER.info("Registering blocks...");
     }
 }

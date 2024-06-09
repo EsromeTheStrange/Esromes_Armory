@@ -15,11 +15,14 @@ public class ModItemGroups {
             new Identifier(EsromesArmory.MOD_ID, "esromes_armory"),
             FabricItemGroup.builder().displayName(Text.translatable("itemGroup.esromes_armory"))
                     .icon(()->new ItemStack(ModItems.STEEL_INGOT)).entries((displayContext, entries) -> {
-                        entries.add(ModItems.STEEL_INGOT);
+                        entries.add(ModBlocks.FORGE);
+
                         entries.add(ModBlocks.STEEL_BLOCK);
+
+                        entries.add(ModItems.STEEL_INGOT);
                     }).build());
 
     public static void RegisterItemGroups(){
-        EsromesArmory.LOGGER.info(EsromesArmory.MOD_ID+": registering item groups...");
+        EsromesArmory.LOGGER.info("Registering item groups...");
     }
 }

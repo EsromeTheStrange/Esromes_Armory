@@ -1,0 +1,74 @@
+package net.esromethestrange.esromes_armory.recipe;
+
+import com.google.gson.JsonObject;
+import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.*;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.World;
+
+public class ForgeRecipe implements Recipe<SimpleInventory> {
+    public static final String ID = "forging";
+    private final ItemStack output;
+    private final Ingredient input;
+
+    public ForgeRecipe(Ingredient input, ItemStack output){
+        this.output = output;
+        this.input = input;
+    }
+
+    @Override
+    public boolean matches(SimpleInventory inventory, World world) {
+        if(world.isClient()) return false;
+        return input.test(inventory.getStack(ForgeBlockEntity.INPUT_SLOT));
+    }
+
+    @Override public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) { return output; }
+    @Override public boolean fits(int width, int height) { return true; }
+    @Override public ItemStack getOutput(DynamicRegistryManager registryManager) { return output; }
+    @Override
+    public DefaultedList<Ingredient> getIngredients(){
+        DefaultedList<Ingredient> list = DefaultedList.of();
+        list.add(input);
+        return list;
+    }
+
+    @Override public Identifier getId() { return new Identifier(EsromesArmory.MOD_ID, ID); }
+    @Override public RecipeType<?> getType() { return ModRecipes.FORGE_RECIPE_TYPE; }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return null;
+    }
+
+    public static class Serializer implements RecipeSerializer<ForgeRecipe> {
+        public static final Serializer INSTANCE = new Serializer();
+
+        @Override
+        public ForgeRecipe read(Identifier id, JsonObject json) {
+            Ingredient input = Ingredient.fromJson(json.get("input"));
+            ItemStack output = ShapedRecipe.outputFromJson(json.getAsJsonObject("output"));
+            return new ForgeRecipe(input, output);
+        }
+
+        @Override
+        public ForgeRecipe read(Identifier id, PacketByteBuf buf) {
+            Ingredient input = Ingredient.fromPacket(buf);
+            ItemStack output = buf.readItemStack();
+            return new ForgeRecipe(input, output);
+        }
+
+        @Override
+        public void write(PacketByteBuf buf, ForgeRecipe recipe) {
+            recipe.input.write(buf);
+            buf.writeItemStack(recipe.output);
+        }
+
+        @Override public String toString() { return ForgeRecipe.ID; }
+    }
+}
