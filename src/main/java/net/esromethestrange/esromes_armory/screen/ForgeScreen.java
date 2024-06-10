@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ForgeScreen extends HandledScreen<ForgeScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier(EsromesArmory.MOD_ID, "textures/gui/forge_gui.png");
+    public static final Identifier TEXTURE = new Identifier(EsromesArmory.MOD_ID, "textures/gui/forge_gui.png");
 
     public ForgeScreen(ForgeScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

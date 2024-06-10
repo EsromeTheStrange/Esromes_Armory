@@ -12,12 +12,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-public class ForgeRecipe implements Recipe<SimpleInventory> {
+public class ForgingRecipe implements Recipe<SimpleInventory> {
     public static final String ID = "forging";
     private final ItemStack output;
     private final Ingredient input;
 
-    public ForgeRecipe(Ingredient input, ItemStack output){
+    public ForgingRecipe(Ingredient input, ItemStack output){
         this.output = output;
         this.input = input;
     }
@@ -46,29 +46,29 @@ public class ForgeRecipe implements Recipe<SimpleInventory> {
         return null;
     }
 
-    public static class Serializer implements RecipeSerializer<ForgeRecipe> {
+    public static class Serializer implements RecipeSerializer<ForgingRecipe> {
         public static final Serializer INSTANCE = new Serializer();
 
         @Override
-        public ForgeRecipe read(Identifier id, JsonObject json) {
+        public ForgingRecipe read(Identifier id, JsonObject json) {
             Ingredient input = Ingredient.fromJson(json.get("input"));
             ItemStack output = ShapedRecipe.outputFromJson(json.getAsJsonObject("output"));
-            return new ForgeRecipe(input, output);
+            return new ForgingRecipe(input, output);
         }
 
         @Override
-        public ForgeRecipe read(Identifier id, PacketByteBuf buf) {
+        public ForgingRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient input = Ingredient.fromPacket(buf);
             ItemStack output = buf.readItemStack();
-            return new ForgeRecipe(input, output);
+            return new ForgingRecipe(input, output);
         }
 
         @Override
-        public void write(PacketByteBuf buf, ForgeRecipe recipe) {
+        public void write(PacketByteBuf buf, ForgingRecipe recipe) {
             recipe.input.write(buf);
             buf.writeItemStack(recipe.output);
         }
 
-        @Override public String toString() { return ForgeRecipe.ID; }
+        @Override public String toString() { return ForgingRecipe.ID; }
     }
 }

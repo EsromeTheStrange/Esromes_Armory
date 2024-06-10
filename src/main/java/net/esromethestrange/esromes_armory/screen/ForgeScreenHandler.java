@@ -10,14 +10,14 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import org.jetbrains.annotations.Nullable;
 
 public class ForgeScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     public final ForgeBlockEntity blockEntity;
+
+    public static final int[] INPUT_POS = {80,11}, OUTPUT_POS = {80,59};
 
     private static final int INVENTORY_X = 8;
     private static final int INVENTORY_Y = 84;
@@ -34,8 +34,8 @@ public class ForgeScreenHandler extends ScreenHandler {
         this.propertyDelegate = arrayPropertyDelegate;
         this.blockEntity = (ForgeBlockEntity) blockEntity;
 
-        this.addSlot(new Slot(inventory, 0, 80, 11));
-        this.addSlot(new Slot(inventory, 1, 80, 59));
+        this.addSlot(new Slot(inventory, 0, INPUT_POS[0], INPUT_POS[1]));
+        this.addSlot(new Slot(inventory, 1, OUTPUT_POS[0], OUTPUT_POS[1]));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);

@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.recipe.ForgeRecipe;
+import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
 import net.esromethestrange.esromes_armory.screen.ForgeScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -118,7 +118,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     private boolean hasRecipe(){
-        Optional<ForgeRecipe> recipe = getCurrentRecipe();
+        Optional<ForgingRecipe> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return false;
 
         ItemStack output = getStack(OUTPUT_SLOT);
@@ -128,7 +128,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
                 output.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxCount();
     }
 
-    private Optional<ForgeRecipe> getCurrentRecipe(){
+    private Optional<ForgingRecipe> getCurrentRecipe(){
         SimpleInventory inv = new SimpleInventory(this.size());
         for (int i=0; i<this.size(); i++){
             inv.setStack(i, this.getStack(i));
@@ -137,7 +137,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     private void craftItem(){
-        Optional<ForgeRecipe> recipe = getCurrentRecipe();
+        Optional<ForgingRecipe> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return;
 
         ItemStack recipeOutput = recipe.get().getOutput(getWorld().getRegistryManager());

@@ -6,5 +6,7 @@
   "block.esromes_armory.steel_block": "Block of Steel",
   "block.esromes_armory.forge": "Forge",
 
-  "container.esromes_armory.forge": "Forge"
+  "container.esromes_armory.forge": "Forge",
+
+  "rei.esromes_armory.forging": "Forging"
 }
