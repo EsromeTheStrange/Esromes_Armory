@@ -1,3 +1,5 @@
 {
-  "miningLevel": 2
+  "miningLevel": 2,
+  "attackDamage": 8,
+  "attackSpeed": 1.5
 }

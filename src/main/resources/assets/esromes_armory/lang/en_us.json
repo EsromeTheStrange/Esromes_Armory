@@ -17,5 +17,6 @@
 
   "text.config.esromes-armory.title": "Esrome's Armory",
 
-  "material.esromes_armory.steel": "Steel"
+  "material.esromes_armory.steel": "Steel",
+  "material.esromes_armory.none": "No Material"
 }
