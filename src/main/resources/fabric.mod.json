@@ -24,8 +24,8 @@
 		"fabric-datagen": [
 			"net.esromethestrange.esromes_armory.EsromesArmoryDataGenerator"
 		],
-		"rei_client": [
-			"net.esromethestrange.esromes_armory.compat.rei.EsromesArmoryREIClientPlugin"
+		"emi": [
+			"net.esromethestrange.esromes_armory.compat.emi.EsromesArmoryEmiPlugin"
 		]
 	},
 	"mixins": [

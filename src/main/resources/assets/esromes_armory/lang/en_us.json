@@ -12,5 +12,6 @@
 
   "container.esromes_armory.forge": "Forge",
 
-  "rei.esromes_armory.forging": "Forging"
+  "rei.esromes_armory.forging": "Forging",
+  "emi.category.esromes_armory.forging": "Forging"
 }

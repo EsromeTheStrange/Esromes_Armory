@@ -23,8 +23,8 @@ public class ForgeBlockEntityRenderer implements BlockEntityRenderer<ForgeBlockE
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
         ItemStack stack = entity.getRenderStack(ForgeBlockEntity.INPUT_SLOT);
         matrices.push();
-        matrices.translate(0.6f, 0.6f, 0.6f);
-        matrices.scale(0.5f, 0.5f, 0.5f);
+        matrices.translate(0.5f, 0.5f, 0.5f);
+        matrices.scale(0.6f, 0.6f, 0.6f);
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(270));
 
         itemRenderer.renderItem(stack, ModelTransformationMode.GUI, getLightLevel(entity.getWorld(), entity.getPos()),
