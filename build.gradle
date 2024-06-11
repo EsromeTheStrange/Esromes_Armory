@@ -16,6 +16,7 @@ repositories {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
 	}
+	maven { url 'https://maven.wispforest.io' }
 }
 
 fabricApi {
@@ -38,6 +39,10 @@ dependencies {
 	//EMI
 	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
 	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
+
+	//owo
+	annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
+	include "io.wispforest:owo-sentinel:${project.owo_version}"
 }
 
 processResources {

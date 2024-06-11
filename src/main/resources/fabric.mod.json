@@ -3,7 +3,7 @@
 	"id": "esromes_armory",
 	"version": "${version}",
 	"name": "Esrome's Armory",
-	"description": "Esrome's Armory adds tools, weapons, and armor into the game. Unlike vanilla Minecraft,these items have pros and cons, making the progression less linear and giving the player multiple valid options for tools.",
+	"description": "Esrome's Armory adds the ability to forge your own tools and armor.",
 	"authors": [
 		"Esrome the Strange"
 	],
