@@ -12,7 +12,5 @@ public class ModBlockEntities {
     public static final BlockEntityType<ForgeBlockEntity> FORGE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
             new Identifier(EsromesArmory.MOD_ID, "forge"), FabricBlockEntityTypeBuilder.create(ForgeBlockEntity::new, ModBlocks.FORGE).build());
 
-    public static void registerBlockEntities(){
-        EsromesArmory.LOGGER.info("Registering block entities...");
-    }
+    public static void registerBlockEntities() {}
 }

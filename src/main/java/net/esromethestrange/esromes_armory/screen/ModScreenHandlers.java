@@ -11,7 +11,5 @@ public class ModScreenHandlers {
     public static final ScreenHandlerType<ForgeScreenHandler> FORGE_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,
             new Identifier(EsromesArmory.MOD_ID, "forge"), new ExtendedScreenHandlerType<>(ForgeScreenHandler::new));
 
-    public static void registerScreenHandlers(){
-        EsromesArmory.LOGGER.info("Registering screen handlers...");
-    }
+    public static void registerScreenHandlers() {}
 }

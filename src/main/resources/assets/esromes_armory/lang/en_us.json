@@ -15,5 +15,7 @@
   "rei.esromes_armory.forging": "Forging",
   "emi.category.esromes_armory.forging": "Forging",
 
-  "text.config.esromes-armory.title": "Esrome's Armory"
+  "text.config.esromes-armory.title": "Esrome's Armory",
+
+  "material.esromes_armory.steel": "Steel"
 }

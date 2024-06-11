@@ -30,7 +30,5 @@ public class ModBlocks {
         return Registry.register(Registries.BLOCK, new Identifier(EsromesArmory.MOD_ID, name), block);
     }
 
-    public static void registerModBlocks(){
-        EsromesArmory.LOGGER.info("Registering blocks...");
-    }
+    public static void registerModBlocks(){ }
 }

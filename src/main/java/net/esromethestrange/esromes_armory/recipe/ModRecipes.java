@@ -13,8 +13,6 @@ public class ModRecipes {
             });
 
     public static void registerRecipes(){
-        EsromesArmory.LOGGER.info("Registering recipes...");
-
         Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(EsromesArmory.MOD_ID, ForgingRecipe.ID), ForgingRecipe.Serializer.INSTANCE);
     }
 }
