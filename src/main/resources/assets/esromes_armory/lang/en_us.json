@@ -1,10 +1,14 @@
 {
-  "itemGroup.esromes_armory": "Esrome's Armory",
-
   "item.esromes_armory.steel_ingot": "Steel Ingot",
 
-  "block.esromes_armory.steel_block": "Block of Steel",
+
   "block.esromes_armory.forge": "Forge",
+
+  "block.esromes_armory.steel_block": "Block of Steel",
+  "block.esromes_armory.charcoal_block": "Block of Charcoal",
+
+
+  "itemGroup.esromes_armory": "Esrome's Armory",
 
   "container.esromes_armory.forge": "Forge",
 

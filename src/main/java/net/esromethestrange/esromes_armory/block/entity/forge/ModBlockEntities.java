@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.block.entity;
+package net.esromethestrange.esromes_armory.block.entity.forge;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;

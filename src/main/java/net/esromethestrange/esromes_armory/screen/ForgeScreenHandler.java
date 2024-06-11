@@ -1,6 +1,6 @@
 package net.esromethestrange.esromes_armory.screen;
 
-import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
+import net.esromethestrange.esromes_armory.block.entity.forge.ForgeBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory;
 
 import net.esromethestrange.esromes_armory.block.ModBlocks;
-import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
+import net.esromethestrange.esromes_armory.block.entity.forge.ModBlockEntities;
 import net.esromethestrange.esromes_armory.item.ModItemGroups;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;

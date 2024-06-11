@@ -7,10 +7,10 @@
     },
     "C": [
       {
-        "item": "minecraft:coal"
+        "item": "minecraft:coal_block"
       },
       {
-        "item": "minecraft:charcoal"
+        "item": "esromes_armory:charcoal_block"
       }
     ]
   },

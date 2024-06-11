@@ -22,5 +22,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         offerBlasting(exporter, List.of(Items.IRON_INGOT), RecipeCategory.MISC, ModItems.STEEL_INGOT, 1.2f, 1600, "steel_ingot");
 
         offerReversibleCompactingRecipes(exporter, RecipeCategory.MISC, ModItems.STEEL_INGOT, RecipeCategory.DECORATIONS, ModBlocks.STEEL_BLOCK);
+        offerReversibleCompactingRecipes(exporter, RecipeCategory.MISC, Items.CHARCOAL, RecipeCategory.DECORATIONS, ModBlocks.CHARCOAL_BLOCK);
     }
 }

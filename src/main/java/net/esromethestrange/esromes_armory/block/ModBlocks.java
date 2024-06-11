@@ -17,6 +17,8 @@ public class ModBlocks {
 
     public static final Block STEEL_BLOCK = registerBlock("steel_block",
             new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
+    public static final Block CHARCOAL_BLOCK = registerBlock("charcoal_block",
+            new Block(FabricBlockSettings.copyOf(Blocks.COAL_BLOCK).nonOpaque()));
 
     private static Item registerBlockItem(String name, Block block){
         return Registry.register(Registries.ITEM, new Identifier(EsromesArmory.MOD_ID, name),

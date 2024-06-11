@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.recipe;
 
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
+import net.esromethestrange.esromes_armory.block.entity.forge.ForgeBlockEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;

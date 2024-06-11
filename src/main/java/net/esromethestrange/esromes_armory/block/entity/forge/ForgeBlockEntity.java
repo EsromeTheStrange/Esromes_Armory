@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.block.entity;
+package net.esromethestrange.esromes_armory.block.entity.forge;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
@@ -14,6 +14,9 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -62,6 +65,20 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
                 return 2;
             }
         };
+    }
+
+    public ItemStack getRenderStack(int index){
+        return switch (index){
+            case INPUT_SLOT -> this.getStack(INPUT_SLOT);
+            case OUTPUT_SLOT -> this.getStack(OUTPUT_SLOT);
+            default -> ItemStack.EMPTY;
+        };
+    }
+
+    @Override
+    public void markDirty() {
+        world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        super.markDirty();
     }
 
     @Override
@@ -145,5 +162,16 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
         this.removeStack(INPUT_SLOT, 1);
         this.setStack(OUTPUT_SLOT, new ItemStack(recipeOutput.getItem(), getStack(OUTPUT_SLOT).getCount() + recipeOutput.getCount()));
         progress = 0;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 }

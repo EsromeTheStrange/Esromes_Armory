@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.block;
 
-import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
-import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
+import net.esromethestrange.esromes_armory.block.entity.forge.ForgeBlockEntity;
+import net.esromethestrange.esromes_armory.block.entity.forge.ModBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
