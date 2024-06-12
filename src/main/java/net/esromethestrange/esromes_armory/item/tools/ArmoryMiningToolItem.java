@@ -7,7 +7,6 @@ import net.esromethestrange.esromes_armory.data.MaterialHandler;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -39,9 +38,14 @@ public class ArmoryMiningToolItem extends MiningToolItem {
 
     @Override public boolean isSuitableFor(BlockState state) { return false; }
 
+    public final int getMaxDamage(ItemStack stack){
+        return getArmoryMaterial(stack).durability;
+    }
+
     @Override
     public boolean isSuitableFor(ItemStack stack, BlockState state) {
         ArmoryMaterial material = getArmoryMaterial(stack);
+
         return MiningLevelManager.getRequiredMiningLevel(state) <= material.miningLevel;
     }
 
@@ -61,7 +65,7 @@ public class ArmoryMiningToolItem extends MiningToolItem {
                     EntityAttributeModifier.Operation.ADDITION));
             builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
                     (double)material.attackSpeed * toolType.attackSpeedMultiplier,
-                    EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
+                    EntityAttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getAttributeModifiers(stack, slot);
