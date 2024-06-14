@@ -13,7 +13,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class ForgingRecipe implements Recipe<SimpleInventory> {
-    public static final String ID = "forging";
+    public static final Identifier ID = new Identifier(EsromesArmory.MOD_ID, "forging");
     private final ItemStack output;
     private final Ingredient input;
 
@@ -38,12 +38,12 @@ public class ForgingRecipe implements Recipe<SimpleInventory> {
         return list;
     }
 
-    @Override public Identifier getId() { return new Identifier(EsromesArmory.MOD_ID, ID); }
+    @Override public Identifier getId() { return ForgingRecipe.ID; }
     @Override public RecipeType<?> getType() { return ModRecipes.FORGE_RECIPE_TYPE; }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return Serializer.INSTANCE;
     }
 
     public static class Serializer implements RecipeSerializer<ForgingRecipe> {
@@ -69,6 +69,6 @@ public class ForgingRecipe implements Recipe<SimpleInventory> {
             buf.writeItemStack(recipe.output);
         }
 
-        @Override public String toString() { return ForgingRecipe.ID; }
+        @Override public String toString() { return ID.getPath(); }
     }
 }

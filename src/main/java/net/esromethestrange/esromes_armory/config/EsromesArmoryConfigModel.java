@@ -7,5 +7,5 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 @Modmenu(modId=EsromesArmory.MOD_ID)
 @Config(name="esromes-armory", wrapperName = "EsromesArmoryConfig")
 public class EsromesArmoryConfigModel {
-    public int sillyNumber;
+    public boolean developerMode;
 }

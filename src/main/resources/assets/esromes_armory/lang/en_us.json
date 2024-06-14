@@ -2,21 +2,37 @@
   "item.esromes_armory.steel_ingot": "Steel Ingot",
 
 
+
   "block.esromes_armory.forge": "Forge",
 
   "block.esromes_armory.steel_block": "Block of Steel",
   "block.esromes_armory.charcoal_block": "Block of Charcoal",
 
 
+
   "itemGroup.esromes_armory": "Esrome's Armory",
 
   "container.esromes_armory.forge": "Forge",
 
+
+
+
   "rei.esromes_armory.forging": "Forging",
   "emi.category.esromes_armory.forging": "Forging",
 
+
+
+
+
   "text.config.esromes-armory.title": "Esrome's Armory",
 
-  "material.esromes_armory.steel": "Steel",
-  "material.esromes_armory.none": "No Material"
+  "text.config.esromes-armory.option.developerMode": "Developer Mode",
+
+
+
+
+
+  "esromes_armory.material.steel": "Steel",
+  "esromes_armory.material.iron": "Iron",
+  "esromes_armory.material.none": "No Material"
 }

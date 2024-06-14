@@ -4,5 +4,6 @@
   "miningSpeed": 100,
   "attackDamage": 8,
   "attackSpeed": 1.5,
-  "enchantability": 50
+  "enchantability": 50,
+  "color": "0x787878"
 }

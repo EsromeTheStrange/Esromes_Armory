@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 public class EsromesArmoryEmiPlugin implements EmiPlugin {
     public static final Identifier FORGING_SPRITESHEET = new Identifier(EsromesArmory.MOD_ID, "textures/gui/forging_emi.png");
     public static final EmiStack FORGING = EmiStack.of(ModBlocks.FORGE);
-    public static final EmiRecipeCategory FORGING_CATEGORY = new EmiRecipeCategory(new Identifier(EsromesArmory.MOD_ID, ForgingRecipe.ID),
+    public static final EmiRecipeCategory FORGING_CATEGORY = new EmiRecipeCategory(ForgingRecipe.ID,
             FORGING, new EmiTexture(FORGING_SPRITESHEET, 0, 0, 16, 16));
 
     @Override

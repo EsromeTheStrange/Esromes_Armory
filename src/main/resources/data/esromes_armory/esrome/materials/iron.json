@@ -1,0 +1,9 @@
+{
+  "durability": 100,
+  "miningLevel": 2,
+  "miningSpeed": 10,
+  "attackDamage": 15,
+  "attackSpeed": 5,
+  "enchantability": 10,
+  "color": "0xb3b3b3"
+}

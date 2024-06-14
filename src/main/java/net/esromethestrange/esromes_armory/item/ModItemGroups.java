@@ -20,7 +20,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.STEEL_BLOCK);
                         entries.add(ModBlocks.CHARCOAL_BLOCK);
 
-                        entries.add(ModItems.STEEL_PICKAXE);
+                        entries.add(ModItems.PICKAXE);
                         entries.add(ModItems.STEEL_INGOT);
                     }).build());
 

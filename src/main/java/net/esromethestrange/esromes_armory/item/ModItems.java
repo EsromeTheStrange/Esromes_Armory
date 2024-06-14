@@ -11,12 +11,8 @@ import net.minecraft.util.Identifier;
 
 public class ModItems {
     public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new FabricItemSettings()));
-    public static final Item STEEL_PICKAXE = registerItem("steel_pickaxe", new ArmoryMiningToolItem(
+    public static final Item PICKAXE = registerItem("pickaxe", new ArmoryMiningToolItem(
             ArmoryMiningToolItem.ToolType.PICKAXE, ModToolMaterial.STEEL, new FabricItemSettings().maxCount(1)));
-
-    private static void AddItemsToItemGroup(FabricItemGroupEntries entries){
-        entries.add(STEEL_INGOT);
-    }
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(EsromesArmory.MOD_ID, name), item);

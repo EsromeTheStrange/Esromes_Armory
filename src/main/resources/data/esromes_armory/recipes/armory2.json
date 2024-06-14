@@ -1,0 +1,8 @@
+{
+  "type": "esromes_armory:armory_recipe",
+  "input": { "item": "minecraft:stick" },
+  "output": {
+    "item": "esromes_armory:pickaxe",
+    "material": "esromes_armory:iron"
+  }
+}
