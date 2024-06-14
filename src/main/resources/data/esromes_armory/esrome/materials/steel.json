@@ -3,5 +3,6 @@
   "miningLevel": 2,
   "miningSpeed": 100,
   "attackDamage": 8,
-  "attackSpeed": 1.5
+  "attackSpeed": 1.5,
+  "enchantability": 50
 }

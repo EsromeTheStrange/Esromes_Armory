@@ -36,6 +36,10 @@ public class ArmoryMiningToolItem extends MiningToolItem {
         stack.setNbt(nbt);
     }
 
+    public static int getEnchantability(ItemStack stack) {
+        return getArmoryMaterial(stack).enchantability;
+    }
+
     public final int getMaxDamage(ItemStack stack){
         return getArmoryMaterial(stack).durability;
     }
@@ -51,7 +55,7 @@ public class ArmoryMiningToolItem extends MiningToolItem {
         return state.isIn(this.toolType.effectiveBlocks) ? getArmoryMaterial(stack).miningSpeed : 1.0f;
     }
 
-    public ArmoryMaterial getArmoryMaterial(ItemStack stack){
+    public static ArmoryMaterial getArmoryMaterial(ItemStack stack){
         NbtCompound nbt = stack.getNbt();
         return MaterialHandler.getMaterial(nbt.getString(NBTKEY_MATERIAL));
     }
