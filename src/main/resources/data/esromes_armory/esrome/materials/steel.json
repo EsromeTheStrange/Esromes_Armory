@@ -1,6 +1,7 @@
 {
   "durability": 200,
   "miningLevel": 2,
+  "miningSpeed": 100,
   "attackDamage": 8,
   "attackSpeed": 1.5
 }

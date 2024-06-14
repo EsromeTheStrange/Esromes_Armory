@@ -42,10 +42,11 @@ public class MaterialHandler implements SimpleSynchronousResourceReloadListener 
     private void readMaterial(String modId, String materialName, JsonObject jsonObject){
         int durability = jsonObject.get("durability").getAsInt();
         int miningLevel = jsonObject.get("miningLevel").getAsInt();
+        float miningSpeed = jsonObject.get("miningSpeed").getAsInt();
         int attackDamage = jsonObject.get("attackDamage").getAsInt();
         float attackSpeed = jsonObject.get("attackSpeed").getAsFloat();
 
-        ArmoryMaterial newMaterial = new ArmoryMaterial(modId, materialName, durability, miningLevel, attackDamage, attackSpeed);
+        ArmoryMaterial newMaterial = new ArmoryMaterial(modId, materialName, durability, miningLevel, miningSpeed, attackDamage, attackSpeed);
         materials.put(newMaterial.id, newMaterial);
         EsromesArmory.LOGGER.info("Material created with id "+newMaterial.id);
     }

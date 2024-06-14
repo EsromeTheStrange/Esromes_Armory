@@ -36,17 +36,19 @@ public class ArmoryMiningToolItem extends MiningToolItem {
         stack.setNbt(nbt);
     }
 
-    @Override public boolean isSuitableFor(BlockState state) { return false; }
-
     public final int getMaxDamage(ItemStack stack){
         return getArmoryMaterial(stack).durability;
     }
 
+    @Override public boolean isSuitableFor(BlockState state) { return false; }
     @Override
     public boolean isSuitableFor(ItemStack stack, BlockState state) {
-        ArmoryMaterial material = getArmoryMaterial(stack);
+        return MiningLevelManager.getRequiredMiningLevel(state) <= getArmoryMaterial(stack).miningLevel;
+    }
 
-        return MiningLevelManager.getRequiredMiningLevel(state) <= material.miningLevel;
+    @Override
+    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+        return state.isIn(this.toolType.effectiveBlocks) ? getArmoryMaterial(stack).miningSpeed : 1.0f;
     }
 
     public ArmoryMaterial getArmoryMaterial(ItemStack stack){
