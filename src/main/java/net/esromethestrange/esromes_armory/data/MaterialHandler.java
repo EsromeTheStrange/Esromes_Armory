@@ -1,11 +1,10 @@
 package net.esromethestrange.esromes_armory.data;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
@@ -17,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MaterialHandler implements SimpleSynchronousResourceReloadListener {
-    private static HashMap<String, ArmoryMaterial> materials = new HashMap<>();
-    private static HashMap<String, ArmoryMaterialType> materialTypes = new HashMap<>();
+    private static HashMap<Identifier, ArmoryMaterial> materials = new HashMap<>();
+    private static HashMap<Identifier, ArmoryMaterialType> materialTypes = new HashMap<>();
 
     @Override
     public Identifier getFabricId() {
@@ -70,29 +69,38 @@ public class MaterialHandler implements SimpleSynchronousResourceReloadListener 
                 durability, miningLevel, miningSpeed,
                 attackDamage, attackSpeed,
                 enchantability);
-        materials.put(newMaterial.id.toString(), newMaterial);
+
+        JsonObject items = jsonObject.get("items").getAsJsonObject();
+        for(String itemType : items.keySet()){
+            String itemString = items.get(itemType).getAsString();
+            Item item = Registries.ITEM.getOrEmpty(Identifier.tryParse(itemString)).orElseThrow(()
+                    -> new JsonSyntaxException("Unknown item '" + itemString + "'"));
+            newMaterial.addItem(itemType, item);
+        }
+
+        materials.put(newMaterial.id, newMaterial);
         EsromesArmory.LOGGER.info("Material created with id "+newMaterial.id.toString());
     }
 
     private void readMaterialType(String modId, String materialTypeName, JsonObject jsonObject){
         JsonArray materialsArray = jsonObject.get("materials").getAsJsonArray();
-        List<String> materials = new ArrayList<>();
+        List<Identifier> materials = new ArrayList<>();
         for (JsonElement element : materialsArray){
-            materials.add(element.getAsString());
+            materials.add(Identifier.tryParse(element.getAsString()));
         }
         ArmoryMaterialType newMaterialType = new ArmoryMaterialType(modId, materialTypeName, materials);
-        materialTypes.put(newMaterialType.id.toString(), newMaterialType);
+        materialTypes.put(newMaterialType.id, newMaterialType);
 
         EsromesArmory.LOGGER.info("Material Type created with id "+newMaterialType.id.toString()+
                 " containing: "+ Arrays.toString(newMaterialType.materials.toArray()));
     }
 
-    public static ArmoryMaterial getMaterial(String id) {
-        if(!materials.containsKey(id)) return ArmoryMaterial.NONE;
-        return materials.get(id);
+    public static ArmoryMaterial getMaterial(Identifier id) {
+        ArmoryMaterial material = materials.get(id);
+        return material == null ? ArmoryMaterial.NONE : material;
     }
-    public static ArmoryMaterialType getMaterialType(String id){
-        if(!materials.containsKey(id)) return ArmoryMaterialType.NONE;
-        return materialTypes.get(id);
+    public static ArmoryMaterialType getMaterialType(Identifier id){
+        ArmoryMaterialType materialType = materialTypes.get(id);
+        return materialType == null ? ArmoryMaterialType.NONE : materialType;
     }
 }

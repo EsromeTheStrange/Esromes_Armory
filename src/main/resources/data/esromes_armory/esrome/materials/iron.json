@@ -5,5 +5,9 @@
   "attackDamage": 15,
   "attackSpeed": 5,
   "enchantability": 10,
-  "color": "0xb3b3b3"
+  "color": "0xb3b3b3",
+  "items": {
+    "ingot": "minecraft:iron_ingot",
+    "block": "minecraft:iron_block"
+  }
 }

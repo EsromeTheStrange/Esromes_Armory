@@ -5,5 +5,9 @@
   "attackDamage": 8,
   "attackSpeed": 1.5,
   "enchantability": 50,
-  "color": "0x787878"
+  "color": "0x787878",
+  "items": {
+    "ingot": "esromes_armory:steel_ingot",
+    "block": "esromes_armory:steel_block"
+  }
 }

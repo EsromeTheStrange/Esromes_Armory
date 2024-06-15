@@ -19,9 +19,9 @@ public class ArmoryRecipe implements CraftingRecipe {
 
     private final Identifier id;
     private final ItemStack output;
-    private final Ingredient input;
+    private final ArmoryIngredient input;
 
-    public ArmoryRecipe(Identifier id, Ingredient input, ItemStack output){
+    public ArmoryRecipe(Identifier id, ArmoryIngredient input, ItemStack output){
         this.id = id;
         this.output = output;
         this.input = input;
@@ -31,20 +31,28 @@ public class ArmoryRecipe implements CraftingRecipe {
 
     @Override
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
-        return input.test(recipeInputInventory.getStack(1));
+        return  input.test(recipeInputInventory.getStack(0)) &&
+                input.test(recipeInputInventory.getStack(1)) &&
+                input.test(recipeInputInventory.getStack(2));
     }
 
     @Override
     public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
-        return this.getOutput(registryManager).copy();
+        ItemStack craftOutput = this.getOutput(registryManager).copy();
+        String material = input.getMaterial(inventory.getStack(0));
+        NbtCompound nbt = new NbtCompound();
+        nbt.putString(ArmoryMiningToolItem.NBTKEY_MATERIAL, material);
+        craftOutput.setNbt(nbt);
+        return craftOutput;
     }
 
+
     @Override public boolean fits(int width, int height) { return width >= 3 && height >= 3; }
-    @Override public ItemStack getOutput(DynamicRegistryManager registryManager) { return output; }
+    @Override public ItemStack getOutput(DynamicRegistryManager registryManager){ return output; }
     @Override
     public DefaultedList<Ingredient> getIngredients(){
         DefaultedList<Ingredient> list = DefaultedList.of();
-        list.add(input);
+        //TODO list.add(input);
         return list;
     }
 
@@ -60,11 +68,7 @@ public class ArmoryRecipe implements CraftingRecipe {
     }
 
     public static ItemStack outputFromJson(JsonObject json){
-        ItemStack stack = ShapedRecipe.outputFromJson(json);
-        NbtCompound nbt = new NbtCompound();
-        nbt.putString(ArmoryMiningToolItem.NBTKEY_MATERIAL, json.get("material").getAsString());
-        stack.setNbt(nbt);
-        return stack;
+        return ShapedRecipe.outputFromJson(json);
     }
 
     public static class Serializer implements RecipeSerializer<ArmoryRecipe> {
@@ -72,14 +76,14 @@ public class ArmoryRecipe implements CraftingRecipe {
 
         @Override
         public ArmoryRecipe read(Identifier id, JsonObject json) {
-            Ingredient input = Ingredient.fromJson(json.get("input"));
+            ArmoryIngredient input = ArmoryIngredient.fromJson(json.get("input"));
             ItemStack output = ArmoryRecipe.outputFromJson(json.getAsJsonObject("output"));
             return new ArmoryRecipe(id, input, output);
         }
 
         @Override
         public ArmoryRecipe read(Identifier id, PacketByteBuf buf) {
-            Ingredient input = Ingredient.fromPacket(buf);
+            ArmoryIngredient input = ArmoryIngredient.fromPacket(buf);
             ItemStack output = buf.readItemStack();
             return new ArmoryRecipe(id, input, output);
         }

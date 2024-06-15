@@ -1,8 +1,10 @@
 {
   "type": "esromes_armory:armory_recipe",
-  "input": { "item": "minecraft:apple" },
+  "input": {
+    "materialType": "esromes_armory:metal",
+    "itemType": "ingot"
+  },
   "output": {
-    "item": "esromes_armory:pickaxe",
-    "material": "esromes_armory:steel"
+    "item": "esromes_armory:pickaxe"
   }
 }

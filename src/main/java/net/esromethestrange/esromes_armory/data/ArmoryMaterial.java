@@ -1,6 +1,10 @@
 package net.esromethestrange.esromes_armory.data;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+
+import java.util.HashMap;
 
 public class ArmoryMaterial {
     public static final ArmoryMaterial NONE = new ArmoryMaterial(
@@ -22,6 +26,8 @@ public class ArmoryMaterial {
     public final float attackSpeed;
     public final int enchantability;
 
+    private final HashMap<String, Item> items = new HashMap<>();
+
     public ArmoryMaterial(String modId, String materialName, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
         this.translatable_name = modId + ".material." + materialName;
         this.modId = modId;
@@ -36,5 +42,14 @@ public class ArmoryMaterial {
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
         this.enchantability = enchantability;
+    }
+
+    public void addItem(String itemType, Item item){
+        items.put(itemType, item);
+    }
+
+    public Item getItem(String itemType){
+        if(items.containsKey(itemType)) return items.get(itemType);
+        return Items.AIR;
     }
 }

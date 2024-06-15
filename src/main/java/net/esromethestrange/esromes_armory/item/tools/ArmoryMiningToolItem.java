@@ -19,6 +19,7 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -89,7 +90,7 @@ public class ArmoryMiningToolItem extends MiningToolItem {
     public static ArmoryMaterial getArmoryMaterial(ItemStack stack){
         NbtCompound nbt = stack.getNbt();
         if(nbt != null){
-            return MaterialHandler.getMaterial(nbt.getString(NBTKEY_MATERIAL));
+            return MaterialHandler.getMaterial(Identifier.tryParse(nbt.getString(NBTKEY_MATERIAL)));
         }
         return ArmoryMaterial.NONE;
     }
