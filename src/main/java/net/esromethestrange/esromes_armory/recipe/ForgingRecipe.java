@@ -14,10 +14,12 @@ import net.minecraft.world.World;
 
 public class ForgingRecipe implements Recipe<SimpleInventory> {
     public static final Identifier ID = new Identifier(EsromesArmory.MOD_ID, "forging");
+    private final Identifier id;
     private final ItemStack output;
     private final Ingredient input;
 
-    public ForgingRecipe(Ingredient input, ItemStack output){
+    public ForgingRecipe(Identifier id, Ingredient input, ItemStack output){
+        this.id = id;
         this.output = output;
         this.input = input;
     }
@@ -38,7 +40,7 @@ public class ForgingRecipe implements Recipe<SimpleInventory> {
         return list;
     }
 
-    @Override public Identifier getId() { return ForgingRecipe.ID; }
+    @Override public Identifier getId() { return id; }
     @Override public RecipeType<?> getType() { return ModRecipes.FORGE_RECIPE_TYPE; }
 
     @Override
@@ -53,14 +55,14 @@ public class ForgingRecipe implements Recipe<SimpleInventory> {
         public ForgingRecipe read(Identifier id, JsonObject json) {
             Ingredient input = Ingredient.fromJson(json.get("input"));
             ItemStack output = ShapedRecipe.outputFromJson(json.getAsJsonObject("output"));
-            return new ForgingRecipe(input, output);
+            return new ForgingRecipe(id, input, output);
         }
 
         @Override
         public ForgingRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient input = Ingredient.fromPacket(buf);
             ItemStack output = buf.readItemStack();
-            return new ForgingRecipe(input, output);
+            return new ForgingRecipe(id, input, output);
         }
 
         @Override

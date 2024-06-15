@@ -54,6 +54,23 @@ public class ArmoryMiningToolItem extends MiningToolItem {
     }
 
     @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+        if (slot == EquipmentSlot.MAINHAND) {
+            ArmoryMaterial material = getArmoryMaterial(stack);
+
+            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
+                    (double)material.attackDamage * toolType.attackDamageMultiplier,
+                    EntityAttributeModifier.Operation.ADDITION));
+            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
+                    (double)material.attackSpeed * toolType.attackSpeedMultiplier,
+                    EntityAttributeModifier.Operation.ADDITION));
+            return builder.build();
+        }
+        return super.getAttributeModifiers(stack, slot);
+    }
+
+    @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         String materialId = getArmoryMaterial(stack).translatable_name;
         Text materialText = Text.translatable(materialId);
@@ -75,23 +92,6 @@ public class ArmoryMiningToolItem extends MiningToolItem {
             return MaterialHandler.getMaterial(nbt.getString(NBTKEY_MATERIAL));
         }
         return ArmoryMaterial.NONE;
-    }
-
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            ArmoryMaterial material = getArmoryMaterial(stack);
-
-            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
-                    (double)material.attackDamage * toolType.attackDamageMultiplier,
-                    EntityAttributeModifier.Operation.ADDITION));
-            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
-                    (double)material.attackSpeed * toolType.attackSpeedMultiplier,
-                    EntityAttributeModifier.Operation.ADDITION));
-            return builder.build();
-        }
-        return super.getAttributeModifiers(stack, slot);
     }
 
     public enum ToolType{

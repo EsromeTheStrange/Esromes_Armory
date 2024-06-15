@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.tools.ArmoryMiningToolItem;
 import net.minecraft.inventory.RecipeInputInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
@@ -12,21 +11,23 @@ import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
 public class ArmoryRecipe implements CraftingRecipe {
     public static final Identifier ID = new Identifier(EsromesArmory.MOD_ID, "armory_recipe");
+
+    private final Identifier id;
     private final ItemStack output;
     private final Ingredient input;
 
-    public ArmoryRecipe(Ingredient input, ItemStack output){
+    public ArmoryRecipe(Identifier id, Ingredient input, ItemStack output){
+        this.id = id;
         this.output = output;
         this.input = input;
     }
 
-    @Override public Identifier getId() { return ID; }
+    @Override public Identifier getId() { return id; }
 
     @Override
     public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
@@ -73,14 +74,14 @@ public class ArmoryRecipe implements CraftingRecipe {
         public ArmoryRecipe read(Identifier id, JsonObject json) {
             Ingredient input = Ingredient.fromJson(json.get("input"));
             ItemStack output = ArmoryRecipe.outputFromJson(json.getAsJsonObject("output"));
-            return new ArmoryRecipe(input, output);
+            return new ArmoryRecipe(id, input, output);
         }
 
         @Override
         public ArmoryRecipe read(Identifier id, PacketByteBuf buf) {
             Ingredient input = Ingredient.fromPacket(buf);
             ItemStack output = buf.readItemStack();
-            return new ArmoryRecipe(input, output);
+            return new ArmoryRecipe(id, input, output);
         }
 
         @Override
