@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.recipe;
 
 import com.google.gson.JsonObject;
+import dev.emi.emi.api.stack.EmiIngredient;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.entity.forge.ForgeBlockEntity;
 import net.minecraft.inventory.SimpleInventory;

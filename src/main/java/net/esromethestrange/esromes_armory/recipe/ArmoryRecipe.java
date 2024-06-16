@@ -3,6 +3,8 @@ package net.esromethestrange.esromes_armory.recipe;
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.tools.ArmoryMiningToolItem;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -19,9 +21,9 @@ public class ArmoryRecipe implements CraftingRecipe {
 
     private final Identifier id;
     private final ItemStack output;
-    private final ArmoryIngredient input;
+    private final Ingredient input;
 
-    public ArmoryRecipe(Identifier id, ArmoryIngredient input, ItemStack output){
+    public ArmoryRecipe(Identifier id, Ingredient input, ItemStack output){
         this.id = id;
         this.output = output;
         this.input = input;
@@ -39,7 +41,11 @@ public class ArmoryRecipe implements CraftingRecipe {
     @Override
     public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
         ItemStack craftOutput = this.getOutput(registryManager).copy();
-        String material = input.getMaterial(inventory.getStack(0));
+        CustomIngredient customIngredient = input.getCustomIngredient();
+        if(!(customIngredient instanceof MaterialIngredient))
+            return craftOutput;
+
+        String material = ((MaterialIngredient)customIngredient).getMaterial(inventory.getStack(0));
         NbtCompound nbt = new NbtCompound();
         nbt.putString(ArmoryMiningToolItem.NBTKEY_MATERIAL, material);
         craftOutput.setNbt(nbt);
@@ -76,16 +82,16 @@ public class ArmoryRecipe implements CraftingRecipe {
 
         @Override
         public ArmoryRecipe read(Identifier id, JsonObject json) {
-            ArmoryIngredient input = ArmoryIngredient.fromJson(json.get("input"));
+            Ingredient input = Ingredient.fromJson(json.get("input"));
             ItemStack output = ArmoryRecipe.outputFromJson(json.getAsJsonObject("output"));
             return new ArmoryRecipe(id, input, output);
         }
 
         @Override
         public ArmoryRecipe read(Identifier id, PacketByteBuf buf) {
-            ArmoryIngredient input = ArmoryIngredient.fromPacket(buf);
+            MaterialIngredient input = MaterialIngredient.Serializer.INSTANCE.read(buf);
             ItemStack output = buf.readItemStack();
-            return new ArmoryRecipe(id, input, output);
+            return new ArmoryRecipe(id, input.toVanilla(), output);
         }
 
         @Override

@@ -7,6 +7,7 @@ import net.esromethestrange.esromes_armory.data.MaterialHandler;
 import net.esromethestrange.esromes_armory.item.ModItemGroups;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
+import net.esromethestrange.esromes_armory.recipe.ingredient.ModIngredients;
 import net.esromethestrange.esromes_armory.screen.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 
@@ -38,6 +39,7 @@ public class EsromesArmory implements ModInitializer {
 		ModScreenHandlers.registerScreenHandlers();
 
 		ModRecipes.registerRecipes();
+		ModIngredients.registerIngredients();
 
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new MaterialHandler());
 	}
