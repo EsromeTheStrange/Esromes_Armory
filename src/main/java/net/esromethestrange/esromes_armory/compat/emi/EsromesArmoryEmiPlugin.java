@@ -9,6 +9,9 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
 import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.Identifier;
 
@@ -27,7 +30,11 @@ public class EsromesArmoryEmiPlugin implements EmiPlugin {
         RecipeManager manager = registry.getRecipeManager();
 
         for (ForgingRecipe recipe : manager.listAllOfType(ModRecipes.FORGE_RECIPE_TYPE)){
-            registry.addRecipe(new ForgingEmiRecipe(recipe));
+            ItemStack[] possibleOutputs = recipe.getIngredients().get(0).getMatchingStacks();
+            for(int i=0; i<possibleOutputs.length; i++){
+                ItemStack input = possibleOutputs[i];
+                registry.addRecipe(new ForgingEmiRecipe(recipe.getId().withSuffixedPath("_" + i), input, recipe.craft(new SimpleInventory(input), null)));
+            }
         }
     }
 }

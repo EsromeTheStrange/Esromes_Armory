@@ -6,12 +6,16 @@ import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.util.Identifier;
 
 public class ForgingEmiRecipe extends BasicEmiRecipe {
-    public ForgingEmiRecipe(ForgingRecipe recipe) {
-        super(EsromesArmoryEmiPlugin.FORGING_CATEGORY, recipe.getId(), 70, 18);
-        this.inputs.add(EmiIngredient.of(recipe.getIngredients().get(0)));
-        this.outputs.add(EmiStack.of(recipe.getOutput(null)));
+    public ForgingEmiRecipe(Identifier id, ItemStack input, ItemStack output) {
+        super(EsromesArmoryEmiPlugin.FORGING_CATEGORY, id, 70, 18);
+        this.inputs.add(EmiIngredient.of(Ingredient.ofItems(input.getItem())));
+        this.outputs.add(EmiStack.of(output));
     }
 
     @Override
