@@ -1,9 +1,11 @@
 package net.esromethestrange.esromes_armory.recipe;
 
 import com.google.gson.JsonObject;
-import dev.emi.emi.api.stack.EmiIngredient;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.entity.forge.ForgeBlockEntity;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -31,7 +33,15 @@ public class ForgingRecipe implements Recipe<SimpleInventory> {
         return input.test(inventory.getStack(ForgeBlockEntity.INPUT_SLOT));
     }
 
-    @Override public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) { return output; }
+    @Override public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
+        ItemStack craftOutput = output.copy();
+        if((input.getCustomIngredient() instanceof MaterialIngredient materialIngredient) &&
+                (craftOutput.getItem() instanceof MaterialItem materialItem)){
+            ArmoryMaterial outputMaterial = materialIngredient.getMaterial(inventory.getStack(ForgeBlockEntity.INPUT_SLOT));
+            materialItem.setMaterial(craftOutput, outputMaterial);
+        }
+        return craftOutput;
+    }
     @Override public boolean fits(int width, int height) { return true; }
     @Override public ItemStack getOutput(DynamicRegistryManager registryManager) { return output; }
     @Override

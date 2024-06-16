@@ -88,6 +88,8 @@ public class ArmoryMiningToolItem extends MiningToolItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        super.appendTooltip(stack, world, tooltip, context);
+
         String materialId = getArmoryMaterial(stack).translatable_name;
         Text materialText = Text.translatable(materialId);
         tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getArmoryMaterial(stack).color)));
@@ -98,8 +100,6 @@ public class ArmoryMiningToolItem extends MiningToolItem {
                 tooltip.addAll(debugText.getWithStyle(Style.EMPTY.withColor(0xff00ff)));
             }
         }
-
-        super.appendTooltip(stack, world, tooltip, context);
     }
 
     public static ArmoryMaterial getArmoryMaterial(ItemStack stack){

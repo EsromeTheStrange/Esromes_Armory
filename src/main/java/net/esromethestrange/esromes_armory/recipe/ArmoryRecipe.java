@@ -45,7 +45,7 @@ public class ArmoryRecipe implements CraftingRecipe {
         if(!(customIngredient instanceof MaterialIngredient))
             return craftOutput;
 
-        String material = ((MaterialIngredient)customIngredient).getMaterial(inventory.getStack(0));
+        String material = ((MaterialIngredient)customIngredient).getMaterialName(inventory.getStack(0));
         NbtCompound nbt = new NbtCompound();
         nbt.putString(ArmoryMiningToolItem.NBTKEY_MATERIAL, material);
         craftOutput.setNbt(nbt);

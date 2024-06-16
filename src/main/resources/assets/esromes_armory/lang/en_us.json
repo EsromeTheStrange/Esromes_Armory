@@ -1,8 +1,13 @@
 {
-  "item.esromes_armory.steel_ingot": "Steel Ingot",
-
+  "item.esromes_armory.none_pickaxe": "Blank Pickaxe",
   "item.esromes_armory.steel_pickaxe": "Steel Pickaxe",
   "item.esromes_armory.iron_pickaxe": "Iron Pickaxe",
+
+  "item.esromes_armory.none_plate": "Blank Plate",
+  "item.esromes_armory.steel_plate": "Steel Plate",
+  "item.esromes_armory.iron_plate": "Iron Plate",
+
+  "item.esromes_armory.steel_ingot": "Steel Ingot",
 
 
 

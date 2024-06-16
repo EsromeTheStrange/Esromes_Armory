@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
+    private final SimpleInventory inventory = new SimpleInventory(2);
 
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
@@ -83,20 +83,20 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
     @Override
     public DefaultedList<ItemStack> getItems() {
-        return inventory;
+        return inventory.stacks;
     }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, inventory);
+        Inventories.writeNbt(nbt, inventory.stacks);
         nbt.putInt(NBTKEY_PROGRESS, progress);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        Inventories.readNbt(nbt, inventory);
+        Inventories.readNbt(nbt, inventory.stacks);
         progress = nbt.getInt(NBTKEY_PROGRESS);
     }
 
@@ -139,9 +139,9 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
         if (recipe.isEmpty()) return false;
 
         ItemStack output = getStack(OUTPUT_SLOT);
-        ItemStack recipeOutput = recipe.get().getOutput(null);
+        ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
 
-        return  (output.isEmpty() || output.isOf(recipeOutput.getItem()) ) &&
+        return  (output.isEmpty() || ItemStack.areItemsEqual(output, recipeOutput)) &&
                 output.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxCount();
     }
 
@@ -157,10 +157,13 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
         Optional<ForgingRecipe> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return;
 
-        ItemStack recipeOutput = recipe.get().getOutput(getWorld().getRegistryManager());
+        ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
 
         this.removeStack(INPUT_SLOT, 1);
-        this.setStack(OUTPUT_SLOT, new ItemStack(recipeOutput.getItem(), getStack(OUTPUT_SLOT).getCount() + recipeOutput.getCount()));
+        if(this.getStack(OUTPUT_SLOT).isEmpty())
+            this.setStack(OUTPUT_SLOT, recipeOutput);
+        else
+            this.getStack(OUTPUT_SLOT).increment(recipeOutput.getCount());
         progress = 0;
     }
 

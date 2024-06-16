@@ -21,6 +21,9 @@ public class ModItemGroups {
                         entries.add(ModBlocks.CHARCOAL_BLOCK);
 
                         entries.add(ModItems.PICKAXE);
+
+                        entries.add(ModItems.PLATE);
+
                         entries.add(ModItems.STEEL_INGOT);
                     }).build());
 
