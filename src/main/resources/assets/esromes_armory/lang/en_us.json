@@ -1,6 +1,9 @@
 {
   "item.esromes_armory.steel_ingot": "Steel Ingot",
 
+  "item.esromes_armory.steel_pickaxe": "Steel Pickaxe",
+  "item.esromes_armory.iron_pickaxe": "Iron Pickaxe",
+
 
 
   "block.esromes_armory.forge": "Forge",

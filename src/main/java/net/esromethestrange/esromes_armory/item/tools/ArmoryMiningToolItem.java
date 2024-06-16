@@ -15,6 +15,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Style;
@@ -41,6 +42,20 @@ public class ArmoryMiningToolItem extends MiningToolItem {
 
     public final int getMaxDamage(ItemStack stack){
         return getArmoryMaterial(stack).durability;
+    }
+
+    @Override
+    public Text getName() {
+        return super.getName();
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        ArmoryMaterial material = getArmoryMaterial(stack);
+        String key = "item." + material.modId + "." +
+                material.materialName + "_" +
+                Registries.ITEM.getId(stack.getItem()).getPath();
+        return Text.translatable(key);
     }
 
     @Override public boolean isSuitableFor(BlockState state) { return false; }
