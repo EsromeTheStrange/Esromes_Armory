@@ -13,7 +13,9 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
     public static final Block FORGE = registerBlock("forge",
-            new ForgeBlock(FabricBlockSettings.copyOf(Blocks.TERRACOTTA)));
+            new ForgeBlock(FabricBlockSettings.copyOf(Blocks.BRICKS)));
+    public static final Block WORKBENCH = registerBlock("workbench",
+            new WorkbenchBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
 
     public static final Block STEEL_BLOCK = registerBlock("steel_block",
             new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));

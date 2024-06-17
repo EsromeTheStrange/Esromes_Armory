@@ -4,7 +4,10 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.MaterialHandler;
+import net.esromethestrange.esromes_armory.item.ModItems;
+import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
+import net.esromethestrange.esromes_armory.item.material.ComponentItem;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,34 +17,35 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.*;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ArmoryMiningToolItem extends MiningToolItem {
-    public static final String NBTKEY_MATERIAL = "material";
+public class ArmoryMiningToolItem extends MiningToolItem implements ComponentBasedItem {
     private final ToolType toolType;
+    private List<MaterialItem> components = new ArrayList<>();
 
-    public ArmoryMiningToolItem(ToolType toolType, ToolMaterial material, Settings settings) {
+    public ArmoryMiningToolItem(ToolType toolType, ToolMaterial material, Settings settings, MaterialItem... components) {
         super(material.getAttackDamage(), 1, material, toolType.effectiveBlocks, settings);
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
         this.toolType = toolType;
+        this.components.addAll(Arrays.asList(components));
     }
 
     public static int getEnchantability(ItemStack stack) {
-        return getArmoryMaterial(stack).enchantability;
+        return 0;//TODO ((ArmoryMiningToolItem)stack.getItem()).getMaterial(stack).enchantability;
     }
 
     public final int getMaxDamage(ItemStack stack){
-        return getArmoryMaterial(stack).durability;
+        return 0;//TODO getMaterial(stack).durability;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class ArmoryMiningToolItem extends MiningToolItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        ArmoryMaterial material = getArmoryMaterial(stack);
+        ArmoryMaterial material = getMaterial(stack, 0);
         String key = "item." + material.modId + "." +
                 material.materialName + "_" +
                 Registries.ITEM.getId(stack.getItem()).getPath();
@@ -61,18 +65,18 @@ public class ArmoryMiningToolItem extends MiningToolItem {
     @Override public boolean isSuitableFor(BlockState state) { return false; }
     @Override
     public boolean isSuitableFor(ItemStack stack, BlockState state) {
-        return MiningLevelManager.getRequiredMiningLevel(state) <= getArmoryMaterial(stack).miningLevel;
+        return false;//TODO MiningLevelManager.getRequiredMiningLevel(state) <= getMaterial(stack).miningLevel;
     }
 
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-        return state.isIn(this.toolType.effectiveBlocks) ? getArmoryMaterial(stack).miningSpeed : 1.0f;
+        return 0;//TODO state.isIn(this.toolType.effectiveBlocks) ? getMaterial(stack).miningSpeed : 1.0f;
     }
 
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND) {
-            ArmoryMaterial material = getArmoryMaterial(stack);
+            ArmoryMaterial material = ArmoryMaterial.NONE;//TODO getMaterial(stack);
 
             ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
@@ -90,24 +94,18 @@ public class ArmoryMiningToolItem extends MiningToolItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
 
-        String materialId = getArmoryMaterial(stack).translatable_name;
+        String materialId = "";//TODO getMaterial(stack).translatable_name;
         Text materialText = Text.translatable(materialId);
-        tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getArmoryMaterial(stack).color)));
+        //TODO tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getMaterial(stack).color)));
 
         if(EsromesArmory.CONFIG.developerMode()){
-            if (stack.getNbt() != null) {
-                Text debugText = Text.literal("Material Id: "+stack.getNbt().getString(NBTKEY_MATERIAL));
-                tooltip.addAll(debugText.getWithStyle(Style.EMPTY.withColor(0xff00ff)));
-            }
+            //TODO Add Developer Tooltip
         }
     }
 
-    public static ArmoryMaterial getArmoryMaterial(ItemStack stack){
-        NbtCompound nbt = stack.getNbt();
-        if(nbt != null){
-            return MaterialHandler.getMaterial(Identifier.tryParse(nbt.getString(NBTKEY_MATERIAL)));
-        }
-        return ArmoryMaterial.NONE;
+    @Override
+    public List<MaterialItem> getComponents() {
+        return components;
     }
 
     public enum ToolType{

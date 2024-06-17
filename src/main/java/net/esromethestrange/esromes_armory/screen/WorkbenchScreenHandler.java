@@ -1,46 +1,47 @@
 package net.esromethestrange.esromes_armory.screen;
 
-import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
+import net.esromethestrange.esromes_armory.block.entity.WorkbenchBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.ArrayPropertyDelegate;
-import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
-public class ForgeScreenHandler extends ScreenHandler {
+public class WorkbenchScreenHandler extends ScreenHandler {
     private final Inventory inventory;
-    private final PropertyDelegate propertyDelegate;
-    public final ForgeBlockEntity blockEntity;
+    public final WorkbenchBlockEntity blockEntity;
 
-    public static final int[] INPUT_POS = {80,11}, OUTPUT_POS = {80,59};
+    public static final int[][] INPUT_POS = {
+            {80,11},
+            {60,11},
+            {100,11}
+    };
+    public static final int[] OUTPUT_POS = {80,59};
 
     private static final int INVENTORY_X = 8;
     private static final int INVENTORY_Y = 84;
 
-    public ForgeScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf){
-        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(buf.readBlockPos()), new ArrayPropertyDelegate(2));
+    public WorkbenchScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf){
+        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(buf.readBlockPos()));
     }
 
-    public ForgeScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate){
-        super(ModScreenHandlers.FORGE_SCREEN_HANDLER, syncId);
+    public WorkbenchScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity){
+        super(ModScreenHandlers.WORKBENCH_SCREEN_HANDLER, syncId);
         checkSize((Inventory)blockEntity, 2);
         this.inventory = (Inventory)blockEntity;
         inventory.onOpen(playerInventory.player);
-        this.propertyDelegate = arrayPropertyDelegate;
-        this.blockEntity = (ForgeBlockEntity) blockEntity;
+        this.blockEntity = (WorkbenchBlockEntity) blockEntity;
 
-        this.addSlot(new Slot(inventory, 0, INPUT_POS[0], INPUT_POS[1]));
-        this.addSlot(new Slot(inventory, 1, OUTPUT_POS[0], OUTPUT_POS[1]));
+        for(int i = 0; i< WorkbenchBlockEntity.NUM_INPUTS; i++){
+            this.addSlot(new Slot(inventory, i, INPUT_POS[i][0], INPUT_POS[i][1]));
+        }
+        this.addSlot(new Slot(inventory, WorkbenchBlockEntity.OUTPUT_SLOT, OUTPUT_POS[0], OUTPUT_POS[1]));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
-
-        addProperties(arrayPropertyDelegate);
     }
 
     private void addPlayerInventory(PlayerInventory playerInventory) {
@@ -84,14 +85,4 @@ public class ForgeScreenHandler extends ScreenHandler {
 
     @Override
     public boolean canUse(PlayerEntity player) { return this.inventory.canPlayerUse(player); }
-
-    public boolean isCrafting() { return propertyDelegate.get(0) > 0; }
-
-    public int getScaledProgress() {
-        int progress = this.propertyDelegate.get(0); //Progress
-        int maxProgress = this.propertyDelegate.get(1);  // Max Progress
-        int progressArrowSize = 26; // This is the length in pixels of your arrow
-
-        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
-    }
 }

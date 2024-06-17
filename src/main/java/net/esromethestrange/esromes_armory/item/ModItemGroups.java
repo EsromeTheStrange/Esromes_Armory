@@ -16,6 +16,7 @@ public class ModItemGroups {
             FabricItemGroup.builder().displayName(Text.translatable("itemGroup.esromes_armory"))
                     .icon(()->new ItemStack(ModItems.STEEL_INGOT)).entries((displayContext, entries) -> {
                         entries.add(ModBlocks.FORGE);
+                        entries.add(ModBlocks.WORKBENCH);
 
                         entries.add(ModBlocks.STEEL_BLOCK);
                         entries.add(ModBlocks.CHARCOAL_BLOCK);

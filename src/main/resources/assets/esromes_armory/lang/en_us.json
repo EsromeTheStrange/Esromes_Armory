@@ -12,6 +12,7 @@
 
 
   "block.esromes_armory.forge": "Forge",
+  "block.esromes_armory.workbench": "Workbench",
 
   "block.esromes_armory.steel_block": "Block of Steel",
   "block.esromes_armory.charcoal_block": "Block of Charcoal",
@@ -32,9 +33,9 @@
 
 
 
-  "text.config.esromes-armory.title": "Esrome's Armory",
+  "text.config.esromes_armory.title": "Esrome's Armory",
 
-  "text.config.esromes-armory.option.developerMode": "Developer Mode",
+  "text.config.esromes_armory.option.developerMode": "Developer Mode",
 
 
 

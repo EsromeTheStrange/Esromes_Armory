@@ -47,13 +47,6 @@ public class MaterialIngredient implements CustomIngredient {
         return null;
     }
 
-    public String getMaterialName(ItemStack stack){
-        List<ArmoryMaterial> materials = MaterialHandler.getMaterialType(materialType).getMaterials();
-        for (ArmoryMaterial material : materials){
-            if(stack.isOf(material.getItem(itemType))) return material.id.toString();
-        }
-        return ArmoryMaterial.NONE.id.toString();
-    }
     public ArmoryMaterial getMaterial(ItemStack stack){
         List<ArmoryMaterial> materials = MaterialHandler.getMaterialType(materialType).getMaterials();
         for (ArmoryMaterial material : materials){

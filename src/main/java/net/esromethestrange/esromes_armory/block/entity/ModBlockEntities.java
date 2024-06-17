@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.block.entity.forge;
+package net.esromethestrange.esromes_armory.block.entity;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
@@ -11,6 +11,8 @@ import net.minecraft.util.Identifier;
 public class ModBlockEntities {
     public static final BlockEntityType<ForgeBlockEntity> FORGE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
             new Identifier(EsromesArmory.MOD_ID, "forge"), FabricBlockEntityTypeBuilder.create(ForgeBlockEntity::new, ModBlocks.FORGE).build());
+    public static final BlockEntityType<WorkbenchBlockEntity> WORKBENCH_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+            new Identifier(EsromesArmory.MOD_ID, "workbench"), FabricBlockEntityTypeBuilder.create(WorkbenchBlockEntity::new, ModBlocks.WORKBENCH).build());
 
     public static void registerBlockEntities() {}
 }

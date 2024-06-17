@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.block.entity.forge;
+package net.esromethestrange.esromes_armory.block.entity;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.LightmapTextureManager;

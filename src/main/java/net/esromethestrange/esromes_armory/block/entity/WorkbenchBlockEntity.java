@@ -1,9 +1,11 @@
-package net.esromethestrange.esromes_armory.block.entity.forge;
+package net.esromethestrange.esromes_armory.block.entity;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
+import net.esromethestrange.esromes_armory.block.entity.ImplementedInventory;
+import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
-import net.esromethestrange.esromes_armory.screen.ForgeScreenHandler;
+import net.esromethestrange.esromes_armory.recipe.WorkbenchRecipe;
+import net.esromethestrange.esromes_armory.screen.WorkbenchScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,7 +19,6 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -28,51 +29,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
-    private final SimpleInventory inventory = new SimpleInventory(2);
+public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
+    private final SimpleInventory inventory = new SimpleInventory(WorkbenchRecipe.NUM_INPUTS + 1);
 
-    public static final int INPUT_SLOT = 0;
-    public static final int OUTPUT_SLOT = 1;
+    public static final int NUM_INPUTS = WorkbenchRecipe.NUM_INPUTS;
+    public static final int OUTPUT_SLOT = WorkbenchRecipe.NUM_INPUTS;
 
-    private static final String NBTKEY_PROGRESS = "forge.progress";
-
-    protected final PropertyDelegate propertyDelegate;
-    private int progress = 0;
-    private int max_progress = 72;
-
-    public ForgeBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FORGE_BLOCK_ENTITY, pos, state);
-        this.propertyDelegate = new PropertyDelegate() {
-            @Override
-            public int get(int index) {
-                return switch(index){
-                    case 0 -> ForgeBlockEntity.this.progress;
-                    case 1 -> ForgeBlockEntity.this.max_progress;
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int index, int value) {
-                switch(index){
-                    case 0 -> ForgeBlockEntity.this.progress = value;
-                    case 1 -> ForgeBlockEntity.this.max_progress = value;
-                };
-            }
-
-            @Override
-            public int size() {
-                return 2;
-            }
-        };
-    }
-
-    public ItemStack getRenderStack(int index){
-        return switch (index){
-            case INPUT_SLOT -> this.getStack(INPUT_SLOT);
-            case OUTPUT_SLOT -> this.getStack(OUTPUT_SLOT);
-            default -> ItemStack.EMPTY;
-        };
+    public WorkbenchBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.WORKBENCH_BLOCK_ENTITY, pos, state);
     }
 
     @Override
@@ -82,23 +46,19 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
-        return inventory.stacks;
-    }
-
-    @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, inventory.stacks);
-        nbt.putInt(NBTKEY_PROGRESS, progress);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         Inventories.readNbt(nbt, inventory.stacks);
-        progress = nbt.getInt(NBTKEY_PROGRESS);
     }
+
+    @Override
+    public DefaultedList<ItemStack> getItems() { return inventory.stacks; }
 
     @Override
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
@@ -107,24 +67,21 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("container."+EsromesArmory.MOD_ID+".forge");
+        return Text.translatable("container."+ EsromesArmory.MOD_ID+".workbench");
     }
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new ForgeScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
+        return new WorkbenchScreenHandler(syncId, playerInventory, this);
     }
 
     public void tick(World world, BlockPos pos, BlockState state) {
         if(world.isClient) return;
 
-        if(isOutputSlotEmptyOrReceivable() && this.hasRecipe()){
-            progress++;
-            if (progress >= max_progress)
-                craftItem();
-        }
-        else progress = 0;
+        if(isOutputSlotEmptyOrReceivable() && this.hasRecipe())
+            craftItem();
+
         markDirty(world, pos, state);
     }
 
@@ -135,7 +92,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     private boolean hasRecipe(){
-        Optional<ForgingRecipe> recipe = getCurrentRecipe();
+        Optional<WorkbenchRecipe> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return false;
 
         ItemStack output = getStack(OUTPUT_SLOT);
@@ -145,26 +102,27 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
                 output.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxCount();
     }
 
-    private Optional<ForgingRecipe> getCurrentRecipe(){
+    private Optional<WorkbenchRecipe> getCurrentRecipe(){
         SimpleInventory inv = new SimpleInventory(this.size());
         for (int i=0; i<this.size(); i++){
             inv.setStack(i, this.getStack(i));
         }
-        return getWorld().getRecipeManager().getFirstMatch(ModRecipes.FORGE_RECIPE_TYPE, inv, getWorld());
+        return getWorld().getRecipeManager().getFirstMatch(ModRecipes.WORKBENCH_RECIPE_TYPE, inv, getWorld());
     }
 
     private void craftItem(){
-        Optional<ForgingRecipe> recipe = getCurrentRecipe();
+        Optional<WorkbenchRecipe> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return;
 
         ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
 
-        this.removeStack(INPUT_SLOT, 1);
+        for(int i=0; i<NUM_INPUTS; i++)
+            this.removeStack(i, 1);
+
         if(this.getStack(OUTPUT_SLOT).isEmpty())
             this.setStack(OUTPUT_SLOT, recipeOutput);
         else
             this.getStack(OUTPUT_SLOT).increment(recipeOutput.getCount());
-        progress = 0;
     }
 
     @Nullable

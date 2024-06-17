@@ -2,11 +2,9 @@ package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.MaterialHandler;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -21,22 +19,6 @@ public class ComponentItem extends Item implements MaterialItem {
 
     public ComponentItem(Settings settings) {
         super(settings);
-    }
-
-    @Override
-    public ArmoryMaterial getMaterial(ItemStack stack){
-        NbtCompound nbt = stack.getNbt();
-        if(nbt != null)
-            return MaterialHandler.getMaterial(Identifier.tryParse(nbt.getString(NBT_MATERIAL)));
-        return ArmoryMaterial.NONE;
-    }
-
-    @Override
-    public void setMaterial(ItemStack stack, ArmoryMaterial material){
-        NbtCompound nbt = stack.getNbt();
-        if(nbt == null) nbt = new NbtCompound();
-        nbt.putString(NBT_MATERIAL, material.id.toString());
-        stack.setNbt(nbt);
     }
 
     @Override
@@ -62,5 +44,10 @@ public class ComponentItem extends Item implements MaterialItem {
                 tooltip.addAll(debugText.getWithStyle(Style.EMPTY.withColor(0xff00ff)));
             }
         }
+    }
+
+    @Override
+    public Identifier getIdentifier() {
+        return Registries.ITEM.getId(this);
     }
 }

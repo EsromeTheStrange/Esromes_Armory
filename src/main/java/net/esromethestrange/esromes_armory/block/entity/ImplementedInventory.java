@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.block.entity.forge;
+package net.esromethestrange.esromes_armory.block.entity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
