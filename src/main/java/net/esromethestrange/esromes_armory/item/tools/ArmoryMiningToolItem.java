@@ -29,62 +29,42 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ArmoryMiningToolItem extends MiningToolItem implements ComponentBasedItem {
-    private final ToolType toolType;
-    private List<MaterialItem> components = new ArrayList<>();
+public abstract class ArmoryMiningToolItem extends MiningToolItem implements ComponentBasedItem {
+    protected final ToolType toolType;
+    protected List<MaterialItem> components = new ArrayList<>();
 
-    public ArmoryMiningToolItem(ToolType toolType, ToolMaterial material, Settings settings, MaterialItem... components) {
-        super(material.getAttackDamage(), 1, material, toolType.effectiveBlocks, settings);
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+    public ArmoryMiningToolItem(Settings settings, ToolType toolType, MaterialItem... components) {
+        super(1, 1, ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
         this.toolType = toolType;
         this.components.addAll(Arrays.asList(components));
     }
 
-    public static int getEnchantability(ItemStack stack) {
-        return 0;//TODO ((ArmoryMiningToolItem)stack.getItem()).getMaterial(stack).enchantability;
+    public int getEnchantability(ItemStack stack) {
+        return calculateEnchantability(stack);
     }
 
     public final int getMaxDamage(ItemStack stack){
-        return 0;//TODO getMaterial(stack).durability;
+        return calculateDurability(stack);
     }
 
-    @Override
-    public Text getName() {
-        return super.getName();
-    }
-
-    @Override
-    public Text getName(ItemStack stack) {
-        ArmoryMaterial material = getMaterial(stack, 0);
-        String key = "item." + material.modId + "." +
-                material.materialName + "_" +
-                Registries.ITEM.getId(stack.getItem()).getPath();
-        return Text.translatable(key);
-    }
-
-    @Override public boolean isSuitableFor(BlockState state) { return false; }
     @Override
     public boolean isSuitableFor(ItemStack stack, BlockState state) {
-        return false;//TODO MiningLevelManager.getRequiredMiningLevel(state) <= getMaterial(stack).miningLevel;
+        return MiningLevelManager.getRequiredMiningLevel(state) <= calculateMiningLevel(stack);
     }
 
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-        return 0;//TODO state.isIn(this.toolType.effectiveBlocks) ? getMaterial(stack).miningSpeed : 1.0f;
+        return state.isIn(this.toolType.effectiveBlocks) ? calculateMiningSpeed(stack) : 1.0f;
     }
 
     @Override
     public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
         if (slot == EquipmentSlot.MAINHAND) {
-            ArmoryMaterial material = ArmoryMaterial.NONE;//TODO getMaterial(stack);
-
             ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
-                    (double)material.attackDamage * toolType.attackDamageMultiplier,
-                    EntityAttributeModifier.Operation.ADDITION));
+                    calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADDITION));
             builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
-                    (double)material.attackSpeed * toolType.attackSpeedMultiplier,
-                    EntityAttributeModifier.Operation.ADDITION));
+                    calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADDITION));
             return builder.build();
         }
         return super.getAttributeModifiers(stack, slot);
@@ -94,31 +74,46 @@ public class ArmoryMiningToolItem extends MiningToolItem implements ComponentBas
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
 
-        String materialId = "";//TODO getMaterial(stack).translatable_name;
+        //TODO Add Tooltip
+        String materialId = "";//getMaterial(stack).translatable_name;
         Text materialText = Text.translatable(materialId);
-        //TODO tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getMaterial(stack).color)));
+        //tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getMaterial(stack).color)));
 
         if(EsromesArmory.CONFIG.developerMode()){
             //TODO Add Developer Tooltip
         }
     }
 
+    protected abstract int calculateMiningLevel(ItemStack stack);
+    protected abstract float calculateMiningSpeed(ItemStack stack);
+    protected abstract int calculateDurability(ItemStack stack);
+
+    protected abstract double calculateAttackDamage(ItemStack stack);
+    protected abstract double calculateAttackSpeed(ItemStack stack);
+
+    protected abstract int calculateEnchantability(ItemStack stack);
+
     @Override
     public List<MaterialItem> getComponents() {
         return components;
     }
 
-    public enum ToolType{
-        PICKAXE(0.25f, 0.75f, BlockTags.PICKAXE_MINEABLE);
-
+    public static class ToolType{
         private final float attackDamageMultiplier;
+        private final float attackSpeed;
         private final float attackSpeedMultiplier;
         private final TagKey<Block> effectiveBlocks;
 
-        ToolType(float attackDamageMultiplier, float attackSpeedMultiplier, TagKey<Block> effectiveBlocks){
+        ToolType(float attackDamageMultiplier, float attackSpeed, float attackSpeedMultiplier, TagKey<Block> effectiveBlocks){
             this.attackDamageMultiplier = attackDamageMultiplier;
+            this.attackSpeed = attackSpeed;
             this.attackSpeedMultiplier = attackSpeedMultiplier;
             this.effectiveBlocks = effectiveBlocks;
         }
+
+        public float getAttackDamageMultiplier() { return this.attackDamageMultiplier; }
+        public float getAttackSpeed() { return this.attackSpeed; }
+        public float getAttackSpeedMultiplier() { return this.attackSpeedMultiplier; }
+        public final TagKey<Block> getEffectiveBlocks() { return this.effectiveBlocks; }
     }
 }

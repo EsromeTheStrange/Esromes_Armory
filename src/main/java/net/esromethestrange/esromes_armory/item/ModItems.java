@@ -4,6 +4,7 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.ComponentItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.tools.ArmoryMiningToolItem;
+import net.esromethestrange.esromes_armory.item.tools.ArmoryPickaxeItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.minecraft.item.Item;
@@ -16,9 +17,7 @@ public class ModItems {
 
     public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new FabricItemSettings()));
 
-    public static final Item PICKAXE = registerItem("pickaxe", new ArmoryMiningToolItem(
-            ArmoryMiningToolItem.ToolType.PICKAXE, ModToolMaterial.STEEL, new FabricItemSettings().maxCount(1),
-            (MaterialItem) PLATE));
+    public static final Item PICKAXE = registerItem("pickaxe", new ArmoryPickaxeItem(new FabricItemSettings().maxCount(1)));
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, new Identifier(EsromesArmory.MOD_ID, name), item);

@@ -24,7 +24,7 @@ public class EsromesArmoryEnchantabilityMixin {
     @Unique
     private static int getEnchantabilityOf(Item item, ItemStack stack){
         if(item instanceof ArmoryMiningToolItem){
-            return ArmoryMiningToolItem.getEnchantability(stack);
+            return ((ArmoryMiningToolItem)item).getEnchantability(stack);
         }
         return item.getEnchantability();
     }
