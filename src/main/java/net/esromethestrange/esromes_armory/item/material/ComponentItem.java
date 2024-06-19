@@ -22,6 +22,13 @@ public class ComponentItem extends Item implements MaterialItem {
     }
 
     @Override
+    public ItemStack getStack(ArmoryMaterial material) {
+        ItemStack stack = getDefaultStack();
+        setMaterial(stack, material);
+        return stack;
+    }
+
+    @Override
     public Text getName(ItemStack stack) {
         ArmoryMaterial material = getMaterial(stack);
         String key = "item." + material.modId + "." +

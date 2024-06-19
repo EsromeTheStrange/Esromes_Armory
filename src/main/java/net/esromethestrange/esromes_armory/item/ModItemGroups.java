@@ -23,7 +23,8 @@ public class ModItemGroups {
 
                         entries.add(ModItems.PICKAXE);
 
-                        entries.add(ModItems.PLATE);
+                        entries.add(ModItems.TOOL_HANDLE);
+                        entries.add(ModItems.PICKAXE_HEAD);
 
                         entries.add(ModItems.STEEL_INGOT);
                     }).build());

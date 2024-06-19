@@ -3,7 +3,6 @@ package net.esromethestrange.esromes_armory.util;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;

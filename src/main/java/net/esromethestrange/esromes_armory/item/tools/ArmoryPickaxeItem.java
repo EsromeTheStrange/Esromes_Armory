@@ -10,11 +10,12 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.text.Text;
 
 public class ArmoryPickaxeItem extends ArmoryMiningToolItem {
-    private static final MaterialItem COMPONENT_HEAD = (MaterialItem) ModItems.PLATE;
+    private static final MaterialItem COMPONENT_HEAD = (MaterialItem) ModItems.PICKAXE_HEAD;
+    private static final MaterialItem COMPONENT_HANDLE = (MaterialItem) ModItems.TOOL_HANDLE;
     public static final ToolType PICKAXE_TOOL_TYPE = new ToolType(0.5f, -2.8f,0.5f, BlockTags.PICKAXE_MINEABLE);
 
     public ArmoryPickaxeItem(Settings settings) {
-        super(settings, PICKAXE_TOOL_TYPE, COMPONENT_HEAD);
+        super(settings, PICKAXE_TOOL_TYPE, COMPONENT_HEAD, COMPONENT_HANDLE);
     }
 
     @Override

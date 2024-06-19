@@ -3,11 +3,19 @@
   "item.esromes_armory.steel_pickaxe": "Steel Pickaxe",
   "item.esromes_armory.iron_pickaxe": "Iron Pickaxe",
 
-  "item.esromes_armory.none_plate": "Blank Plate",
-  "item.esromes_armory.steel_plate": "Steel Plate",
-  "item.esromes_armory.iron_plate": "Iron Plate",
+
+  "item.esromes_armory.none_tool_handle": "Blank Tool Handle",
+  "item.esromes_armory.steel_tool_handle": "Steel Tool Handle",
+  "item.esromes_armory.iron_tool_handle": "Iron Tool Handle",
+
+  "item.esromes_armory.none_pickaxe_head": "Blank Pickaxe Head",
+  "item.esromes_armory.steel_pickaxe_head": "Steel Pickaxe Head",
+  "item.esromes_armory.iron_pickaxe_head": "Iron Pickaxe Head",
+
 
   "item.esromes_armory.steel_ingot": "Steel Ingot",
+
+
 
 
 

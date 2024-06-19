@@ -10,6 +10,8 @@ import net.minecraft.util.Identifier;
 public interface MaterialItem {
     String NBT_MATERIAL = EsromesArmory.MOD_ID + ".material";
 
+    ItemStack getStack(ArmoryMaterial material);
+
     default void setMaterial(ItemStack stack, ArmoryMaterial material){
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)

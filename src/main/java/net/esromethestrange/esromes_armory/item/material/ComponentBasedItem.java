@@ -30,12 +30,6 @@ public interface ComponentBasedItem {
         return MaterialHandler.getMaterial(Identifier.tryParse(materialId));
     }
 
-    default ArmoryMaterial getMaterial(ItemStack stack, int index){
-        if(getComponents().size() <= index)
-            return ArmoryMaterial.NONE;
-        return getMaterial(stack, getComponents().get(index));
-    }
-
     default boolean containsComponent(MaterialItem component){
         for(MaterialItem item : getComponents()){
             if(component.getIdentifier().equals(item.getIdentifier()))
