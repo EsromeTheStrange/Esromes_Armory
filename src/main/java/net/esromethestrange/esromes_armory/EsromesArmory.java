@@ -10,7 +10,6 @@ import net.esromethestrange.esromes_armory.recipe.ModRecipes;
 import net.esromethestrange.esromes_armory.recipe.ingredient.ModIngredients;
 import net.esromethestrange.esromes_armory.screen.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;

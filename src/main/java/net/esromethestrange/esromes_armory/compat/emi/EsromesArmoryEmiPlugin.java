@@ -11,7 +11,6 @@ import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.Identifier;
 

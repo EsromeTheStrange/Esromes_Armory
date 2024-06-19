@@ -1,8 +1,6 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.block.entity.ImplementedInventory;
-import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
 import net.esromethestrange.esromes_armory.recipe.WorkbenchRecipe;
 import net.esromethestrange.esromes_armory.screen.WorkbenchScreenHandler;
