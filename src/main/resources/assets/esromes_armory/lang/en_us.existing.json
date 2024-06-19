@@ -1,10 +1,11 @@
 {
   "esromes_armory.material.none": "No Material",
 
-  "esromes_armory.material.oak": "Oak",
+  "minecraft.material.oak": "Oak",
+
+  "minecraft.material.iron": "Iron",
 
   "esromes_armory.material.steel": "Steel",
-  "esromes_armory.material.iron": "Iron",
 
 
 
@@ -14,12 +15,14 @@
 
   "item.esromes_armory.tool_handle": "Tool Handle",
   "item.esromes_armory.none_tool_handle": "Blank Tool Handle",
-  "item.esromes_armory.oak_tool_handle": "Oak Tool Handle",
+
+  "item.minecraft.oak_tool_handle": "Oak Tool Handle",
 
   "item.esromes_armory.pickaxe_head": "Pickaxe Head",
   "item.esromes_armory.none_pickaxe_head": "Blank Pickaxe Head",
   "item.esromes_armory.steel_pickaxe_head": "Steel Pickaxe Head",
-  "item.esromes_armory.iron_pickaxe_head": "Iron Pickaxe Head",
+
+  "item.minecraft.iron_pickaxe_head": "Iron Pickaxe Head",
 
   "item.esromes_armory.steel_ingot": "Steel Ingot",
 

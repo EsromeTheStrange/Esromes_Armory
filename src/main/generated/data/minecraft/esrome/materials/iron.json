@@ -1,0 +1,12 @@
+{
+  "attackDamage": 6,
+  "attackSpeed": 0.0,
+  "color": 11776947,
+  "durability": 100,
+  "enchantability": 20,
+  "items": {
+    "ingot": "minecraft:iron_ingot"
+  },
+  "miningLevel": 2,
+  "miningSpeed": 1.0
+}

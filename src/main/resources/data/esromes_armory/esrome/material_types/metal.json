@@ -1,6 +1,6 @@
 {
   "materials": [
-    "esromes_armory:steel",
-    "esromes_armory:iron"
+    "minecraft:iron",
+    "esromes_armory:steel"
   ]
 }

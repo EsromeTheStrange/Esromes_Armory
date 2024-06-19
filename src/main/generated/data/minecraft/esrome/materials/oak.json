@@ -1,0 +1,12 @@
+{
+  "attackDamage": 6,
+  "attackSpeed": 0.0,
+  "color": 12754274,
+  "durability": 100,
+  "enchantability": 20,
+  "items": {
+    "log": "minecraft:oak_log"
+  },
+  "miningLevel": 2,
+  "miningSpeed": 1.0
+}

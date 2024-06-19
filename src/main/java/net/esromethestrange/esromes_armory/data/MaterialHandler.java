@@ -63,7 +63,7 @@ public class MaterialHandler implements SimpleSynchronousResourceReloadListener 
         int attackDamage = jsonObject.get("attackDamage").getAsInt();
         float attackSpeed = jsonObject.get("attackSpeed").getAsFloat();
         int enchantability = jsonObject.get("enchantability").getAsInt();
-        int color = Integer.decode(jsonObject.get("color").getAsString());
+        int color = jsonObject.get("color").getAsInt();
 
         ArmoryMaterial newMaterial = new ArmoryMaterial(modId, materialName, color,
                 durability, miningLevel, miningSpeed,

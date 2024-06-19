@@ -10,6 +10,9 @@ public class ModMaterialProvider extends ArmoryMaterialProvider {
 
     @Override
     public void generateMaterials() {
+        createMaterial(ArmoryMaterials.IRON);
         createMaterial(ArmoryMaterials.STEEL);
+
+        createMaterial(ArmoryMaterials.OAK);
     }
 }

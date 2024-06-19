@@ -28,16 +28,15 @@ public abstract class ArmoryMaterialProvider implements DataProvider {
     /**
      * Implement this method to register materials.
      *
-     * <p>Call {@link FabricLanguageProvider.TranslationBuilder#add(String, String)} to add a translation.
+     * <p>Call {@link ArmoryMaterialProvider#createMaterial(ArmoryMaterialInfo)} to add a material.
      */
-    //TODO
     public abstract void generateMaterials();
 
     @Override
     public CompletableFuture<?> run(DataWriter writer) {
         generateMaterials();
 
-        return CompletableFuture.allOf((CompletableFuture[])jsonsToWrite.keySet().stream().map(key -> {
+        return CompletableFuture.allOf(jsonsToWrite.keySet().stream().map(key -> {
             Path path = pathResolver.resolve(key, "json");
             JsonElement jsonElement = jsonsToWrite.get(key);
             return DataProvider.writeToPath(writer, jsonElement, path);
@@ -46,16 +45,8 @@ public abstract class ArmoryMaterialProvider implements DataProvider {
 
     protected void createMaterial(ArmoryMaterialInfo materialInfo){
         JsonObject materialJson = new JsonObject();
-
-        materialJson.addProperty();
-
+        materialInfo.writeToJson(materialJson);
         jsonsToWrite.put(materialInfo.id, materialJson);
-    }
-
-    private Path getMaterialFilePath(String code) {
-        return dataOutput
-                .getResolver(DataOutput.OutputType.DATA_PACK, "esrome/materials")
-                .resolveJson(new Identifier(dataOutput.getModId(), code));
     }
 
     @Override

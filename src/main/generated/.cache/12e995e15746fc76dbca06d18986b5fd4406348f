@@ -1,11 +1,11 @@
-// 1.20.1	2024-06-19T21:38:53.5692694	Esrome's Armory/Model Definitions
+// 1.20.1	2024-06-19T22:09:56.6674666	Esrome's Armory/Model Definitions
 c53b2b3c9a9d4930920e65e628b758197cfa17af assets\esromes_armory\blockstates\forge.json
 f273bfd24f2c6da132b2fd7b44be562f5ce90670 assets\esromes_armory\blockstates\workbench.json
 591cb9b4c550de35417ec6a252acecba8284d07a assets\esromes_armory\models\item\forge.json
 570b1ac9ba6e9f52f133178e8bec5d862857ce76 assets\esromes_armory\models\item\steel_ingot.json
 d6134357e09c36cdcab26749478a27d5b863f1d6 assets\esromes_armory\blockstates\charcoal_block.json
-21892b6c018d354f69c0b2d3e267133ac18e7d0e assets\esromes_armory\models\block\charcoal_block.json
 4637c412d6be00060a908952c49e8624d9a262c2 assets\esromes_armory\models\item\steel_block.json
+21892b6c018d354f69c0b2d3e267133ac18e7d0e assets\esromes_armory\models\block\charcoal_block.json
 df5365d169364b838891e323ce9b369e9b8f5714 assets\esromes_armory\models\block\steel_block.json
 6d3caa7adc24ffc3e6126efe9be2fc462435f4c9 assets\esromes_armory\blockstates\steel_block.json
 c9f2e830a5260231ea0ec537aeb1b34bbc3e14df assets\esromes_armory\models\item\workbench.json
