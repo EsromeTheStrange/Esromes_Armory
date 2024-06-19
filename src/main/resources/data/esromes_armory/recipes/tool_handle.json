@@ -1,0 +1,9 @@
+{
+  "type": "esromes_armory:forging",
+  "input": {
+    "fabric:type": "esromes_armory:material",
+    "materialType": "esromes_armory:wood",
+    "itemType": "log"
+  },
+  "output": { "item": "esromes_armory:tool_handle" }
+}

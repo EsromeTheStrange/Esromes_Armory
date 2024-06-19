@@ -4,6 +4,7 @@ import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.DiffuseLighting;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -27,12 +28,19 @@ public class ComponentBasedItemRenderer implements BuiltinItemRendererRegistry.D
 
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
 
+        if(mode == ModelTransformationMode.GUI)
+            DiffuseLighting.enableGuiDepthLighting();
+
         for (MaterialItem item : componentBasedItem.getComponents()){
             ItemStack componentStack = item.getStack(componentBasedItem.getMaterial(stack, item));
 
             itemRenderer.renderItem(componentStack, mode, light, OverlayTexture.DEFAULT_UV,
                     matrices, vertexConsumers, null, 0);
         }
+
+        if(mode == ModelTransformationMode.GUI)
+            DiffuseLighting.disableGuiDepthLighting();
+
         matrices.pop();
     }
 }

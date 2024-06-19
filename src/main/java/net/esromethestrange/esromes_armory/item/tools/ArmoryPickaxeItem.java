@@ -15,7 +15,7 @@ public class ArmoryPickaxeItem extends ArmoryMiningToolItem {
     public static final ToolType PICKAXE_TOOL_TYPE = new ToolType(0.5f, -2.8f,0.5f, BlockTags.PICKAXE_MINEABLE);
 
     public ArmoryPickaxeItem(Settings settings) {
-        super(settings, PICKAXE_TOOL_TYPE, COMPONENT_HEAD, COMPONENT_HANDLE);
+        super(settings, PICKAXE_TOOL_TYPE, COMPONENT_HANDLE, COMPONENT_HEAD);
     }
 
     @Override

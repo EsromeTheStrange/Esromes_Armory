@@ -5,5 +5,5 @@
     "materialType": "esromes_armory:metal",
     "itemType": "ingot"
   },
-  "output": { "item": "esromes_armory:plate" }
+  "output": { "item": "esromes_armory:pickaxe_head" }
 }

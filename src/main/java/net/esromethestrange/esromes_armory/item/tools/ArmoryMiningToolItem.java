@@ -70,13 +70,10 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
 
-        //TODO Add Tooltip
-        String materialId = "";//getMaterial(stack).translatable_name;
-        Text materialText = Text.translatable(materialId);
-        //tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getMaterial(stack).color)));
-
-        if(EsromesArmory.CONFIG.developerMode()){
-            //TODO Add Developer Tooltip
+        if(EsromesArmory.CONFIG.componentTooltips()){
+            for(MaterialItem item : getComponents()){
+                item.addMaterialTooltip(item.getStack(getMaterial(stack, item)), tooltip, true);
+            }
         }
     }
 

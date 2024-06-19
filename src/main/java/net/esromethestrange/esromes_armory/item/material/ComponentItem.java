@@ -6,8 +6,10 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -41,16 +43,21 @@ public class ComponentItem extends Item implements MaterialItem {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
 
-        String materialId = getMaterial(stack).translatable_name;
-        Text materialText = Text.translatable(materialId);
-        tooltip.addAll(materialText.getWithStyle(Style.EMPTY.withColor(getMaterial(stack).color)));
+        if(EsromesArmory.CONFIG.materialTooltips())
+            addMaterialTooltip(stack, tooltip);
+    }
 
-        if(EsromesArmory.CONFIG.developerMode()){
-            if (stack.getNbt() != null) {
-                Text debugText = Text.literal("Material Id: "+stack.getNbt().getString(NBT_MATERIAL));
-                tooltip.addAll(debugText.getWithStyle(Style.EMPTY.withColor(0xff00ff)));
-            }
+    @Override
+    public void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded) {
+        String materialId = getMaterial(stack).translatable_name;
+        MutableText materialText = Text.translatable(materialId).setStyle(Style.EMPTY.withColor(getMaterial(stack).color));
+
+        if(componentNameIncluded){
+            MutableText componentName = Text.translatable(getTranslationKey());
+            materialText = componentName.append(": ").append(materialText);
         }
+
+        tooltip.add(materialText);
     }
 
     @Override

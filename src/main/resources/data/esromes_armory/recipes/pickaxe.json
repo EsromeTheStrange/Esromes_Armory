@@ -1,9 +1,8 @@
 {
   "type": "esromes_armory:workbench",
   "inputs": [
-    {"item": "esromes_armory:plate"},
-    {"item": "esromes_armory:plate"},
-    {"item": "esromes_armory:plate"}
+    {"item": "esromes_armory:tool_handle"},
+    {"item": "esromes_armory:pickaxe_head"}
   ],
   "output": {
     "item": "esromes_armory:pickaxe"
