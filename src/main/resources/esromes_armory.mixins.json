@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EsromesArmoryEnchantabilityMixin",
-    "EsromesArmoryItemStackMixin"
+    "EsromesArmoryItemStackMixin",
+    "EsromesArmoryModelLoaderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

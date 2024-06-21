@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadListener {
     private static HashMap<Identifier, ArmoryMaterial> materials = new HashMap<>();
@@ -40,6 +42,7 @@ public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadLis
         ArmoryMaterial material = materials.get(id);
         return material == null ? ArmoryMaterial.NONE : material;
     }
+
     public static ArmoryMaterialType getMaterialType(Identifier id){
         ArmoryMaterialType materialType = materialTypes.get(id);
         return materialType == null ? ArmoryMaterialType.NONE : materialType;

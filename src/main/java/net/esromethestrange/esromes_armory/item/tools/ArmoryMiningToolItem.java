@@ -33,6 +33,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         super(1, 1, ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
         this.toolType = toolType;
         this.components.addAll(Arrays.asList(components));
+        COMPONENT_BASED_ITEMS.add(this);
     }
 
     public int getEnchantability(ItemStack stack) {

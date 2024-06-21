@@ -10,9 +10,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MaterialItem {
+    List<MaterialItem> MATERIAL_ITEMS = new ArrayList<>();
+
     String NBT_MATERIAL = EsromesArmory.MOD_ID + ".material";
 
     ItemStack getStack(ArmoryMaterial material);

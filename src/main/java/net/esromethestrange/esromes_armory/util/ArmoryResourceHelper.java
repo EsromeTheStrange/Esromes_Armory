@@ -88,6 +88,17 @@ public class ArmoryResourceHelper {
         return json;
     }
 
+    public static List<Identifier> getExpectedMaterials(){
+        List<Identifier> materialsList = new ArrayList<>();
+
+        materialsList.add(new Identifier(EsromesArmory.MOD_ID, "none"));
+        materialsList.add(new Identifier(EsromesArmory.MOD_ID, "steel"));
+        materialsList.add(new Identifier("minecraft", "iron"));
+        materialsList.add(new Identifier("minecraft", "oak"));
+
+        return materialsList;
+    }
+
 
     //Material Types
     public static ArmoryMaterialType readMaterialType(Identifier id, ResourceManager manager){

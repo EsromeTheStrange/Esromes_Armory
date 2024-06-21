@@ -9,10 +9,13 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ComponentBasedItem {
-    String NBT_MATERIALPREFIX = EsromesArmory.MOD_ID + ".materials.";
+    List<ComponentBasedItem> COMPONENT_BASED_ITEMS = new ArrayList<>();
+
+    String NBT_MATERIALS_PREFIX = EsromesArmory.MOD_ID + ".materials.";
 
     List<MaterialItem> getComponents();
 
@@ -22,7 +25,7 @@ public interface ComponentBasedItem {
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
             nbt = new NbtCompound();
-        nbt.putString(NBT_MATERIALPREFIX + component.getRawIdentifier().toString(), material.id.toString());
+        nbt.putString(NBT_MATERIALS_PREFIX + component.getRawIdentifier().toString(), material.id.toString());
         stack.setNbt(nbt);
     }
 
@@ -30,7 +33,7 @@ public interface ComponentBasedItem {
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
             return ArmoryMaterial.NONE;
-        String materialId = nbt.getString(NBT_MATERIALPREFIX + component.getRawIdentifier().toString());
+        String materialId = nbt.getString(NBT_MATERIALS_PREFIX + component.getRawIdentifier().toString());
         return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
     }
 

@@ -22,6 +22,7 @@ public class ComponentItem extends Item implements MaterialItem {
 
     public ComponentItem(Settings settings) {
         super(settings);
+        MATERIAL_ITEMS.add(this);
     }
 
     @Override
