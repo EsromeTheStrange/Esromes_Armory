@@ -15,8 +15,8 @@ public class WorkbenchScreenHandler extends ScreenHandler {
     public final WorkbenchBlockEntity blockEntity;
 
     public static final int[][] INPUT_POS = {
-            {80,11},
             {60,11},
+            {80,11},
             {100,11}
     };
     public static final int[] OUTPUT_POS = {80,59};

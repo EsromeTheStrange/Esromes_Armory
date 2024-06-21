@@ -9,9 +9,9 @@
 
 
 
-  "item.esromes_armory.none_pickaxe": "Blank Pickaxe",
-  "item.esromes_armory.steel_pickaxe": "Steel Pickaxe",
-  "item.esromes_armory.iron_pickaxe": "Iron Pickaxe",
+  "item.esromes_armory.pickaxe_esromes_armory_none": "Blank Pickaxe",
+  "item.esromes_armory.pickaxe_esromes_armory_steel": "Steel Pickaxe",
+  "item.esromes_armory.pickaxe_minecraft_iron": "Iron Pickaxe",
 
   "item.esromes_armory.tool_handle": "Tool Handle",
   "item.esromes_armory.none_tool_handle": "Blank Tool Handle",

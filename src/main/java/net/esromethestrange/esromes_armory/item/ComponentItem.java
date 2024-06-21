@@ -1,7 +1,9 @@
-package net.esromethestrange.esromes_armory.item.material;
+package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,7 +11,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -32,11 +33,7 @@ public class ComponentItem extends Item implements MaterialItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        ArmoryMaterial material = getMaterial(stack);
-        String key = "item." + material.modId + "." +
-                material.materialName + "_" +
-                Registries.ITEM.getId(stack.getItem()).getPath();
-        return Text.translatable(key);
+        return Text.translatable(MaterialHelper.getTranslatableName(stack));
     }
 
     @Override
@@ -58,10 +55,5 @@ public class ComponentItem extends Item implements MaterialItem {
         }
 
         tooltip.add(materialText);
-    }
-
-    @Override
-    public Identifier getIdentifier() {
-        return Registries.ITEM.getId(this);
     }
 }

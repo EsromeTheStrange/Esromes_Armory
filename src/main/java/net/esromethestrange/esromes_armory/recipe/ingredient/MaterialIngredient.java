@@ -3,7 +3,7 @@ package net.esromethestrange.esromes_armory.recipe.ingredient;
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.MaterialHandler;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public boolean test(ItemStack stack){
-        List<ArmoryMaterial> materials = MaterialHandler.getMaterialType(materialType).getMaterials();
+        List<ArmoryMaterial> materials = ArmoryMaterialHandler.getMaterialType(materialType).getMaterials();
         for (ArmoryMaterial material : materials){
             if(stack.isOf(material.getItem(itemType))) return true;
         }
@@ -32,7 +32,7 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     @Override
-    public List<ItemStack> getMatchingStacks() {List<ArmoryMaterial> materials = MaterialHandler.getMaterialType(materialType).getMaterials();
+    public List<ItemStack> getMatchingStacks() {List<ArmoryMaterial> materials = ArmoryMaterialHandler.getMaterialType(materialType).getMaterials();
         List<ItemStack> stacks = new ArrayList<>();
         for (ArmoryMaterial material : materials)
             stacks.add(material.getItem(itemType).getDefaultStack());
@@ -48,7 +48,7 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public ArmoryMaterial getMaterial(ItemStack stack){
-        List<ArmoryMaterial> materials = MaterialHandler.getMaterialType(materialType).getMaterials();
+        List<ArmoryMaterial> materials = ArmoryMaterialHandler.getMaterialType(materialType).getMaterials();
         for (ArmoryMaterial material : materials){
             if(stack.isOf(material.getItem(itemType))) return material;
         }

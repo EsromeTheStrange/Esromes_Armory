@@ -2,9 +2,11 @@ package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.MaterialHandler;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -12,13 +14,15 @@ import java.util.List;
 public interface ComponentBasedItem {
     String NBT_MATERIALPREFIX = EsromesArmory.MOD_ID + ".materials.";
 
+    List<MaterialItem> getComponents();
+
     default void setMaterial(ItemStack stack, MaterialItem component, ArmoryMaterial material){
         if(!containsComponent(component)) return;
 
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
             nbt = new NbtCompound();
-        nbt.putString(NBT_MATERIALPREFIX + component.getIdentifier().toString(), material.id.toString());
+        nbt.putString(NBT_MATERIALPREFIX + component.getRawIdentifier().toString(), material.id.toString());
         stack.setNbt(nbt);
     }
 
@@ -26,17 +30,19 @@ public interface ComponentBasedItem {
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
             return ArmoryMaterial.NONE;
-        String materialId = nbt.getString(NBT_MATERIALPREFIX + component.getIdentifier().toString());
-        return MaterialHandler.getMaterial(Identifier.tryParse(materialId));
+        String materialId = nbt.getString(NBT_MATERIALPREFIX + component.getRawIdentifier().toString());
+        return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
     }
 
     default boolean containsComponent(MaterialItem component){
         for(MaterialItem item : getComponents()){
-            if(component.getIdentifier().equals(item.getIdentifier()))
+            if(component.getRawIdentifier().equals(item.getRawIdentifier()))
                 return true;
         }
         return false;
     }
 
-    List<MaterialItem> getComponents();
+    default Identifier getRawIdentifier() {
+        return Registries.ITEM.getId((Item)this);
+    }
 }

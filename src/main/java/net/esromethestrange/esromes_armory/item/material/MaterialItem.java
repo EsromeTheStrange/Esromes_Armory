@@ -2,9 +2,11 @@ package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.MaterialHandler;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -14,7 +16,6 @@ public interface MaterialItem {
     String NBT_MATERIAL = EsromesArmory.MOD_ID + ".material";
 
     ItemStack getStack(ArmoryMaterial material);
-    Identifier getIdentifier();
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded);
 
     default void addMaterialTooltip(ItemStack stack, List<Text> tooltip){
@@ -34,6 +35,10 @@ public interface MaterialItem {
         if(nbt == null)
             return ArmoryMaterial.NONE;
         String materialId = nbt.getString(NBT_MATERIAL);
-        return MaterialHandler.getMaterial(Identifier.tryParse(materialId));
+        return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
+    }
+
+    default Identifier getRawIdentifier() {
+        return Registries.ITEM.getId((Item)this);
     }
 }

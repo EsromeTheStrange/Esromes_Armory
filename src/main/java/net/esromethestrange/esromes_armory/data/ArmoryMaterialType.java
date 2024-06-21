@@ -26,7 +26,7 @@ public class ArmoryMaterialType {
         this.materials = materials;
         armoryMaterials = new ArrayList<>();
         for(Identifier material : materials)
-            armoryMaterials.add(MaterialHandler.getMaterial(material));
+            armoryMaterials.add(ArmoryMaterialHandler.getMaterial(material));
     }
 
     public List<ArmoryMaterial> getMaterials() {

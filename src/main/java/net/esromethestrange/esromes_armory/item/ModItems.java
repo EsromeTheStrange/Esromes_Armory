@@ -1,7 +1,6 @@
 package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.item.material.ComponentItem;
 import net.esromethestrange.esromes_armory.item.tools.ArmoryPickaxeItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;

@@ -3,7 +3,7 @@ package net.esromethestrange.esromes_armory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
 import net.esromethestrange.esromes_armory.config.EsromesArmoryConfig;
-import net.esromethestrange.esromes_armory.data.MaterialHandler;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.esromethestrange.esromes_armory.item.ModItemGroups;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
@@ -24,6 +24,8 @@ public class EsromesArmory implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Loading Esrome's Armory...");
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryMaterialHandler());
+
 		ModItemGroups.RegisterItemGroups();
 
 		ModItems.registerModItems();
@@ -34,7 +36,5 @@ public class EsromesArmory implements ModInitializer {
 
 		ModRecipes.registerRecipes();
 		ModIngredients.registerIngredients();
-
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new MaterialHandler());
 	}
 }

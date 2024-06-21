@@ -8,10 +8,13 @@ import net.esromethestrange.esromes_armory.screen.ForgeScreen;
 import net.esromethestrange.esromes_armory.screen.ModScreenHandlers;
 import net.esromethestrange.esromes_armory.screen.WorkbenchScreen;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
+@Environment(EnvType.CLIENT)
 public class EsromesArmoryClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
