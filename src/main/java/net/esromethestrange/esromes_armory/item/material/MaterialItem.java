@@ -34,8 +34,15 @@ public interface MaterialItem {
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
             return ArmoryMaterial.NONE;
-        String materialId = nbt.getString(NBT_MATERIAL);
-        return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
+
+        if(stack.getItem() instanceof MaterialItem){
+            String materialId = nbt.getString(NBT_MATERIAL);
+            return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
+        }
+        if(stack.getItem() instanceof ComponentBasedItem componentBasedItem){
+            return componentBasedItem.getMaterial(stack, this);
+        }
+        return ArmoryMaterial.NONE;
     }
 
     default Identifier getRawIdentifier() {
