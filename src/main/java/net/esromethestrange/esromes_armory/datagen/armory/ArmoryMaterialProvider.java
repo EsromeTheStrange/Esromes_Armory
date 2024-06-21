@@ -3,9 +3,8 @@ package net.esromethestrange.esromes_armory.datagen.armory;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialInfo;
-import net.esromethestrange.esromes_armory.util.ArmoryResourceHelper;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
@@ -45,7 +44,7 @@ public abstract class ArmoryMaterialProvider implements DataProvider {
     }
 
     protected void createMaterial(ArmoryMaterialInfo materialInfo){
-        jsonsToWrite.put(materialInfo.id, ArmoryResourceHelper.writeToJson(materialInfo));
+        jsonsToWrite.put(materialInfo.id, ResourceHelper.writeToJson(materialInfo));
     }
 
     @Override

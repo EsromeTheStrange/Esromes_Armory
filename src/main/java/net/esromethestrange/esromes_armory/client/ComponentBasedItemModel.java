@@ -5,6 +5,7 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;
@@ -24,10 +25,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -40,22 +37,6 @@ public class ComponentBasedItemModel implements UnbakedModel, BakedModel, Fabric
 
     public ComponentBasedItemModel(ComponentBasedItem componentBasedItem){
         this.componentBasedItem = componentBasedItem;
-    }
-
-    public static ModelTransformation loadTransformFromJson(Identifier location) {
-        try {
-            return JsonUnbakedModel.deserialize(getReaderForResource(location)).getTransformations();
-        } catch (IOException exception) {
-            EsromesArmory.LOGGER.warn("Can't load resource " + location);
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    public static Reader getReaderForResource(Identifier location) throws IOException {
-        Identifier file = new Identifier(location.getNamespace(), location.getPath() + ".json");
-        Resource resource = MinecraftClient.getInstance().getResourceManager().getResource(file).get();
-        return new BufferedReader(new InputStreamReader(resource.getInputStream(), Charsets.UTF_8));
     }
 
     //Unbaked Model
@@ -83,7 +64,7 @@ public class ComponentBasedItemModel implements UnbakedModel, BakedModel, Fabric
     }
     @Override
     public ModelTransformation getTransformation() {
-        return loadTransformFromJson(new Identifier("minecraft:models/item/handheld"));
+        return ResourceHelper.loadTransformFromJson(new Identifier("minecraft:models/item/handheld"));
     }
     @Override public ModelOverrideList getOverrides() { return ModelOverrideList.EMPTY; }
 

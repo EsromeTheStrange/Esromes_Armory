@@ -1,14 +1,12 @@
 package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.util.ArmoryResourceHelper;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadListener {
     private static HashMap<Identifier, ArmoryMaterial> materials = new HashMap<>();
@@ -26,13 +24,13 @@ public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadLis
 
         materials.clear();
         for(Identifier id : manager.findResources("esrome/materials", i -> i.toString().endsWith(".json")).keySet()){
-            ArmoryMaterial material = ArmoryResourceHelper.readMaterial(id, manager);
+            ArmoryMaterial material = ResourceHelper.readMaterial(id, manager);
             materials.put(material.id, material);
         }
 
         materialTypes.clear();
         for(Identifier id : manager.findResources("esrome/material_types", i -> i.toString().endsWith(".json")).keySet()){
-            ArmoryMaterialType materialType = ArmoryResourceHelper.readMaterialType(id, manager);
+            ArmoryMaterialType materialType = ResourceHelper.readMaterialType(id, manager);
             materialTypes.put(materialType.id, materialType);
         }
 

@@ -1,14 +1,13 @@
 package net.esromethestrange.esromes_armory.client;
 
-import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.util.ArmoryResourceHelper;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -40,7 +39,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Nullable
     @Override
     public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
-        for(Identifier materialId : ArmoryResourceHelper.getExpectedMaterials()){
+        for(Identifier materialId : ResourceHelper.getExpectedMaterials()){
             Identifier materialItemId = MaterialHelper.getItemIdWithMaterial(materialId, modelId);
             BakedModel materialModel = baker.bake(new ModelIdentifier(materialItemId, "inventory"), ModelRotation.X0_Y0);
             variants.put(materialId, materialModel);
@@ -62,7 +61,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     }
     @Override
     public ModelTransformation getTransformation() {
-        return ModelTransformation.NONE;//return loadTransformFromJson(new Identifier("minecraft:models/item/handheld"));
+        return ResourceHelper.loadTransformFromJson(materialItem.getRawIdentifier());
     }
     @Override public ModelOverrideList getOverrides() { return ModelOverrideList.EMPTY; }
 
