@@ -4,39 +4,30 @@ import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialIngredientInfo;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialIngredient implements CustomIngredient {
     public static final Identifier ID = new Identifier(EsromesArmory.MOD_ID, "material");
-    private final Identifier materialType;
-    private final String itemType;
+    private final Identifier ingredientType;
 
-    public MaterialIngredient(Identifier materialType, String itemType){
-        this.materialType = materialType;
-        this.itemType = itemType;
+    public MaterialIngredient(Identifier ingredientType){
+        this.ingredientType = ingredientType;
     }
 
     public boolean test(ItemStack stack){
-        List<ArmoryMaterial> materials = ArmoryMaterialHandler.getMaterialType(materialType).getMaterials();
-        for (ArmoryMaterial material : materials){
-            if(stack.isOf(material.getItem(itemType))) return true;
-        }
-        return false;
+        return ArmoryMaterialHandler.getMaterialIngredient(ingredientType).isValid(stack);
     }
 
     @Override
-    public List<ItemStack> getMatchingStacks() {List<ArmoryMaterial> materials = ArmoryMaterialHandler.getMaterialType(materialType).getMaterials();
-        List<ItemStack> stacks = new ArrayList<>();
-        for (ArmoryMaterial material : materials)
-            stacks.add(material.getItem(itemType).getDefaultStack());
-        return stacks;
+    public List<ItemStack> getMatchingStacks() {
+        return ArmoryMaterialHandler.getMaterialIngredient(ingredientType).matchingStacks;
     }
 
     @Override
@@ -48,45 +39,36 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public ArmoryMaterial getMaterial(ItemStack stack){
-        List<ArmoryMaterial> materials = ArmoryMaterialHandler.getMaterialType(materialType).getMaterials();
-        for (ArmoryMaterial material : materials){
-            if(stack.isOf(material.getItem(itemType))) return material;
-        }
-        return ArmoryMaterial.NONE;
+        return ArmoryMaterialHandler.getMaterialIngredient(ingredientType).getMaterial(stack);
     }
 
     public static class Serializer implements CustomIngredientSerializer<MaterialIngredient>{
         public static final Serializer INSTANCE = new Serializer();
-        public final String KEY_MATERIALTYPE = "materialType";
-        public final String KEY_ITEMTYPE = "itemType";
+        public final String KEY_INGREDIENT = "ingredient";
 
         @Override
         public Identifier getIdentifier() { return MaterialIngredient.ID; }
 
         @Override
         public MaterialIngredient read(JsonObject json) {
-            Identifier materialId = Identifier.tryParse(json.get(KEY_MATERIALTYPE).getAsString());
-            String jsonItemType = json.get(KEY_ITEMTYPE).getAsString();
-            return new MaterialIngredient(materialId, jsonItemType);
+            Identifier ingredientId = Identifier.tryParse(json.get(KEY_INGREDIENT).getAsString());
+            return new MaterialIngredient(ingredientId);
         }
 
         @Override
         public void write(JsonObject json, MaterialIngredient ingredient) {
-            json.addProperty(KEY_MATERIALTYPE, ingredient.materialType.toString());
-            json.addProperty(KEY_ITEMTYPE, ingredient.itemType);
+            json.addProperty(KEY_INGREDIENT, ingredient.ingredientType.toString());
         }
 
         @Override
         public MaterialIngredient read(PacketByteBuf buf) {
             Identifier materialId = Identifier.tryParse(buf.readString());
-            String packetItemType = buf.readString();
-            return new MaterialIngredient(materialId, packetItemType);
+            return new MaterialIngredient(materialId);
         }
 
         @Override
         public void write(PacketByteBuf buf, MaterialIngredient ingredient) {
-            buf.writeString(ingredient.materialType.toString());
-            buf.writeString(ingredient.itemType);
+            buf.writeString(ingredient.ingredientType.toString());
         }
     }
 }

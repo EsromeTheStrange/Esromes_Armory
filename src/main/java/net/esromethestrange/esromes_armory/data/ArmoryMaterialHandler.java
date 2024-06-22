@@ -10,8 +10,7 @@ import java.util.HashMap;
 
 public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadListener {
     private static HashMap<Identifier, ArmoryMaterial> materials = new HashMap<>();
-
-    private static HashMap<Identifier, ArmoryMaterialType> materialTypes = new HashMap<>();
+    private static HashMap<Identifier, ArmoryMaterialIngredientInfo> materialIngredients = new HashMap<>();
 
     @Override
     public Identifier getFabricId() {
@@ -28,12 +27,11 @@ public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadLis
             materials.put(material.id, material);
         }
 
-        materialTypes.clear();
-        for(Identifier id : manager.findResources("esrome/material_types", i -> i.toString().endsWith(".json")).keySet()){
-            ArmoryMaterialType materialType = ResourceHelper.readMaterialType(id, manager);
-            materialTypes.put(materialType.id, materialType);
+        materialIngredients.clear();
+        for(Identifier id : manager.findResources("esrome/material_ingredients", i -> i.toString().endsWith(".json")).keySet()){
+            ArmoryMaterialIngredientInfo materialIngredientInfo = ResourceHelper.readMaterialIngredient(id, manager);
+            materialIngredients.put(materialIngredientInfo.id, materialIngredientInfo);
         }
-
     }
 
     public static ArmoryMaterial getMaterial(Identifier id) {
@@ -41,8 +39,8 @@ public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadLis
         return material == null ? ArmoryMaterial.NONE : material;
     }
 
-    public static ArmoryMaterialType getMaterialType(Identifier id){
-        ArmoryMaterialType materialType = materialTypes.get(id);
-        return materialType == null ? ArmoryMaterialType.NONE : materialType;
+    public static ArmoryMaterialIngredientInfo getMaterialIngredient(Identifier id){
+        ArmoryMaterialIngredientInfo materialIngredient = materialIngredients.get(id);
+        return materialIngredient == null ? ArmoryMaterialIngredientInfo.NONE : materialIngredient;
     }
 }

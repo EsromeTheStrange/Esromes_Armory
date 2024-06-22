@@ -39,7 +39,6 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     public int getEnchantability(ItemStack stack) {
         return calculateEnchantability(stack);
     }
-
     public final int getMaxDamage(ItemStack stack){
         return calculateDurability(stack);
     }

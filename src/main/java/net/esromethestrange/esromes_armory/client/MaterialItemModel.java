@@ -61,7 +61,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     }
     @Override
     public ModelTransformation getTransformation() {
-        return ResourceHelper.loadTransformFromJson(materialItem.getRawIdentifier());
+        return ResourceHelper.loadTransformFromJson(new Identifier("minecraft:models/item/handheld"));
     }
     @Override public ModelOverrideList getOverrides() { return ModelOverrideList.EMPTY; }
 

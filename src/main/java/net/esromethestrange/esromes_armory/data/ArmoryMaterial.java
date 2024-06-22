@@ -26,8 +26,6 @@ public class ArmoryMaterial {
     public final float attackSpeed;
     public final int enchantability;
 
-    private final HashMap<String, Item> items = new HashMap<>();
-
     public ArmoryMaterial(String modId, String materialName, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
         this.translatable_name = modId + ".material." + materialName;
         this.modId = modId;
@@ -42,14 +40,5 @@ public class ArmoryMaterial {
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
         this.enchantability = enchantability;
-    }
-
-    public void addItem(String itemType, Item item){
-        items.put(itemType, item);
-    }
-
-    public Item getItem(String itemType){
-        if(items.containsKey(itemType)) return items.get(itemType);
-        return Items.AIR;
     }
 }

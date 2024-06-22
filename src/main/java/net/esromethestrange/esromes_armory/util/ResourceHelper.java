@@ -5,11 +5,10 @@ import com.google.gson.*;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialInfo;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialType;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialIngredientInfo;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
@@ -20,16 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceHelper {
-    private static final String JSON_DURABILITY = "durability";
-    private static final String JSON_MINING_LEVEL = "miningLevel";
-    private static final String JSON_MINING_SPEED = "miningSpeed";
-    private static final String JSON_ATTACK_DAMAGE = "attackDamage";
-    private static final String JSON_ATTACK_SPEED = "attackSpeed";
-    private static final String JSON_ENCHANTABILITY = "enchantability";
-    private static final String JSON_COLOR = "color";
-    private static final String JSON_ITEMS = "items";
+    public static final String JSON_DURABILITY = "durability";
+    public static final String JSON_MINING_LEVEL = "miningLevel";
+    public static final String JSON_MINING_SPEED = "miningSpeed";
+    public static final String JSON_ATTACK_DAMAGE = "attackDamage";
+    public static final String JSON_ATTACK_SPEED = "attackSpeed";
+    public static final String JSON_ENCHANTABILITY = "enchantability";
+    public static final String JSON_COLOR = "color";
 
-    private static final String JSON_MATERIALS = "materials";
+    public static final String JSON_MATERIALS = "materials";
+
+    public static final String JSON_ENTRIES = "entries";
 
     //Materials
     public static ArmoryMaterial readMaterial(Identifier id, ResourceManager manager){
@@ -58,15 +58,6 @@ public class ResourceHelper {
                 durability, miningLevel, miningSpeed,
                 attackDamage, attackSpeed,
                 enchantability);
-
-        JsonObject items = jsonObject.get(JSON_ITEMS).getAsJsonObject();
-        for(String itemType : items.keySet()){
-            String itemString = items.get(itemType).getAsString();
-            Item item = Registries.ITEM.getOrEmpty(Identifier.tryParse(itemString)).orElseThrow(()
-                    -> new JsonSyntaxException("Unknown item '" + itemString + "'"));
-            newMaterial.addItem(itemType, item);
-        }
-
         return newMaterial;
     }
 
@@ -82,13 +73,6 @@ public class ResourceHelper {
 
         json.addProperty(JSON_COLOR, materialInfo.color);
 
-        JsonObject itemsJson = new JsonObject();
-        for(String key : materialInfo.items.keySet()){
-            Item item = materialInfo.items.get(key);
-            itemsJson.addProperty(key, Registries.ITEM.getId(item).toString());
-        }
-
-        json.add(JSON_ITEMS, itemsJson);
         return json;
     }
 
@@ -103,30 +87,32 @@ public class ResourceHelper {
         return materialsList;
     }
 
-
-    //Material Types
-    public static ArmoryMaterialType readMaterialType(Identifier id, ResourceManager manager){
+    //Material Ingredients
+    public static ArmoryMaterialIngredientInfo readMaterialIngredient(Identifier id, ResourceManager manager){
         String[] idParts = id.getPath().split("/");
         String materialTypeName = idParts[idParts.length-1].split(".json")[0];
 
         try(InputStream stream = manager.getResource(id).get().getInputStream()) {
             JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new InputStreamReader(stream));
-            return parseMaterialType(jsonObject, id.getNamespace(), materialTypeName);
+            return parseMaterialIngredient(jsonObject, id.getNamespace(), materialTypeName);
         } catch(Exception e) {
             EsromesArmory.LOGGER.error("Error occurred while loading resource json" + id.toString(), e);
         }
-        return ArmoryMaterialType.NONE;
+        return ArmoryMaterialIngredientInfo.NONE;
     }
 
-    private static ArmoryMaterialType parseMaterialType(JsonObject json, String modId, String materialTypeName){
-        JsonArray materialsArray = json.get(JSON_MATERIALS).getAsJsonArray();
-        List<Identifier> materials = new ArrayList<>();
-        for (JsonElement element : materialsArray){
-            materials.add(Identifier.tryParse(element.getAsString()));
+
+    private static ArmoryMaterialIngredientInfo parseMaterialIngredient(JsonObject json, String modId, String materialTypeName){
+        ArmoryMaterialIngredientInfo newIngredient = new ArmoryMaterialIngredientInfo(new Identifier(modId, materialTypeName));
+
+        JsonObject ingredients = json.get(JSON_ENTRIES).getAsJsonObject();
+        for (String key : ingredients.keySet()){
+            newIngredient.addEntry(Identifier.tryParse(key), Registries.ITEM.get(Identifier.tryParse(ingredients.get(key).getAsString())));
         }
 
-        return new ArmoryMaterialType(modId, materialTypeName, materials);
+        return newIngredient;
     }
+
 
     //Model Stuff
     /**
