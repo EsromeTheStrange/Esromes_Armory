@@ -1,13 +1,12 @@
 package net.esromethestrange.esromes_armory.client;
 
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
