@@ -83,6 +83,8 @@ public class ResourceHelper {
         materialsList.add(new Identifier(EsromesArmory.MOD_ID, "steel"));
         materialsList.add(new Identifier("minecraft", "iron"));
         materialsList.add(new Identifier("minecraft", "oak"));
+        materialsList.add(new Identifier("minecraft", "string"));
+        materialsList.add(new Identifier("minecraft", "slime"));
 
         return materialsList;
     }

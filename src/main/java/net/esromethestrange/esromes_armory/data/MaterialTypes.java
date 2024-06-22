@@ -11,4 +11,9 @@ public class MaterialTypes {
             ArmoryMaterials.IRON.id,
             ArmoryMaterials.STEEL.id
     };
+
+    public static final Identifier[] BINDING = new Identifier[]{
+            ArmoryMaterials.STRING.id,
+            ArmoryMaterials.SLIME.id
+    };
 }

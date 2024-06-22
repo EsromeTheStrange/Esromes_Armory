@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ComponentItem extends Item implements MaterialItem {
-    public static final String NBT_MATERIAL = EsromesArmory.MOD_ID + ".material";
     public Identifier[] defaultMaterials;
 
     public ComponentItem(Settings settings, Identifier[] defaultMaterials) {
@@ -51,6 +51,11 @@ public class ComponentItem extends Item implements MaterialItem {
             defaultStacks.add(getStack(ArmoryMaterialHandler.getMaterial(material)));
         }
         return defaultStacks;
+    }
+
+    @Override
+    public List<Identifier> getValidMaterials() {
+        return Arrays.stream(defaultMaterials).toList();
     }
 
     @Override

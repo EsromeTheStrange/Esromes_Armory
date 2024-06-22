@@ -18,8 +18,6 @@ public class ArmoryMaterialInfo{
     public final float attackSpeed;
     public final int enchantability;
 
-    public HashMap<String, Item> items = new HashMap<>();
-
     public ArmoryMaterialInfo(Identifier id, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
         this.id = id;
         this.translatable_name = id.getNamespace() + ".material." + id.getPath();
@@ -32,10 +30,5 @@ public class ArmoryMaterialInfo{
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
         this.enchantability = enchantability;
-    }
-
-    public ArmoryMaterialInfo addItem(String key, Item item){
-        items.put(key, item);
-        return this;
     }
 }

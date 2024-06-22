@@ -1,0 +1,8 @@
+{
+  "type": "esromes_armory:forging",
+  "input": {
+    "fabric:type": "esromes_armory:material",
+    "ingredient": "esromes_armory:binding"
+  },
+  "output": { "item": "esromes_armory:tool_binding" }
+}

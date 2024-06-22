@@ -27,12 +27,22 @@ public class ModItemGroups {
                         entries.add(ModBlocks.STEEL_BLOCK);
                         entries.add(ModBlocks.CHARCOAL_BLOCK);
 
+                        entries.add(ModItems.STEEL_INGOT);
+
+                        entries.addAll(((ComponentBasedItem)ModItems.SHOVEL).getDefaultStacks());
                         entries.addAll(((ComponentBasedItem)ModItems.PICKAXE).getDefaultStacks());
+                        entries.addAll(((ComponentBasedItem)ModItems.AXE).getDefaultStacks());
+                        entries.addAll(((ComponentBasedItem)ModItems.HOE).getDefaultStacks());
+                        entries.addAll(((ComponentBasedItem)ModItems.SWORD).getDefaultStacks());
 
                         entries.addAll(((MaterialItem)ModItems.TOOL_HANDLE).getDefaultStacks());
-                        entries.addAll(((MaterialItem)ModItems.PICKAXE_HEAD).getDefaultStacks());
+                        entries.addAll(((MaterialItem)ModItems.TOOL_BINDING).getDefaultStacks());
 
-                        entries.add(ModItems.STEEL_INGOT);
+                        entries.addAll(((MaterialItem)ModItems.SHOVEL_HEAD).getDefaultStacks());
+                        entries.addAll(((MaterialItem)ModItems.PICKAXE_HEAD).getDefaultStacks());
+                        entries.addAll(((MaterialItem)ModItems.AXE_HEAD).getDefaultStacks());
+                        entries.addAll(((MaterialItem)ModItems.HOE_HEAD).getDefaultStacks());
+                        entries.addAll(((MaterialItem)ModItems.SWORD_BLADE).getDefaultStacks());
                     }).build());
 
     public static void RegisterItemGroups() { }

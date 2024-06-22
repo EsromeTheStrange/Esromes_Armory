@@ -14,5 +14,8 @@ public class ModMaterialProvider extends ArmoryMaterialProvider {
         createMaterial(ArmoryMaterials.STEEL);
 
         createMaterial(ArmoryMaterials.OAK);
+
+        createMaterial(ArmoryMaterials.STRING);
+        createMaterial(ArmoryMaterials.SLIME);
     }
 }

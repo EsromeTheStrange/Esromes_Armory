@@ -16,7 +16,7 @@ public class EsromesArmoryDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModBlockLootTableProvider::new);
 		pack.addProvider(ModBlockTagProvider::new);
 		pack.addProvider(ModItemTagProvider::new);
-		pack.addProvider(ModModelProvider::new);
+		pack.addProvider(ArmoryModelProvider::new);
 		pack.addProvider(ModRecipeProvider::new);
 
 		pack.addProvider(ModEnglishLangProvider::new);

@@ -28,11 +28,24 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(ArmoryMaterials.IRON, "Iron", translationBuilder);
         addTranslation(ArmoryMaterials.STEEL, "Steel", translationBuilder);
 
-        //Items
-        translationBuilder.add(ModItems.PICKAXE, " Pickaxe");
+        addTranslation(ArmoryMaterials.STRING, "String", translationBuilder);
+        addTranslation(ArmoryMaterials.SLIME, "Slime", translationBuilder);
 
-        translationBuilder.add(ModItems.PICKAXE_HEAD, " Pickaxe Head");
+        //Items
+        translationBuilder.add(ModItems.SHOVEL, " Shovel");
+        translationBuilder.add(ModItems.PICKAXE, " Pickaxe");
+        translationBuilder.add(ModItems.AXE, " Axe");
+        translationBuilder.add(ModItems.HOE, " Hoe");
+        translationBuilder.add(ModItems.SWORD, " Sword");
+
         translationBuilder.add(ModItems.TOOL_HANDLE, " Tool Handle");
+        translationBuilder.add(ModItems.TOOL_BINDING, " Tool Binding");
+
+        translationBuilder.add(ModItems.SHOVEL_HEAD, " Shovel Head");
+        translationBuilder.add(ModItems.PICKAXE_HEAD, " Pickaxe Head");
+        translationBuilder.add(ModItems.AXE_HEAD, " Axe Head");
+        translationBuilder.add(ModItems.HOE_HEAD, " Hoe Head");
+        translationBuilder.add(ModItems.SWORD_BLADE, " Sword Blade");
 
         translationBuilder.add(ModItems.STEEL_INGOT, "Steel Ingot");
 
