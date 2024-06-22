@@ -18,6 +18,7 @@ import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,6 +76,17 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
                 item.addMaterialTooltip(item.getStack(getMaterial(stack, item)), tooltip, true);
             }
         }
+    }
+
+    @Override
+    public int getItemBarStep(ItemStack stack) {
+        return Math.round(13.0f - (float)stack.getDamage() * 13.0f / (float)getMaxDamage(stack));
+    }
+
+    @Override
+    public int getItemBarColor(ItemStack stack) {
+        float f = Math.max(0.0f, ((float)getMaxDamage(stack) - (float)stack.getDamage()) / (float)getMaxDamage(stack));
+        return MathHelper.hsvToRgb(f / 3.0f, 1.0f, 1.0f);
     }
 
     protected abstract int calculateMiningLevel(ItemStack stack);

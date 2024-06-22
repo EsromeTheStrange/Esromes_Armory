@@ -1,8 +1,8 @@
 package net.esromethestrange.esromes_armory.mixin;
 
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.ModelIdentifier;
@@ -24,7 +24,7 @@ public abstract class EsromesArmoryModelLoaderMixin {
      * Injects right after <code>profiler.swap("items")</code> is called.
      */
     @Inject(method = "<init>", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 2))
-    public void loadModelFromJson(BlockColors blockColors, Profiler profiler, Map jsonUnbakedModels, Map blockStates, CallbackInfo ci) {
+    public void esromes_armory$loadModelFromJson(BlockColors blockColors, Profiler profiler, Map jsonUnbakedModels, Map blockStates, CallbackInfo ci) {
         for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
             for(Identifier materialId : ResourceHelper.getExpectedMaterials()){
                 Identifier id = MaterialHelper.getItemIdWithMaterial(materialId, materialItem.getRawIdentifier());
