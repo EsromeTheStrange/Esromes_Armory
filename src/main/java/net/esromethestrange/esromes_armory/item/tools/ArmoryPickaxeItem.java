@@ -5,10 +5,9 @@ import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 
 public class ArmoryPickaxeItem extends ArmoryMiningToolItem {
     private static final MaterialItem COMPONENT_HEAD = (MaterialItem) ModItems.PICKAXE_HEAD;
@@ -21,10 +20,9 @@ public class ArmoryPickaxeItem extends ArmoryMiningToolItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        String key = "item." + EsromesArmory.MOD_ID + ".";
-        key += getRawIdentifier().getPath();
-        key += "_" + getMaterial(stack, COMPONENT_HEAD).id.toString().replace(":","_");
-        return Text.translatable(key);
+        MutableText materialText = Text.translatable(getMaterial(stack, COMPONENT_HEAD).translatable_name);
+        Text toolText = super.getName(stack);
+        return materialText.append(toolText);
     }
 
     @Override

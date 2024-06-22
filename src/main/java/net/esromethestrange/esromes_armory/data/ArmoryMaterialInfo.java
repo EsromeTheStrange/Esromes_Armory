@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class ArmoryMaterialInfo{
     public final Identifier id;
+    public final String translatable_name;
     public final int color;
 
     public final int durability;
@@ -21,6 +22,7 @@ public class ArmoryMaterialInfo{
 
     public ArmoryMaterialInfo(Identifier id, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
         this.id = id;
+        this.translatable_name = id.getNamespace() + ".material." + id.getPath();
         this.color = color;
 
         this.durability = durability;

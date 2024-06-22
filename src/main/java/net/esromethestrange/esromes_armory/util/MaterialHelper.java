@@ -11,16 +11,4 @@ public class MaterialHelper {
         String path = itemId.getPath() + "_" + materialId.getNamespace() + "_" + materialId.getPath();
         return new Identifier(itemId.getNamespace(), path);
     }
-
-    public static String getTranslatableName(ItemStack stack){
-        if(stack.getItem() instanceof MaterialItem materialItem){
-            Identifier materialIdentifier = materialItem.getMaterial(stack).id;
-            return "item." + new Identifier(materialIdentifier.getNamespace(),
-                    materialIdentifier.getPath() + "_" + materialItem.getRawIdentifier().getPath())
-                    .toString().replace(":",".");
-        }
-
-        EsromesArmory.LOGGER.error("Failed to get material id for stack: " + stack.toString());
-        return ArmoryMaterial.NONE.translatable_name;
-    }
 }

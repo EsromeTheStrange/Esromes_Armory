@@ -34,7 +34,9 @@ public class ComponentItem extends Item implements MaterialItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        return Text.translatable(MaterialHelper.getTranslatableName(stack));
+        MutableText materialText = Text.translatable(getMaterial(stack).translatable_name);
+        Text toolText = super.getName(stack);
+        return materialText.append(toolText);
     }
 
     @Override

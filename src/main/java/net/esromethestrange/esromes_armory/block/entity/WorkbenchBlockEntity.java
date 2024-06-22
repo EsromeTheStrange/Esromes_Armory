@@ -33,6 +33,8 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
     public static final int NUM_INPUTS = WorkbenchRecipe.NUM_INPUTS;
     public static final int OUTPUT_SLOT = WorkbenchRecipe.NUM_INPUTS;
 
+    public static final String CONTAINER_TRANSLATION_KEY = "container."+ EsromesArmory.MOD_ID+".workbench";
+
     public WorkbenchBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.WORKBENCH_BLOCK_ENTITY, pos, state);
     }
@@ -65,7 +67,7 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("container."+ EsromesArmory.MOD_ID+".workbench");
+        return Text.translatable(CONTAINER_TRANSLATION_KEY);
     }
 
     @Nullable

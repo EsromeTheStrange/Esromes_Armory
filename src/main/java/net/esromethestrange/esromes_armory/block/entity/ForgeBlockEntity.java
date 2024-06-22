@@ -35,6 +35,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     public static final int OUTPUT_SLOT = 1;
 
     private static final String NBTKEY_PROGRESS = "forge.progress";
+    public static final String CONTAINER_TRANSLATION_KEY = "container."+EsromesArmory.MOD_ID+".forge";
 
     protected final PropertyDelegate propertyDelegate;
     private int progress = 0;
@@ -107,7 +108,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("container."+EsromesArmory.MOD_ID+".forge");
+        return Text.translatable(CONTAINER_TRANSLATION_KEY);
     }
 
     @Nullable

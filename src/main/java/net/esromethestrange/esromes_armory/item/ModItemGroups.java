@@ -11,9 +11,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ModItemGroups {
+    public static final String ESROMES_ARMORY_GROUP_TRANSLATION_KEY = "itemGroup.esromes_armory";
+
     public static final ItemGroup ESROMES_ARMORY_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(EsromesArmory.MOD_ID, "esromes_armory"),
-            FabricItemGroup.builder().displayName(Text.translatable("itemGroup.esromes_armory"))
+            FabricItemGroup.builder().displayName(Text.translatable(ESROMES_ARMORY_GROUP_TRANSLATION_KEY))
                     .icon(()->new ItemStack(ModItems.STEEL_INGOT)).entries((displayContext, entries) -> {
                         entries.add(ModBlocks.FORGE);
                         entries.add(ModBlocks.WORKBENCH);
