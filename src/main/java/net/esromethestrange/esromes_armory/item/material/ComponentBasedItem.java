@@ -18,6 +18,7 @@ public interface ComponentBasedItem {
     String NBT_MATERIALS_PREFIX = EsromesArmory.MOD_ID + ".materials.";
 
     List<MaterialItem> getComponents();
+    List<ItemStack> getDefaultStacks();
 
     default void setMaterial(ItemStack stack, MaterialItem component, ArmoryMaterial material){
         if(!containsComponent(component)) return;

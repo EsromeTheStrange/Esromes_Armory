@@ -20,6 +20,7 @@ public interface MaterialItem {
 
     ItemStack getStack(ArmoryMaterial material);
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded);
+    List<ItemStack> getDefaultStacks();
 
     default void addMaterialTooltip(ItemStack stack, List<Text> tooltip){
         addMaterialTooltip(stack, tooltip, false);

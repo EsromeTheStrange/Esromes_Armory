@@ -26,15 +26,14 @@ public class EsromesArmory implements ModInitializer {
 		LOGGER.info("Loading Esrome's Armory...");
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryMaterialHandler());
 
-		ModItemGroups.RegisterItemGroups();
-
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
 
-		ModScreenHandlers.registerScreenHandlers();
-
-		ModRecipes.registerRecipes();
 		ModIngredients.registerIngredients();
+		ModRecipes.registerRecipes();
+
+		ModItemGroups.RegisterItemGroups();
+		ModScreenHandlers.registerScreenHandlers();
 	}
 }

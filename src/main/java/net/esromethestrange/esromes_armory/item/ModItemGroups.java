@@ -2,6 +2,10 @@ package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -23,10 +27,10 @@ public class ModItemGroups {
                         entries.add(ModBlocks.STEEL_BLOCK);
                         entries.add(ModBlocks.CHARCOAL_BLOCK);
 
-                        entries.add(ModItems.PICKAXE);
+                        entries.addAll(((ComponentBasedItem)ModItems.PICKAXE).getDefaultStacks());
 
-                        entries.add(ModItems.TOOL_HANDLE);
-                        entries.add(ModItems.PICKAXE_HEAD);
+                        entries.addAll(((MaterialItem)ModItems.TOOL_HANDLE).getDefaultStacks());
+                        entries.addAll(((MaterialItem)ModItems.PICKAXE_HEAD).getDefaultStacks());
 
                         entries.add(ModItems.STEEL_INGOT);
                     }).build());

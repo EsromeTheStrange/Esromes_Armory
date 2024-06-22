@@ -2,12 +2,19 @@ package net.esromethestrange.esromes_armory.item.tools;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.MaterialTypes;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArmoryPickaxeItem extends ArmoryMiningToolItem {
     private static final MaterialItem COMPONENT_HEAD = (MaterialItem) ModItems.PICKAXE_HEAD;
@@ -23,6 +30,18 @@ public class ArmoryPickaxeItem extends ArmoryMiningToolItem {
         MutableText materialText = Text.translatable(getMaterial(stack, COMPONENT_HEAD).translatable_name);
         Text toolText = super.getName(stack);
         return materialText.append(toolText);
+    }
+
+    @Override
+    public List<ItemStack> getDefaultStacks() {
+        List<ItemStack> defaultStacks = new ArrayList<>();
+        for(Identifier id : MaterialTypes.METAL){
+            ItemStack stack = getDefaultStack();
+            setMaterial(stack, COMPONENT_HEAD, ArmoryMaterialHandler.getMaterial(id));
+            setMaterial(stack, COMPONENT_HANDLE, ArmoryMaterialHandler.getMaterial(ArmoryMaterials.OAK.id));
+            defaultStacks.add(stack);
+        }
+        return defaultStacks;
     }
 
     @Override
