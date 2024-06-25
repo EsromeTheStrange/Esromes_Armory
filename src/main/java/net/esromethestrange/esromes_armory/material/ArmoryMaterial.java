@@ -1,13 +1,12 @@
-package net.esromethestrange.esromes_armory.data;
+package net.esromethestrange.esromes_armory.material;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-
-public class ArmoryMaterialInfo{
-    public final Identifier id;
+public class ArmoryMaterial {
     public final String translatable_name;
+    public final Identifier id;
+    public final String modId;
+    public final String materialName;
     public final int color;
 
     public final int durability;
@@ -18,9 +17,11 @@ public class ArmoryMaterialInfo{
     public final float attackSpeed;
     public final int enchantability;
 
-    public ArmoryMaterialInfo(Identifier id, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
-        this.id = id;
-        this.translatable_name = id.getNamespace() + ".material." + id.getPath();
+    public ArmoryMaterial(String modId, String materialName, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
+        this.translatable_name = modId + ".material." + materialName;
+        this.modId = modId;
+        this.materialName = materialName;
+        this.id = new Identifier(modId, materialName);
         this.color = color;
 
         this.durability = durability;

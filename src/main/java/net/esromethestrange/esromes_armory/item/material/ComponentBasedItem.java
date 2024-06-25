@@ -1,8 +1,8 @@
 package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -33,9 +33,9 @@ public interface ComponentBasedItem {
     default ArmoryMaterial getMaterial(ItemStack stack, MaterialItem component){
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
-            return ArmoryMaterial.NONE;
+            return ArmoryMaterials.NONE;
         String materialId = nbt.getString(NBT_MATERIALS_PREFIX + component.getRawIdentifier().toString());
-        return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
+        return ArmoryMaterials.getMaterial(Identifier.tryParse(materialId));
     }
 
     default boolean containsComponent(MaterialItem component){

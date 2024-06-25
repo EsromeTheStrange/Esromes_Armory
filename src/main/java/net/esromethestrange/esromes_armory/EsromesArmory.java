@@ -6,6 +6,8 @@ import net.esromethestrange.esromes_armory.config.EsromesArmoryConfig;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.esromethestrange.esromes_armory.item.ModItemGroups;
 import net.esromethestrange.esromes_armory.item.ModItems;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
 import net.esromethestrange.esromes_armory.recipe.ingredient.ModIngredients;
 import net.esromethestrange.esromes_armory.screen.ModScreenHandlers;
@@ -25,6 +27,9 @@ public class EsromesArmory implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Loading Esrome's Armory...");
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryMaterialHandler());
+
+		ArmoryMaterials.registerMaterials();
+		MaterialTypes.registerMaterialTypes();
 
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();

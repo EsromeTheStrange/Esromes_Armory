@@ -1,7 +1,8 @@
 package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -37,13 +38,13 @@ public class ArmoryMaterialIngredientInfo {
 
     public ArmoryMaterial getMaterial(ItemStack stack){
         if(!isValid(stack))
-            return ArmoryMaterial.NONE;
+            return ArmoryMaterials.NONE;
 
         Item item = stack.getItem();
         for(Identifier material : validItems.keySet())
             if(validItems.get(material).contains(item))
-                return ArmoryMaterialHandler.getMaterial(material);
+                return ArmoryMaterials.getMaterial(material);
 
-        return ArmoryMaterial.NONE;
+        return ArmoryMaterials.NONE;
     }
 }

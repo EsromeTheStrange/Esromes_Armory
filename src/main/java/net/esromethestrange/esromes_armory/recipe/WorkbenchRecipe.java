@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.inventory.SimpleInventory;

@@ -1,8 +1,8 @@
 package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -21,7 +21,7 @@ public interface MaterialItem {
     ItemStack getStack(ArmoryMaterial material);
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded);
     List<ItemStack> getDefaultStacks();
-    List<Identifier> getValidMaterials();
+    List<ArmoryMaterial> getValidMaterials();
 
     default void addMaterialTooltip(ItemStack stack, List<Text> tooltip){
         addMaterialTooltip(stack, tooltip, false);
@@ -38,16 +38,16 @@ public interface MaterialItem {
     default ArmoryMaterial getMaterial(ItemStack stack){
         NbtCompound nbt = stack.getNbt();
         if(nbt == null)
-            return ArmoryMaterial.NONE;
+            return ArmoryMaterials.NONE;
 
         if(stack.getItem() instanceof MaterialItem){
             String materialId = nbt.getString(NBT_MATERIAL);
-            return ArmoryMaterialHandler.getMaterial(Identifier.tryParse(materialId));
+            return ArmoryMaterials.getMaterial(Identifier.tryParse(materialId));
         }
         if(stack.getItem() instanceof ComponentBasedItem componentBasedItem){
             return componentBasedItem.getMaterial(stack, this);
         }
-        return ArmoryMaterial.NONE;
+        return ArmoryMaterials.NONE;
     }
 
     default Identifier getRawIdentifier() {

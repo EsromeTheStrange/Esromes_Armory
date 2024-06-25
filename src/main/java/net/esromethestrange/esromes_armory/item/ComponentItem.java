@@ -1,30 +1,24 @@
 package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
-import net.esromethestrange.esromes_armory.data.MaterialTypes;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.util.MaterialHelper;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ComponentItem extends Item implements MaterialItem {
-    public Identifier[] defaultMaterials;
+    public List<ArmoryMaterial> defaultMaterials;
 
-    public ComponentItem(Settings settings, Identifier[] defaultMaterials) {
+    public ComponentItem(Settings settings, List<ArmoryMaterial> defaultMaterials) {
         super(settings);
         this.defaultMaterials = defaultMaterials;
         MATERIAL_ITEMS.add(this);
@@ -47,15 +41,15 @@ public class ComponentItem extends Item implements MaterialItem {
     @Override
     public List<ItemStack> getDefaultStacks() {
         List<ItemStack> defaultStacks = new ArrayList<>();
-        for(Identifier material : defaultMaterials){
-            defaultStacks.add(getStack(ArmoryMaterialHandler.getMaterial(material)));
+        for(ArmoryMaterial material : defaultMaterials){
+            defaultStacks.add(getStack(material));
         }
         return defaultStacks;
     }
 
     @Override
-    public List<Identifier> getValidMaterials() {
-        return Arrays.stream(defaultMaterials).toList();
+    public List<ArmoryMaterial> getValidMaterials() {
+        return defaultMaterials;
     }
 
     @Override

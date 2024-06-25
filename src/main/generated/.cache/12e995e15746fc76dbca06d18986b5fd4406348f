@@ -1,4 +1,4 @@
-// 1.20.1	2024-06-25T12:11:20.6001478	Esrome's Armory/Model Definitions
+// 1.20.1	2024-06-25T13:38:14.0828923	Esrome's Armory/Model Definitions
 f273bfd24f2c6da132b2fd7b44be562f5ce90670 assets\esromes_armory\blockstates\workbench.json
 fdea51231577b021cf1071700639c2dbe7438685 assets\esromes_armory\models\item\shovel_head.json
 d6134357e09c36cdcab26749478a27d5b863f1d6 assets\esromes_armory\blockstates\charcoal_block.json
@@ -35,5 +35,5 @@ f4d79c40e05850934fc3801870161e2c82c8affb assets\esromes_armory\models\item\sword
 ca300c11cde2c344b92895e20d5e99d3d84d81c9 assets\esromes_armory\models\item\sword_blade_esromes_armory_none.json
 255ef1f2f76213fd7d6ab294251e0628c5752463 assets\esromes_armory\models\item\axe_head_esromes_armory_steel.json
 3832c50e4f4ad09727e9ed21883d1dd24daa58f6 assets\esromes_armory\models\item\pickaxe_head_minecraft_iron.json
-90189754830832c125e358c2d5d96b821f67ba42 assets\esromes_armory\models\item\tool_binding_minecraft_slime.json
 29e23fa6b410504fe6a47a48b61e67b0153e97a0 assets\esromes_armory\models\item\sword_blade_minecraft_iron.json
+90189754830832c125e358c2d5d96b821f67ba42 assets\esromes_armory\models\item\tool_binding_minecraft_slime.json

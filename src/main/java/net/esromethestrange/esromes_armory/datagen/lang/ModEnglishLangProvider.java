@@ -1,19 +1,14 @@
 package net.esromethestrange.esromes_armory.datagen.lang;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.block.ForgeBlock;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
 import net.esromethestrange.esromes_armory.block.entity.WorkbenchBlockEntity;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialInfo;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterials;
-import net.esromethestrange.esromes_armory.item.ModItemGroups;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-
-import java.nio.file.Path;
 
 public class ModEnglishLangProvider extends FabricLanguageProvider {
     public ModEnglishLangProvider(FabricDataOutput dataOutput) { super(dataOutput, "en_us");  }
@@ -21,7 +16,7 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         //Materials
-        addTranslation(ArmoryMaterial.NONE, "Blank", translationBuilder);
+        addTranslation(ArmoryMaterials.NONE, "Blank", translationBuilder);
 
         addTranslation(ArmoryMaterials.OAK, "Oak", translationBuilder);
 
@@ -76,9 +71,6 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(WorkbenchBlockEntity.CONTAINER_TRANSLATION_KEY, "Workbench");
     }
 
-    public void addTranslation(ArmoryMaterialInfo material, String materialName, TranslationBuilder translationBuilder){
-        translationBuilder.add(material.translatable_name, materialName);
-    }
     public void addTranslation(ArmoryMaterial material, String materialName, TranslationBuilder translationBuilder){
         translationBuilder.add(material.translatable_name, materialName);
     }

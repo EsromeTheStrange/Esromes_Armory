@@ -1,11 +1,10 @@
 package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.MaterialTypes;
+import net.esromethestrange.esromes_armory.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.item.tools.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;

@@ -2,9 +2,8 @@ package net.esromethestrange.esromes_armory.recipe.ingredient;
 
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialIngredientInfo;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.minecraft.item.ItemStack;

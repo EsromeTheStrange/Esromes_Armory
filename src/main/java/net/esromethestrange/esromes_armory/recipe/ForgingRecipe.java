@@ -3,7 +3,7 @@ package net.esromethestrange.esromes_armory.recipe;
 import com.google.gson.JsonObject;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.minecraft.inventory.SimpleInventory;

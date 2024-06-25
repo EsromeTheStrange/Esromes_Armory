@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.client;
 
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
@@ -34,11 +35,10 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
         this.materialItem = materialItem;
     }
 
-    //Unbaked Model
     @Nullable
     @Override
     public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
-        for(Identifier materialId : ResourceHelper.getExpectedMaterials()){
+        for(Identifier materialId : ArmoryMaterials.getMaterialIds()){
             Identifier materialItemId = MaterialHelper.getItemIdWithMaterial(materialId, modelId);
             BakedModel materialModel = baker.bake(new ModelIdentifier(materialItemId, "inventory"), ModelRotation.X0_Y0);
             variants.put(materialId, materialModel);

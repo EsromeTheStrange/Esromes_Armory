@@ -3,13 +3,12 @@ package net.esromethestrange.esromes_armory.item.tools;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterials;
-import net.esromethestrange.esromes_armory.data.MaterialTypes;
 import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.material.MaterialTypes;
 import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -26,7 +25,6 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -136,11 +134,11 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     @Override
     public List<ItemStack> getDefaultStacks() {
         List<ItemStack> defaultStacks = new ArrayList<>();
-        for(Identifier id : MaterialTypes.METAL){
+        for(ArmoryMaterial material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), ArmoryMaterialHandler.getMaterial(id));
-            setMaterial(stack, COMPONENT_BINDING, ArmoryMaterialHandler.getMaterial(ArmoryMaterials.STRING.id));
-            setMaterial(stack, COMPONENT_HANDLE, ArmoryMaterialHandler.getMaterial(ArmoryMaterials.OAK.id));
+            setMaterial(stack, getHeadComponent(), material);
+            setMaterial(stack, COMPONENT_BINDING, ArmoryMaterials.STRING);
+            setMaterial(stack, COMPONENT_HANDLE, ArmoryMaterials.OAK);
             defaultStacks.add(stack);
         }
         return defaultStacks;
