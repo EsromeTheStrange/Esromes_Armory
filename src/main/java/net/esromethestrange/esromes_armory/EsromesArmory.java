@@ -33,7 +33,7 @@ public class EsromesArmory implements ModInitializer {
 		ModIngredients.registerIngredients();
 		ModRecipes.registerRecipes();
 
-		ModItemGroups.RegisterItemGroups();
+		ModItemGroups.registerItemGroups();
 		ModScreenHandlers.registerScreenHandlers();
 	}
 }

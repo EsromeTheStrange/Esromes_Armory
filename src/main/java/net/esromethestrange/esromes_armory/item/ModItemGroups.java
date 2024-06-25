@@ -1,49 +1,49 @@
 package net.esromethestrange.esromes_armory.item;
 
+import io.wispforest.owo.itemgroup.Icon;
+import io.wispforest.owo.itemgroup.OwoItemGroup;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ModItemGroups {
-    public static final String ESROMES_ARMORY_GROUP_TRANSLATION_KEY = "itemGroup.esromes_armory";
+    public static final OwoItemGroup ESROMES_ARMORY = OwoItemGroup
+            .builder(new Identifier(EsromesArmory.MOD_ID, "esromes_armory"), () -> Icon.of(ModItems.STEEL_INGOT))
+            // additional builder configuration goes between these lines
+            .build();
 
-    public static final ItemGroup ESROMES_ARMORY_GROUP = Registry.register(Registries.ITEM_GROUP,
-            new Identifier(EsromesArmory.MOD_ID, "esromes_armory"),
-            FabricItemGroup.builder().displayName(Text.translatable(ESROMES_ARMORY_GROUP_TRANSLATION_KEY))
-                    .icon(()->new ItemStack(ModItems.STEEL_INGOT)).entries((displayContext, entries) -> {
-                        entries.add(ModBlocks.FORGE);
-                        entries.add(ModBlocks.WORKBENCH);
+    public static void registerItemGroups() {
+        ESROMES_ARMORY.addCustomTab(Icon.of(ModBlocks.FORGE), "default", (context, entries) ->{
+            entries.add(ModBlocks.FORGE);
+            entries.add(ModBlocks.WORKBENCH);
 
-                        entries.add(ModBlocks.STEEL_BLOCK);
-                        entries.add(ModBlocks.CHARCOAL_BLOCK);
+            entries.add(ModBlocks.CHARCOAL_BLOCK);
+            entries.add(ModBlocks.STEEL_BLOCK);
 
-                        entries.add(ModItems.STEEL_INGOT);
+            entries.add(ModItems.STEEL_INGOT);
+        }, true);
 
-                        entries.addAll(((ComponentBasedItem)ModItems.SHOVEL).getDefaultStacks());
-                        entries.addAll(((ComponentBasedItem)ModItems.PICKAXE).getDefaultStacks());
-                        entries.addAll(((ComponentBasedItem)ModItems.AXE).getDefaultStacks());
-                        entries.addAll(((ComponentBasedItem)ModItems.HOE).getDefaultStacks());
-                        entries.addAll(((ComponentBasedItem)ModItems.SWORD).getDefaultStacks());
+        ESROMES_ARMORY.addCustomTab(Icon.of(ModItems.PICKAXE), "tools", (context, entries) ->{
+            entries.addAll(((ComponentBasedItem)ModItems.SHOVEL).getDefaultStacks());
+            entries.addAll(((ComponentBasedItem)ModItems.PICKAXE).getDefaultStacks());
+            entries.addAll(((ComponentBasedItem)ModItems.AXE).getDefaultStacks());
+            entries.addAll(((ComponentBasedItem)ModItems.HOE).getDefaultStacks());
+            entries.addAll(((ComponentBasedItem)ModItems.SWORD).getDefaultStacks());
+        }, false);
 
-                        entries.addAll(((MaterialItem)ModItems.TOOL_HANDLE).getDefaultStacks());
-                        entries.addAll(((MaterialItem)ModItems.TOOL_BINDING).getDefaultStacks());
+        ESROMES_ARMORY.addCustomTab(Icon.of(ModItems.PICKAXE_HEAD), "tool_components", (context, entries) ->{
+            entries.addAll(((MaterialItem)ModItems.TOOL_HANDLE).getDefaultStacks());
+            entries.addAll(((MaterialItem)ModItems.TOOL_BINDING).getDefaultStacks());
 
-                        entries.addAll(((MaterialItem)ModItems.SHOVEL_HEAD).getDefaultStacks());
-                        entries.addAll(((MaterialItem)ModItems.PICKAXE_HEAD).getDefaultStacks());
-                        entries.addAll(((MaterialItem)ModItems.AXE_HEAD).getDefaultStacks());
-                        entries.addAll(((MaterialItem)ModItems.HOE_HEAD).getDefaultStacks());
-                        entries.addAll(((MaterialItem)ModItems.SWORD_BLADE).getDefaultStacks());
-                    }).build());
+            entries.addAll(((MaterialItem)ModItems.SHOVEL_HEAD).getDefaultStacks());
+            entries.addAll(((MaterialItem)ModItems.PICKAXE_HEAD).getDefaultStacks());
+            entries.addAll(((MaterialItem)ModItems.AXE_HEAD).getDefaultStacks());
+            entries.addAll(((MaterialItem)ModItems.HOE_HEAD).getDefaultStacks());
+            entries.addAll(((MaterialItem)ModItems.SWORD_BLADE).getDefaultStacks());
+        }, false);
 
-    public static void RegisterItemGroups() { }
+        ESROMES_ARMORY.initialize();
+    }
 }

@@ -67,7 +67,10 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         addRecipeTypeTranslation("forging", "Forging", translationBuilder);
 
         //Other
-        translationBuilder.add(ModItemGroups.ESROMES_ARMORY_GROUP_TRANSLATION_KEY, "Esrome's Armory");
+        translationBuilder.add("itemGroup.esromes_armory.esromes_armory", "Esrome's Armory");
+        translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.default", "Esrome's Armory");
+        translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.tools", "Tools");
+        translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.tool_components", "Tool Components");
 
         translationBuilder.add(ForgeBlockEntity.CONTAINER_TRANSLATION_KEY, "Forge");
         translationBuilder.add(WorkbenchBlockEntity.CONTAINER_TRANSLATION_KEY, "Workbench");
