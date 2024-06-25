@@ -11,7 +11,9 @@ public class MaterialTypes {
     public static void registerMaterialTypes(){
         WOOD.add(ArmoryMaterials.OAK);
 
+        METAL.add(ArmoryMaterials.COPPER);
         METAL.add(ArmoryMaterials.IRON);
+        METAL.add(ArmoryMaterials.GOLD);
         METAL.add(ArmoryMaterials.STEEL);
 
         BINDING.add(ArmoryMaterials.STRING);

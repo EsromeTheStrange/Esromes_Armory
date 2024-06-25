@@ -20,7 +20,9 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
 
         addTranslation(ArmoryMaterials.OAK, "Oak", translationBuilder);
 
+        addTranslation(ArmoryMaterials.COPPER, "Copper", translationBuilder);
         addTranslation(ArmoryMaterials.IRON, "Iron", translationBuilder);
+        addTranslation(ArmoryMaterials.GOLD, "Gold", translationBuilder);
         addTranslation(ArmoryMaterials.STEEL, "Steel", translationBuilder);
 
         addTranslation(ArmoryMaterials.STRING, "String", translationBuilder);
@@ -40,6 +42,9 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ModItems.PICKAXE_HEAD, " Pickaxe Head");
         translationBuilder.add(ModItems.AXE_HEAD, " Axe Head");
         translationBuilder.add(ModItems.HOE_HEAD, " Hoe Head");
+
+        translationBuilder.add(ModItems.SWORD_GRIP, " Sword Grip");
+        translationBuilder.add(ModItems.SWORD_GUARD, " Sword Guard");
         translationBuilder.add(ModItems.SWORD_BLADE, " Sword Blade");
 
         translationBuilder.add(ModItems.STEEL_INGOT, "Steel Ingot");
@@ -65,7 +70,7 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory", "Esrome's Armory");
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.default", "Esrome's Armory");
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.tools", "Tools");
-        translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.tool_components", "Tool Components");
+        translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.tool_components", "Components");
 
         translationBuilder.add(ForgeBlockEntity.CONTAINER_TRANSLATION_KEY, "Forge");
         translationBuilder.add(WorkbenchBlockEntity.CONTAINER_TRANSLATION_KEY, "Workbench");

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "esromes_armory:item/shovel_head_minecraft_gold"
+  }
+}

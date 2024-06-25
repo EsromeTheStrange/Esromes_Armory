@@ -129,6 +129,11 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         return headMaterial.enchantability;
     }
 
+    @Override
+    public ArmoryMaterial getPrimaryMaterial(ItemStack stack) {
+        return getMaterial(stack, getHeadComponent());
+    }
+
     protected abstract MaterialItem getHeadComponent();
 
     @Override
@@ -136,9 +141,10 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         List<ItemStack> defaultStacks = new ArrayList<>();
         for(ArmoryMaterial material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
+            for(MaterialItem materialItem : getComponents()){
+                setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
+            }
             setMaterial(stack, getHeadComponent(), material);
-            setMaterial(stack, COMPONENT_BINDING, ArmoryMaterials.STRING);
-            setMaterial(stack, COMPONENT_HANDLE, ArmoryMaterials.OAK);
             defaultStacks.add(stack);
         }
         return defaultStacks;

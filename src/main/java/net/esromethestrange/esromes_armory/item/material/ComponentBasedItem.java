@@ -19,6 +19,7 @@ public interface ComponentBasedItem {
 
     List<MaterialItem> getComponents();
     List<ItemStack> getDefaultStacks();
+    ArmoryMaterial getPrimaryMaterial(ItemStack stack);
 
     default void setMaterial(ItemStack stack, MaterialItem component, ArmoryMaterial material){
         if(!containsComponent(component)) return;

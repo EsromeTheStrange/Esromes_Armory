@@ -6,9 +6,17 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
 import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class ModItemGroups {
+    static HashMap<ArmoryMaterial, List<ItemStack>> itemMap = new HashMap<>();
+
     public static final OwoItemGroup ESROMES_ARMORY = OwoItemGroup
             .builder(new Identifier(EsromesArmory.MOD_ID, "esromes_armory"), () -> Icon.of(ModItems.STEEL_INGOT))
             // additional builder configuration goes between these lines
@@ -26,24 +34,32 @@ public class ModItemGroups {
         }, true);
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ModItems.PICKAXE), "tools", (context, entries) ->{
-            entries.addAll(((ComponentBasedItem)ModItems.SHOVEL).getDefaultStacks());
-            entries.addAll(((ComponentBasedItem)ModItems.PICKAXE).getDefaultStacks());
-            entries.addAll(((ComponentBasedItem)ModItems.AXE).getDefaultStacks());
-            entries.addAll(((ComponentBasedItem)ModItems.HOE).getDefaultStacks());
-            entries.addAll(((ComponentBasedItem)ModItems.SWORD).getDefaultStacks());
+            itemMap.clear();
+            for(ComponentBasedItem componentBasedItem : ComponentBasedItem.COMPONENT_BASED_ITEMS){
+                mapItems(componentBasedItem.getDefaultStacks());
+            }
+            for(List<ItemStack> stacks : itemMap.values()){
+                entries.addAll(stacks);
+            }
         }, false);
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ModItems.PICKAXE_HEAD), "tool_components", (context, entries) ->{
-            entries.addAll(((MaterialItem)ModItems.TOOL_HANDLE).getDefaultStacks());
-            entries.addAll(((MaterialItem)ModItems.TOOL_BINDING).getDefaultStacks());
-
-            entries.addAll(((MaterialItem)ModItems.SHOVEL_HEAD).getDefaultStacks());
-            entries.addAll(((MaterialItem)ModItems.PICKAXE_HEAD).getDefaultStacks());
-            entries.addAll(((MaterialItem)ModItems.AXE_HEAD).getDefaultStacks());
-            entries.addAll(((MaterialItem)ModItems.HOE_HEAD).getDefaultStacks());
-            entries.addAll(((MaterialItem)ModItems.SWORD_BLADE).getDefaultStacks());
+            for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
+                entries.addAll(materialItem.getDefaultStacks());
+            }
         }, false);
 
         ESROMES_ARMORY.initialize();
+    }
+
+    static void mapItems(List<ItemStack> stacks){
+        for(ItemStack stack : stacks){
+            if(!(stack.getItem() instanceof ComponentBasedItem componentBasedItem))
+                return;
+            ArmoryMaterial material = componentBasedItem.getPrimaryMaterial(stack);
+            if(!itemMap.containsKey(material))
+                itemMap.put(material, new ArrayList<>());
+            itemMap.get(material).add(stack);
+        }
     }
 }

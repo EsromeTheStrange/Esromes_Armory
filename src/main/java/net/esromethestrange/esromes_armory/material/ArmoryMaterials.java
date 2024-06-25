@@ -17,10 +17,15 @@ public class ArmoryMaterials {
             0, 0, 1);
 
     //METALS
+    public static final ArmoryMaterial COPPER = new ArmoryMaterial("minecraft", "copper",
+            0xE77C56, 100, 2, 1,
+            6, 0, 20);
     public static final ArmoryMaterial IRON = new ArmoryMaterial("minecraft", "iron",
             0xb3b3b3, 100, 2, 1,
             6, 0, 20);
-
+    public static final ArmoryMaterial GOLD = new ArmoryMaterial("minecraft", "gold",
+            0xE9B115, 100, 2, 1,
+            6, 0, 20);
     public static final ArmoryMaterial STEEL = new ArmoryMaterial(EsromesArmory.MOD_ID, "steel",
             0x787878, 200, 2,100,
             8, 0, 50);
@@ -42,7 +47,9 @@ public class ArmoryMaterials {
     public static void registerMaterials(){
         addMaterial(NONE);
 
+        addMaterial(COPPER);
         addMaterial(IRON);
+        addMaterial(GOLD);
         addMaterial(STEEL);
 
         addMaterial(OAK);

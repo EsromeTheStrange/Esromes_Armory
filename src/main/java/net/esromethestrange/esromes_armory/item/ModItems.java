@@ -19,6 +19,9 @@ public class ModItems {
     public static final Item PICKAXE_HEAD = registerItem("pickaxe_head", new ComponentItem(new FabricItemSettings(), MaterialTypes.METAL));
     public static final Item AXE_HEAD = registerItem("axe_head", new ComponentItem(new FabricItemSettings(), MaterialTypes.METAL));
     public static final Item HOE_HEAD = registerItem("hoe_head", new ComponentItem(new FabricItemSettings(), MaterialTypes.METAL));
+
+    public static final Item SWORD_GRIP = registerItem("sword_grip", new ComponentItem(new FabricItemSettings(), MaterialTypes.WOOD));
+    public static final Item SWORD_GUARD = registerItem("sword_guard", new ComponentItem(new FabricItemSettings(), MaterialTypes.METAL));
     public static final Item SWORD_BLADE = registerItem("sword_blade", new ComponentItem(new FabricItemSettings(), MaterialTypes.METAL));
 
     public static final Item SHOVEL = registerItem("shovel", new ArmoryShovelItem(new FabricItemSettings().maxCount(1)));
