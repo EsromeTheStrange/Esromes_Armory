@@ -4,9 +4,9 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ModBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntity;
 import net.esromethestrange.esromes_armory.block.entity.WorkbenchBlockEntity;
+import net.esromethestrange.esromes_armory.item.ModItems;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
-import net.esromethestrange.esromes_armory.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -19,6 +19,16 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(ArmoryMaterials.NONE, "Blank", translationBuilder);
 
         addTranslation(ArmoryMaterials.OAK, "Oak", translationBuilder);
+        addTranslation(ArmoryMaterials.ACACIA, "Acacia", translationBuilder);
+        addTranslation(ArmoryMaterials.BAMBOO, "Bamboo", translationBuilder);
+        addTranslation(ArmoryMaterials.BIRCH, "Birch", translationBuilder);
+        addTranslation(ArmoryMaterials.CHERRY, "Cherry", translationBuilder);
+        addTranslation(ArmoryMaterials.CRIMSON, "Crimson", translationBuilder);
+        addTranslation(ArmoryMaterials.DARK_OAK, "Dark Oak", translationBuilder);
+        addTranslation(ArmoryMaterials.JUNGLE, "Jungle", translationBuilder);
+        addTranslation(ArmoryMaterials.MANGROVE, "Mangrove", translationBuilder);
+        addTranslation(ArmoryMaterials.SPRUCE, "Spruce", translationBuilder);
+        addTranslation(ArmoryMaterials.WARPED, "Warped", translationBuilder);
 
         addTranslation(ArmoryMaterials.COPPER, "Copper", translationBuilder);
         addTranslation(ArmoryMaterials.IRON, "Iron", translationBuilder);

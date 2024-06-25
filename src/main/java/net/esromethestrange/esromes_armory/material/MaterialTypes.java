@@ -1,5 +1,7 @@
 package net.esromethestrange.esromes_armory.material;
 
+import net.minecraft.util.Arm;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,16 @@ public class MaterialTypes {
 
     public static void registerMaterialTypes(){
         WOOD.add(ArmoryMaterials.OAK);
+        WOOD.add(ArmoryMaterials.ACACIA);
+        WOOD.add(ArmoryMaterials.BAMBOO);
+        WOOD.add(ArmoryMaterials.BIRCH);
+        WOOD.add(ArmoryMaterials.CHERRY);
+        WOOD.add(ArmoryMaterials.CRIMSON);
+        WOOD.add(ArmoryMaterials.DARK_OAK);
+        WOOD.add(ArmoryMaterials.JUNGLE);
+        WOOD.add(ArmoryMaterials.MANGROVE);
+        WOOD.add(ArmoryMaterials.SPRUCE);
+        WOOD.add(ArmoryMaterials.WARPED);
 
         METAL.add(ArmoryMaterials.COPPER);
         METAL.add(ArmoryMaterials.IRON);

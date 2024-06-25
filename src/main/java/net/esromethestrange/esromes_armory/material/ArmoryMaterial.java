@@ -31,5 +31,7 @@ public class ArmoryMaterial {
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
         this.enchantability = enchantability;
+
+        ArmoryMaterials.addMaterial(this);
     }
 }

@@ -35,6 +35,36 @@ public class ArmoryMaterials {
     public static final ArmoryMaterial OAK = new ArmoryMaterial("minecraft", "oak",
             0xC29D62, 100, 2, 1,
             6, 0, 20);
+    public static final ArmoryMaterial ACACIA = new ArmoryMaterial("minecraft", "acacia",
+            0xBA6337, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial BAMBOO = new ArmoryMaterial("minecraft", "bamboo",
+            0xD3BB50, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial BIRCH = new ArmoryMaterial("minecraft", "birch",
+            0xD7C185, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial CHERRY = new ArmoryMaterial("minecraft", "cherry",
+            0xE7C2BB, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial CRIMSON = new ArmoryMaterial("minecraft", "crimson",
+            0x7E3A56, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial DARK_OAK = new ArmoryMaterial("minecraft", "dark_oak",
+            0x4F3218, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial JUNGLE = new ArmoryMaterial("minecraft", "jungle",
+            0xB88764, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial MANGROVE = new ArmoryMaterial("minecraft", "mangrove",
+            0x7F4234, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial SPRUCE = new ArmoryMaterial("minecraft", "spruce",
+            0x82613A, 100, 2, 1,
+            6, 0, 20);
+    public static final ArmoryMaterial WARPED = new ArmoryMaterial("minecraft", "warped",
+            0x398382, 100, 2, 1,
+            6, 0, 20);
 
     //BINDINGS
     public static final ArmoryMaterial STRING = new ArmoryMaterial("minecraft", "string",
@@ -43,20 +73,6 @@ public class ArmoryMaterials {
     public static final ArmoryMaterial SLIME = new ArmoryMaterial("minecraft", "slime",
             0x8CD782, 100, 2, 1,
             6, 0, 20);
-
-    public static void registerMaterials(){
-        addMaterial(NONE);
-
-        addMaterial(COPPER);
-        addMaterial(IRON);
-        addMaterial(GOLD);
-        addMaterial(STEEL);
-
-        addMaterial(OAK);
-
-        addMaterial(STRING);
-        addMaterial(SLIME);
-    }
 
     public static void addMaterial(ArmoryMaterial material){
         materialIds.add(material.id);
