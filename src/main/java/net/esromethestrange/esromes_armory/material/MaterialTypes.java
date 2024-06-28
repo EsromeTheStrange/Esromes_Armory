@@ -27,6 +27,7 @@ public class MaterialTypes {
         METAL.add(ArmoryMaterials.IRON);
         METAL.add(ArmoryMaterials.GOLD);
         METAL.add(ArmoryMaterials.STEEL);
+        METAL.add(ArmoryMaterials.NETHERITE);
 
         BINDING.add(ArmoryMaterials.STRING);
         BINDING.add(ArmoryMaterials.SLIME);

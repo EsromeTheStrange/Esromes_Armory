@@ -33,6 +33,7 @@ public class ModEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(ArmoryMaterials.COPPER, "Copper", translationBuilder);
         addTranslation(ArmoryMaterials.IRON, "Iron", translationBuilder);
         addTranslation(ArmoryMaterials.GOLD, "Gold", translationBuilder);
+        addTranslation(ArmoryMaterials.NETHERITE, "Netherite", translationBuilder);
         addTranslation(ArmoryMaterials.STEEL, "Steel", translationBuilder);
 
         addTranslation(ArmoryMaterials.STRING, "String", translationBuilder);

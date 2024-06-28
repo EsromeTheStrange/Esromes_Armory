@@ -1,5 +1,15 @@
 {
   "entries":{
-    "minecraft:oak": "minecraft:oak_log"
+    "minecraft:oak": "minecraft:oak_log",
+    "minecraft:acacia": "minecraft:acacia_log",
+    "minecraft:bamboo": "minecraft:bamboo_block",
+    "minecraft:birch": "minecraft:birch_log",
+    "minecraft:cherry": "minecraft:cherry_log",
+    "minecraft:crimson": "minecraft:crimson_stem",
+    "minecraft:dark_oak": "minecraft:dark_oak_log",
+    "minecraft:jungle": "minecraft:jungle_log",
+    "minecraft:mangrove": "minecraft:mangrove_log",
+    "minecraft:spruce": "minecraft:spruce_log",
+    "minecraft:warped": "minecraft:warped_stem"
   }
 }

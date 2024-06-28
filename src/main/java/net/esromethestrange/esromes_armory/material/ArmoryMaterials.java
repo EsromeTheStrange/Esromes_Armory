@@ -26,6 +26,9 @@ public class ArmoryMaterials {
     public static final ArmoryMaterial GOLD = new ArmoryMaterial("minecraft", "gold",
             0xE9B115, 100, 2, 1,
             6, 0, 20);
+    public static final ArmoryMaterial NETHERITE = new ArmoryMaterial("minecraft", "netherite",
+            0x4A2940, 200, 2,100,
+            8, 0, 50);
     public static final ArmoryMaterial STEEL = new ArmoryMaterial(EsromesArmory.MOD_ID, "steel",
             0x787878, 200, 2,100,
             8, 0, 50);
