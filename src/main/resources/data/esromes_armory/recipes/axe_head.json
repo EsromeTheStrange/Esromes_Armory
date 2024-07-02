@@ -1,0 +1,7 @@
+{
+  "type": "esromes_armory:forging",
+  "input": {
+    "item": "esromes_armory:pickaxe_head"
+  },
+  "output": { "item": "esromes_armory:axe_head" }
+}

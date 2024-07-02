@@ -1,0 +1,7 @@
+{
+  "type": "esromes_armory:forging",
+  "input": {
+    "item": "esromes_armory:shovel_head"
+  },
+  "output": { "item": "esromes_armory:hoe_head" }
+}

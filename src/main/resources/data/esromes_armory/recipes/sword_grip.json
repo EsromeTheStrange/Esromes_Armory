@@ -1,0 +1,7 @@
+{
+  "type": "esromes_armory:forging",
+  "input": {
+    "item": "esromes_armory:tool_handle"
+  },
+  "output": { "item": "esromes_armory:sword_grip" }
+}

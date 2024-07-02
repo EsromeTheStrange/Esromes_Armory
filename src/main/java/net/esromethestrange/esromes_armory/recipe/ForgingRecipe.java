@@ -35,10 +35,17 @@ public class ForgingRecipe implements Recipe<SimpleInventory> {
 
     @Override public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
         ItemStack craftOutput = output.copy();
-        if((input.getCustomIngredient() instanceof MaterialIngredient materialIngredient) &&
-                (craftOutput.getItem() instanceof MaterialItem materialItem)){
+        if(!(craftOutput.getItem() instanceof MaterialItem materialItem))
+            return craftOutput;
+
+        if((input.getCustomIngredient() instanceof MaterialIngredient materialIngredient)){
             ArmoryMaterial outputMaterial = materialIngredient.getMaterial(inventory.getStack(ForgeBlockEntity.INPUT_SLOT));
             materialItem.setMaterial(craftOutput, outputMaterial);
+        }else{
+            ItemStack inputStack = inventory.getStack(ForgeBlockEntity.INPUT_SLOT);
+            if(inputStack.getItem() instanceof MaterialItem materialInput){
+                materialItem.setMaterial(craftOutput, materialInput.getMaterial(inputStack));
+            }
         }
         return craftOutput;
     }

@@ -5,6 +5,7 @@ import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
 import net.esromethestrange.esromes_armory.recipe.ModRecipes;
 import net.esromethestrange.esromes_armory.screen.ForgeScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,7 +35,9 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
 
-    private static final String NBTKEY_PROGRESS = "forge.progress";
+    private static final String NBT_PROGRESS = EsromesArmory.MOD_ID + ".forge.progress";
+    private static final String NBT_INVENTORY = EsromesArmory.MOD_ID + ".forge.inventory";
+
     public static final String CONTAINER_TRANSLATION_KEY = "container."+EsromesArmory.MOD_ID+".forge";
 
     protected final PropertyDelegate propertyDelegate;
@@ -68,17 +71,11 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
         };
     }
 
-    public ItemStack getRenderStack(int index){
-        return switch (index){
-            case INPUT_SLOT -> this.getStack(INPUT_SLOT);
-            case OUTPUT_SLOT -> this.getStack(OUTPUT_SLOT);
-            default -> ItemStack.EMPTY;
-        };
-    }
+    public ItemStack getRenderStack(){ return this.getStack(INPUT_SLOT); }
 
     @Override
     public void markDirty() {
-        world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
         super.markDirty();
     }
 
@@ -90,15 +87,17 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, inventory.stacks);
-        nbt.putInt(NBTKEY_PROGRESS, progress);
+        nbt.put(NBT_INVENTORY + ".input", inventory.getStack(INPUT_SLOT).writeNbt(new NbtCompound()));
+        nbt.put(NBT_INVENTORY + ".output", inventory.getStack(OUTPUT_SLOT).writeNbt(new NbtCompound()));
+        nbt.putInt(NBT_PROGRESS, progress);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        Inventories.readNbt(nbt, inventory.stacks);
-        progress = nbt.getInt(NBTKEY_PROGRESS);
+        inventory.setStack(INPUT_SLOT, ItemStack.fromNbt(nbt.getCompound(NBT_INVENTORY + ".input")));
+        inventory.setStack(OUTPUT_SLOT, ItemStack.fromNbt(nbt.getCompound(NBT_INVENTORY + ".output")));
+        progress = nbt.getInt(NBT_PROGRESS);
     }
 
     @Override
@@ -165,7 +164,6 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
             this.setStack(OUTPUT_SLOT, recipeOutput);
         else
             this.getStack(OUTPUT_SLOT).increment(recipeOutput.getCount());
-        markDirty();
         progress = 0;
     }
 
