@@ -38,7 +38,7 @@ public class ForgeScreen extends HandledScreen<ForgeScreenHandler> {
 
     private void renderProgressArrow(DrawContext context, int x, int y){
         if(handler.isCrafting()){
-            context.drawTexture(TEXTURE, x + 85, y + 30, 167, 0, 8, handler.getScaledProgress());
+            context.drawTexture(TEXTURE, x + 85, y + 30, 176, 0, 8, handler.getScaledProgress());
         }
     }
 }
