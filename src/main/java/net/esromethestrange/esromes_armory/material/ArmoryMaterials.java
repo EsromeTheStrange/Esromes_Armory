@@ -19,64 +19,48 @@ public class ArmoryMaterials {
 
     //METALS
     public static final ArmoryMaterial COPPER = new ArmoryMaterial("minecraft", "copper",
-            0xE77C56, 100, 2, 1,
-            6, 0, 20);
+            0xE77C56, 6, 1, 1,
+            4, 0, 5);
     public static final ArmoryMaterial IRON = new ArmoryMaterial("minecraft", "iron",
-            0xb3b3b3, 100, 2, 1,
-            6, 0, 20);
+            0xb3b3b3, 8, 2, 1,
+            5, 0, 5);
     public static final ArmoryMaterial GOLD = new ArmoryMaterial("minecraft", "gold",
-            0xE9B115, 100, 2, 1,
-            6, 0, 20);
+            0xE9B115, 4, 1, 1.2f,
+            4, 0, 20);
     public static final ArmoryMaterial NETHERITE = new ArmoryMaterial("minecraft", "netherite",
-            0x4A2940, 200, 2,100,
-            8, 0, 50);
+            0x4A2940, 12, 4,1,
+            7, 0, 5);
     public static final ArmoryMaterial STEEL = new ArmoryMaterial(EsromesArmory.MOD_ID, "steel",
-            0x787878, 200, 2,100,
-            8, 0, 50);
+            0x787878, 10, 2,1,
+            6, 0, 5);
 
 
     //WOODS
-    public static final ArmoryMaterial OAK = new ArmoryMaterial("minecraft", "oak",
-            0xC29D62, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial ACACIA = new ArmoryMaterial("minecraft", "acacia",
-            0xBA6337, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial BAMBOO = new ArmoryMaterial("minecraft", "bamboo",
-            0xD3BB50, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial BIRCH = new ArmoryMaterial("minecraft", "birch",
-            0xD7C185, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial CHERRY = new ArmoryMaterial("minecraft", "cherry",
-            0xE7C2BB, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial CRIMSON = new ArmoryMaterial("minecraft", "crimson",
-            0x7E3A56, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial DARK_OAK = new ArmoryMaterial("minecraft", "dark_oak",
-            0x4F3218, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial JUNGLE = new ArmoryMaterial("minecraft", "jungle",
-            0xB88764, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial MANGROVE = new ArmoryMaterial("minecraft", "mangrove",
-            0x7F4234, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial SPRUCE = new ArmoryMaterial("minecraft", "spruce",
-            0x82613A, 100, 2, 1,
-            6, 0, 20);
-    public static final ArmoryMaterial WARPED = new ArmoryMaterial("minecraft", "warped",
-            0x398382, 100, 2, 1,
-            6, 0, 20);
+    public static final ArmoryMaterial OAK = createWoodMaterial("oak");
+    public static final ArmoryMaterial ACACIA = createWoodMaterial("acacia");
+    public static final ArmoryMaterial BAMBOO = createWoodMaterial("bamboo");
+    public static final ArmoryMaterial BIRCH = createWoodMaterial("birch");
+    public static final ArmoryMaterial CHERRY = createWoodMaterial("cherry");
+    public static final ArmoryMaterial CRIMSON = createWoodMaterial("crimson");
+    public static final ArmoryMaterial DARK_OAK = createWoodMaterial("dark_oak");
+    public static final ArmoryMaterial JUNGLE = createWoodMaterial("jungle");
+    public static final ArmoryMaterial MANGROVE = createWoodMaterial("mangrove");
+    public static final ArmoryMaterial SPRUCE = createWoodMaterial("spruce");
+    public static final ArmoryMaterial WARPED = createWoodMaterial("warped");
 
     //BINDINGS
     public static final ArmoryMaterial STRING = new ArmoryMaterial("minecraft", "string",
-            0xF0F0F0, 100, 2, 1,
+            0xF0F0F0, 4, 2, 1,
             6, 0, 20);
     public static final ArmoryMaterial SLIME = new ArmoryMaterial("minecraft", "slime",
-            0x8CD782, 100, 2, 1,
-            6, 0, 20);
+            0x8CD782, 5, 0, 0,
+            0, 0, 0);
+
+    private static ArmoryMaterial createWoodMaterial(String materialName){
+        return new ArmoryMaterial("minecraft", materialName,
+                0xC29D62, 2, 0, 0.1f,
+                0, 0, 0);
+    }
 
     public static void addMaterial(ArmoryMaterial material){
         materialIds.add(material.id);

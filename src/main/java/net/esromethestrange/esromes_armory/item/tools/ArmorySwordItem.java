@@ -42,7 +42,20 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
     }
 
     @Override
-    protected MaterialItem getHeadComponent() {
+    protected int calculateDurability(ItemStack stack) {
+        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
+        ArmoryMaterial handleMaterial = getHandleMaterial(stack);
+        return (int) (
+                headMaterial.durability * 5 +
+                        bindingMaterial.durability * 5 +
+                        handleMaterial.durability * 5
+        ) * 10;
+    }
+
+    @Override protected MaterialItem getHeadComponent() {
         return SWORD_BLADE;
     }
+    @Override protected MaterialItem getBindingComponent() { return SWORD_GUARD; }
+    @Override protected MaterialItem getHandleComponent() { return SWORD_GRIP; }
 }

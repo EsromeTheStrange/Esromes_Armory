@@ -9,7 +9,7 @@ public class ArmoryMaterial {
     public final String materialName;
     public final int color;
 
-    public final int durability;
+    public final float durability;
     public final int miningLevel;
     public final float miningSpeed;
 
@@ -17,7 +17,7 @@ public class ArmoryMaterial {
     public final float attackSpeed;
     public final int enchantability;
 
-    public ArmoryMaterial(String modId, String materialName, int color, int durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
+    public ArmoryMaterial(String modId, String materialName, int color, float durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
         this.translatable_name = modId + ".material." + materialName;
         this.modId = modId;
         this.materialName = materialName;

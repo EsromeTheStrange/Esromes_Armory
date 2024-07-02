@@ -104,25 +104,31 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     }
 
     protected int calculateMiningLevel(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
+        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
         return headMaterial.miningLevel;
     }
     protected float calculateMiningSpeed(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
+        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
         return headMaterial.miningSpeed;
     }
     protected int calculateDurability(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
-        return headMaterial.durability;
+        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
+        ArmoryMaterial handleMaterial = getHandleMaterial(stack);
+        return (int) (
+                headMaterial.durability * 25 +
+                bindingMaterial.durability * 50 +
+                handleMaterial.durability * 15
+        );
     }
     protected double calculateAttackDamage(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
+        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
         return (double)headMaterial.attackDamage * toolType.getAttackDamageMultiplier();
     }
     protected double calculateAttackSpeed(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
+        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
         return toolType.getAttackSpeed() +
-                (double)headMaterial.attackSpeed * toolType.getAttackSpeedMultiplier();
+                (double)bindingMaterial.attackSpeed * toolType.getAttackSpeedMultiplier();
     }
     protected int calculateEnchantability(ItemStack stack) {
         ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
@@ -133,8 +139,16 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     public ArmoryMaterial getPrimaryMaterial(ItemStack stack) {
         return getMaterial(stack, getHeadComponent());
     }
+    public ArmoryMaterial getBindingMaterial(ItemStack stack){
+        return getMaterial(stack, getBindingComponent());
+    }
+    public ArmoryMaterial getHandleMaterial(ItemStack stack){
+        return getMaterial(stack, getHandleComponent());
+    }
 
     protected abstract MaterialItem getHeadComponent();
+    protected MaterialItem getBindingComponent() { return COMPONENT_BINDING; }
+    protected MaterialItem getHandleComponent() {return COMPONENT_HANDLE; }
 
     @Override
     public List<ItemStack> getDefaultStacks(boolean includeNone) {
@@ -161,11 +175,11 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     }
 
     public static class ToolType{
-        public static final ToolType SHOVEL = new ToolType(1.1f, -2.8f,0.5f, BlockTags.SHOVEL_MINEABLE);
-        public static final ToolType PICKAXE = new ToolType(0.5f, -2.8f,0.5f, BlockTags.PICKAXE_MINEABLE);
-        public static final ToolType AXE = new ToolType(0.5f, -2.8f,0.5f, BlockTags.AXE_MINEABLE);
-        public static final ToolType HOE = new ToolType(0.5f, -2.8f,0.5f, BlockTags.HOE_MINEABLE);
-        public static final ToolType SWORD = new ToolType(0.5f, -2.8f,0.5f, BlockTags.SWORD_EFFICIENT);
+        public static final ToolType SHOVEL = new ToolType(0.5f, -3.0f,0.25f, BlockTags.SHOVEL_MINEABLE);
+        public static final ToolType PICKAXE = new ToolType(0.5f, -2.8f,0.25f, BlockTags.PICKAXE_MINEABLE);
+        public static final ToolType AXE = new ToolType(1.5f, -3.1f,0.1f, BlockTags.AXE_MINEABLE);
+        public static final ToolType HOE = new ToolType(0.0f, -1.0f,0.75f, BlockTags.HOE_MINEABLE);
+        public static final ToolType SWORD = new ToolType(1.0f, -2.4f,0.25f, BlockTags.SWORD_EFFICIENT);
 
         private final float attackDamageMultiplier;
         private final float attackSpeed;
