@@ -20,11 +20,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
-    VoxelShape BASE_SHAPE = Block.createCuboidShape(0,0,0,16,7,16);
-    VoxelShape WALL_1 = Block.createCuboidShape(0,7,0,16,8,2);
-    VoxelShape WALL_2 = Block.createCuboidShape(0,7,0,2,8,16);
-    VoxelShape WALL_3 = Block.createCuboidShape(0,7,14,16,8,16);
-    VoxelShape WALL_4 = Block.createCuboidShape(14,7,0,16,8,16);
+    VoxelShape BASE_SHAPE = Block.createCuboidShape(0,0,0,16,14,16);
+    VoxelShape WALL_1 = Block.createCuboidShape(0,14,0,16, 16,2);
+    VoxelShape WALL_2 = Block.createCuboidShape(0,14,0,2,16,16);
+    VoxelShape WALL_3 = Block.createCuboidShape(0,14,14,16,16,16);
+    VoxelShape WALL_4 = Block.createCuboidShape(14,14,0,16,16,16);
     VoxelShape SHAPE = VoxelShapes.union(BASE_SHAPE, WALL_1, WALL_2, WALL_3, WALL_4);
 
     protected ForgeBlock(Settings settings) {

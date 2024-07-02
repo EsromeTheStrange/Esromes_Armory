@@ -165,6 +165,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
             this.setStack(OUTPUT_SLOT, recipeOutput);
         else
             this.getStack(OUTPUT_SLOT).increment(recipeOutput.getCount());
+        markDirty();
         progress = 0;
     }
 

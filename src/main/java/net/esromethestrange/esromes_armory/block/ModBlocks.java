@@ -13,14 +13,14 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
     public static final Block FORGE = registerBlock("forge",
-            new ForgeBlock(FabricBlockSettings.copyOf(Blocks.BRICKS)));
+            new ForgeBlock(FabricBlockSettings.copyOf(Blocks.BRICKS).nonOpaque()));
     public static final Block WORKBENCH = registerBlock("workbench",
-            new WorkbenchBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE)));
+            new WorkbenchBlock(FabricBlockSettings.copyOf(Blocks.CRAFTING_TABLE).nonOpaque()));
 
     public static final Block STEEL_BLOCK = registerBlock("steel_block",
-            new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
+            new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK)));
     public static final Block CHARCOAL_BLOCK = registerBlock("charcoal_block",
-            new Block(FabricBlockSettings.copyOf(Blocks.COAL_BLOCK).nonOpaque()));
+            new Block(FabricBlockSettings.copyOf(Blocks.COAL_BLOCK)));
 
     private static Item registerBlockItem(String name, Block block){
         return Registry.register(Registries.ITEM, new Identifier(EsromesArmory.MOD_ID, name),

@@ -21,8 +21,14 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
     }
 
     @Override
-    public List<ItemStack> getDefaultStacks() {
+    public List<ItemStack> getDefaultStacks(boolean includeNone) {
         List<ItemStack> defaultStacks = new ArrayList<>();
+        if(includeNone){
+            ItemStack stack = getDefaultStack();
+            setMaterial(stack, SWORD_GUARD, ArmoryMaterials.NONE);
+            setMaterial(stack, getHeadComponent(), ArmoryMaterials.NONE);
+            defaultStacks.add(stack);
+        }
         for(ArmoryMaterial material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
             for(MaterialItem materialItem : getComponents()){

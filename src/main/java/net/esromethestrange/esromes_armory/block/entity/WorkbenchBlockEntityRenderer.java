@@ -15,13 +15,13 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
-public class ForgeBlockEntityRenderer implements BlockEntityRenderer<ForgeBlockEntity> {
-    public ForgeBlockEntityRenderer(BlockEntityRendererFactory.Context context){ }
+public class WorkbenchBlockEntityRenderer implements BlockEntityRenderer<WorkbenchBlockEntity> {
+    public WorkbenchBlockEntityRenderer(BlockEntityRendererFactory.Context context){ }
 
     @Override
-    public void render(ForgeBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(WorkbenchBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
-        ItemStack stack = entity.getRenderStack(ForgeBlockEntity.INPUT_SLOT);
+        ItemStack stack = ItemStack.EMPTY;
         matrices.push();
         matrices.translate(0.5f, (15f / 16f), 0.5f);
         matrices.scale(0.6f, 0.6f, 0.6f);

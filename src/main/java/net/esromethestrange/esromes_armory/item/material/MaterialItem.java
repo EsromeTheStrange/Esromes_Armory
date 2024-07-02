@@ -21,7 +21,8 @@ public interface MaterialItem {
     ItemStack getStack(ArmoryMaterial material);
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded);
 
-    List<ItemStack> getDefaultStacks();
+    default List<ItemStack> getDefaultStacks(){ return getDefaultStacks(false); }
+    List<ItemStack> getDefaultStacks(boolean includeNone);
     List<ArmoryMaterial> getValidMaterials();
     ArmoryMaterial getDefaultMaterial();
 

@@ -1,15 +1,16 @@
 package net.esromethestrange.esromes_armory.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.injection.Inject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ArmoryMaterials {
     private static final HashMap<Identifier, ArmoryMaterial> materials = new HashMap<>();
     private static final List<Identifier> materialIds = new ArrayList<>();
+    private static final List<ArmoryMaterial> sortedMaterials = new ArrayList<>();
 
     public static final ArmoryMaterial NONE = new ArmoryMaterial(
             EsromesArmory.MOD_ID, "none", 0xffffff,
@@ -80,6 +81,7 @@ public class ArmoryMaterials {
     public static void addMaterial(ArmoryMaterial material){
         materialIds.add(material.id);
         materials.put(material.id, material);
+        sortedMaterials.add(material);
     }
     public static ArmoryMaterial getMaterial(Identifier id){
         ArmoryMaterial material = materials.get(id);
@@ -88,4 +90,5 @@ public class ArmoryMaterials {
     public static List<Identifier> getMaterialIds(){
         return materialIds;
     }
+    public static List<ArmoryMaterial> getMaterials() { return List.copyOf(sortedMaterials); }
 }

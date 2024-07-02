@@ -2,10 +2,7 @@ package net.esromethestrange.esromes_armory.block;
 
 import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
 import net.esromethestrange.esromes_armory.block.entity.WorkbenchBlockEntity;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -16,17 +13,28 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class WorkbenchBlock extends BlockWithEntity implements BlockEntityProvider {
+    VoxelShape LEG_MXMZ = Block.createCuboidShape(0,0,0,2, 14,2);
+    VoxelShape LEG_MXPZ = Block.createCuboidShape(0,0,14,2, 14,16);
+    VoxelShape LEG_PXPZ = Block.createCuboidShape(14,0,14,16, 14,16);
+    VoxelShape LEG_PXMZ = Block.createCuboidShape(14,0,0,16, 14,2);
+    VoxelShape TOP = Block.createCuboidShape(0,14,0,16,16,16);
+    VoxelShape SHAPE = VoxelShapes.union(LEG_MXMZ, LEG_MXPZ, LEG_PXPZ, LEG_PXMZ, TOP);
+
     protected WorkbenchBlock(AbstractBlock.Settings settings) {
         super(settings);
     }
 
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new WorkbenchBlockEntity(pos, state); }
+    @Nullable @Override public BlockEntity createBlockEntity(BlockPos pos, BlockState state) { return new WorkbenchBlockEntity(pos, state); }
+
+    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }
+    @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {

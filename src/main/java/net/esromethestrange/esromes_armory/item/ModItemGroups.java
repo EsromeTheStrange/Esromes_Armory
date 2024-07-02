@@ -7,6 +7,7 @@ import net.esromethestrange.esromes_armory.block.ModBlocks;
 import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -36,16 +37,19 @@ public class ModItemGroups {
         ESROMES_ARMORY.addCustomTab(Icon.of(ModItems.PICKAXE), "tools", (context, entries) ->{
             itemMap.clear();
             for(ComponentBasedItem componentBasedItem : ComponentBasedItem.COMPONENT_BASED_ITEMS){
-                mapItems(componentBasedItem.getDefaultStacks());
+                mapItems(componentBasedItem.getDefaultStacks(true));
             }
-            for(List<ItemStack> stacks : itemMap.values()){
+            for(ArmoryMaterial armoryMaterial : ArmoryMaterials.getMaterials()){
+                if(!itemMap.containsKey(armoryMaterial))
+                    continue;
+                List<ItemStack> stacks = itemMap.get(armoryMaterial);
                 entries.addAll(stacks);
             }
         }, false);
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ModItems.PICKAXE_HEAD), "tool_components", (context, entries) ->{
             for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
-                entries.addAll(materialItem.getDefaultStacks());
+                entries.addAll(materialItem.getDefaultStacks(true));
             }
         }, false);
 

@@ -3,6 +3,7 @@ package net.esromethestrange.esromes_armory.item;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,8 +41,10 @@ public class ComponentItem extends Item implements MaterialItem {
     }
 
     @Override
-    public List<ItemStack> getDefaultStacks() {
+    public List<ItemStack> getDefaultStacks(boolean includeNone) {
         List<ItemStack> defaultStacks = new ArrayList<>();
+        if(includeNone)
+            defaultStacks.add(getStack(ArmoryMaterials.NONE));
         for(ArmoryMaterial material : defaultMaterials){
             defaultStacks.add(getStack(material));
         }
