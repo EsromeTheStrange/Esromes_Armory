@@ -1,50 +1,39 @@
 package net.esromethestrange.esromes_armory.item.tools;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.item.ModItems;
-import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
+import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.esromethestrange.esromes_armory.material.MaterialTypes;
-import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
-import net.minecraft.item.Vanishable;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ArmoryMiningToolItem extends MiningToolItem implements ComponentBasedItem, Vanishable {
+public abstract class ArmoryMiningToolItem extends MiningToolItem implements PartBasedItem {
     protected final ToolType toolType;
     protected List<MaterialItem> components = new ArrayList<>();
 
-    protected static final MaterialItem COMPONENT_BINDING = (MaterialItem) ModItems.TOOL_BINDING;
-    protected static final MaterialItem COMPONENT_HANDLE = (MaterialItem) ModItems.TOOL_HANDLE;
+    protected static final MaterialItem COMPONENT_BINDING = (MaterialItem) ArmoryItems.TOOL_BINDING;
+    protected static final MaterialItem COMPONENT_HANDLE = (MaterialItem) ArmoryItems.TOOL_HANDLE;
 
     public ArmoryMiningToolItem(Settings settings, ToolType toolType, MaterialItem... components) {
-        super(1, 1, ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
+        super(ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
         this.toolType = toolType;
         this.components.addAll(Arrays.asList(components));
-        COMPONENT_BASED_ITEMS.add(this);
+        PART_BASED_ITEMS.add(this);
     }
 
     @Override
@@ -54,14 +43,16 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         return materialText.append(toolText);
     }
 
-    @Override
-    public boolean isSuitableFor(ItemStack stack, BlockState state) {
-        return MiningLevelManager.getRequiredMiningLevel(state) <= calculateMiningLevel(stack);
-    }
-    @Override
-    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-        return state.isIn(this.toolType.effectiveBlocks) ? calculateMiningSpeed(stack) : 1.0f;
-    }
+    //TODO Is Suitable For
+//    @Override
+//    public boolean isSuitableFor(ItemStack stack, BlockState state) {
+//        return MiningLevelManager.getRequiredMiningLevel(state) <= calculateMiningLevel(stack);
+//    }
+    //TODO Mining Speed
+//    @Override
+//    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+//        return state.isIn(this.toolType.effectiveBlocks) ? calculateMiningSpeed(stack) : 1.0f;
+//    }
     public int getEnchantability(ItemStack stack) {
         return calculateEnchantability(stack);
     }
@@ -69,25 +60,27 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         return calculateDurability(stack);
     }
 
-    @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
-                    calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADDITION));
-            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
-                    calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADDITION));
-            return builder.build();
-        }
-        return super.getAttributeModifiers(stack, slot);
-    }
+    //TODO Entity Attribute Modifiers
+//    @Override
+//    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+//        if (slot == EquipmentSlot.MAINHAND) {
+//            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+//            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
+//                    calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADDITION));
+//            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
+//                    calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADDITION));
+//            return builder.build();
+//        }
+//        return super.getAttributeModifiers(stack, slot);
+//    }
+
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
 
         if(EsromesArmory.CONFIG.componentTooltips()){
-            for(MaterialItem item : getComponents()){
+            for(MaterialItem item : getParts()){
                 item.addMaterialTooltip(item.getStack(getMaterial(stack, item)), tooltip, true);
             }
         }
@@ -160,7 +153,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         }
         for(ArmoryMaterial material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
-            for(MaterialItem materialItem : getComponents()){
+            for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
             }
             setMaterial(stack, getHeadComponent(), material);
@@ -170,7 +163,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     }
 
     @Override
-    public List<MaterialItem> getComponents() {
+    public List<MaterialItem> getParts() {
         return components;
     }
 

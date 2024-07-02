@@ -1,16 +1,15 @@
 package net.esromethestrange.esromes_armory.datagen;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.block.ModBlocks;
+import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.item.ModItems;
+import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 
 public class ArmoryModelProvider extends FabricModelProvider {
     public ArmoryModelProvider(FabricDataOutput output) {
@@ -19,16 +18,16 @@ public class ArmoryModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleState(ModBlocks.FORGE);
-        blockStateModelGenerator.registerSimpleState(ModBlocks.WORKBENCH);
+        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.FORGE);
+        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.WORKBENCH);
 
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.STEEL_BLOCK);
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.CHARCOAL_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.STEEL_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.CHARCOAL_BLOCK);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(ModItems.STEEL_INGOT, Models.GENERATED);
+        itemModelGenerator.register(ArmoryItems.STEEL_INGOT, Models.GENERATED);
 
         for(MaterialItem item : MaterialItem.MATERIAL_ITEMS){
             Models.GENERATED.upload(ModelIds.getItemModelId((Item)item),

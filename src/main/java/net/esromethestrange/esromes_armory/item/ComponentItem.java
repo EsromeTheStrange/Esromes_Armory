@@ -4,15 +4,12 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +50,7 @@ public class ComponentItem extends Item implements MaterialItem {
 
     @Override
     public ArmoryMaterial getDefaultMaterial() {
-        return defaultMaterials.get(0);
+        return defaultMaterials.getFirst();
     }
 
     @Override
@@ -61,20 +58,21 @@ public class ComponentItem extends Item implements MaterialItem {
         return defaultMaterials;
     }
 
+
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
 
         if(EsromesArmory.CONFIG.materialTooltips())
             addMaterialTooltip(stack, tooltip);
     }
 
     @Override
-    public void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded) {
+    public void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean partNameIncluded) {
         String materialId = getMaterial(stack).translatable_name;
         MutableText materialText = Text.translatable(materialId).setStyle(Style.EMPTY.withColor(getMaterial(stack).color));
 
-        if(componentNameIncluded){
+        if(partNameIncluded){
             MutableText componentName = Text.translatable(getTranslationKey());
             materialText = componentName.append(": ").append(materialText);
         }

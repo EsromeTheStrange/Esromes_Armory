@@ -36,7 +36,7 @@ public class ResourceHelper {
 
 
     private static ArmoryMaterialIngredientInfo parseMaterialIngredient(JsonObject json, String modId, String materialTypeName){
-        ArmoryMaterialIngredientInfo newIngredient = new ArmoryMaterialIngredientInfo(new Identifier(modId, materialTypeName));
+        ArmoryMaterialIngredientInfo newIngredient = new ArmoryMaterialIngredientInfo(Identifier.of(modId, materialTypeName));
 
         JsonObject ingredients = json.get(JSON_ENTRIES).getAsJsonObject();
         for (String key : ingredients.keySet()){
@@ -67,7 +67,7 @@ public class ResourceHelper {
      * @author LordDeatHunter
      */
     public static Reader getReaderForResource(Identifier location) throws IOException {
-        Identifier file = new Identifier(location.getNamespace(), location.getPath() + ".json");
+        Identifier file = Identifier.of(location.getNamespace(), location.getPath() + ".json");
         Resource resource = MinecraftClient.getInstance().getResourceManager().getResource(file).get();
         return new BufferedReader(new InputStreamReader(resource.getInputStream(), Charsets.UTF_8));
     }

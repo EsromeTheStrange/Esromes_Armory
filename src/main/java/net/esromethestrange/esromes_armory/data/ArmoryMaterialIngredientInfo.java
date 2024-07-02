@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ArmoryMaterialIngredientInfo {
-    public static final ArmoryMaterialIngredientInfo NONE = new ArmoryMaterialIngredientInfo(new Identifier(EsromesArmory.MOD_ID, "none"));
+    public static final ArmoryMaterialIngredientInfo NONE = new ArmoryMaterialIngredientInfo(Identifier.of(EsromesArmory.MOD_ID, "none"));
 
     public final Identifier id;
     public final HashMap<Identifier, List<Item>> validItems = new HashMap<>();

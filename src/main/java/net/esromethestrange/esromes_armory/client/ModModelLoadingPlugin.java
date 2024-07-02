@@ -1,7 +1,6 @@
 package net.esromethestrange.esromes_armory.client;
 
-import net.esromethestrange.esromes_armory.item.ModItems;
-import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
+import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,30 +11,30 @@ import java.util.HashMap;
 
 @Environment(EnvType.CLIENT)
 public class ModModelLoadingPlugin implements ModelLoadingPlugin {
-    private HashMap<ModelIdentifier, ComponentBasedItemModel> componentBasedItemModels = new HashMap<>();
-    private HashMap<ModelIdentifier, MaterialItemModel> materialItemModels = new HashMap<>();
+    private final HashMap<ModelIdentifier, PartBasedItemModel> componentBasedItemModels = new HashMap<>();
+    private final HashMap<ModelIdentifier, MaterialItemModel> materialItemModels = new HashMap<>();
 
     @Override
     public void onInitializeModelLoader(Context pluginContext) {
         MaterialItem.MATERIAL_ITEMS.forEach(this::addMaterialItemModel);
-        ComponentBasedItem.COMPONENT_BASED_ITEMS.forEach(this::addComponentBasedModel);
+        PartBasedItem.PART_BASED_ITEMS.forEach(this::addComponentBasedModel);
 
         pluginContext.modifyModelOnLoad().register((original, context) -> {
             for(ModelIdentifier id : componentBasedItemModels.keySet())
-                if (context.id().equals(id))
+                if (context.resourceId().equals(id.id()))
                     return componentBasedItemModels.get(id);
 
             for(ModelIdentifier id : materialItemModels.keySet())
-                if(context.id().equals(id))
+                if(context.resourceId().equals(id.id()))
                     return materialItemModels.get(id);
 
             return original;
         });
     }
 
-    private void addComponentBasedModel(ComponentBasedItem item){
+    private void addComponentBasedModel(PartBasedItem item){
         ModelIdentifier modelIdentifier = new ModelIdentifier(item.getRawIdentifier(), "inventory");
-        componentBasedItemModels.put(modelIdentifier, new ComponentBasedItemModel(item));
+        componentBasedItemModels.put(modelIdentifier, new PartBasedItemModel(item));
     }
 
     private void addMaterialItemModel(MaterialItem item){

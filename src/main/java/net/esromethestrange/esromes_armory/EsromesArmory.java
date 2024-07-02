@@ -1,16 +1,12 @@
 package net.esromethestrange.esromes_armory;
 
-import net.esromethestrange.esromes_armory.block.ModBlocks;
-import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
+import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.config.EsromesArmoryConfig;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
-import net.esromethestrange.esromes_armory.item.ModItemGroups;
-import net.esromethestrange.esromes_armory.item.ModItems;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
+import net.esromethestrange.esromes_armory.item.ArmoryItems;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.material.MaterialTypes;
-import net.esromethestrange.esromes_armory.recipe.ModRecipes;
-import net.esromethestrange.esromes_armory.recipe.ingredient.ModIngredients;
-import net.esromethestrange.esromes_armory.screen.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -28,16 +24,13 @@ public class EsromesArmory implements ModInitializer {
 		LOGGER.info("Loading Esrome's Armory...");
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryMaterialHandler());
 
+		ArmoryComponents.registerComponents();
+
 		MaterialTypes.registerMaterialTypes();
 
-		ModItems.registerModItems();
-		ModBlocks.registerModBlocks();
-		ModBlockEntities.registerBlockEntities();
+		ArmoryItems.registerModItems();
+		ArmoryBlocks.registerModBlocks();
 
-		ModIngredients.registerIngredients();
-		ModRecipes.registerRecipes();
-
-		ModItemGroups.registerItemGroups();
-		ModScreenHandlers.registerScreenHandlers();
+		ArmoryItemGroups.registerItemGroups();
 	}
 }

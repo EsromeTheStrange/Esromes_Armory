@@ -21,7 +21,7 @@ public class ArmoryMaterial {
         this.translatable_name = modId + ".material." + materialName;
         this.modId = modId;
         this.materialName = materialName;
-        this.id = new Identifier(modId, materialName);
+        this.id = Identifier.of(modId, materialName);
         this.color = color;
 
         this.durability = durability;

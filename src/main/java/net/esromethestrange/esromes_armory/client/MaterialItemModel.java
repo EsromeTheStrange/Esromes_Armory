@@ -35,12 +35,13 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
         this.materialItem = materialItem;
     }
 
+
     @Nullable
     @Override
-    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
+    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
         for(Identifier materialId : ArmoryMaterials.getMaterialIds()){
-            Identifier materialItemId = MaterialHelper.getItemIdWithMaterial(materialId, modelId);
-            BakedModel materialModel = baker.bake(new ModelIdentifier(materialItemId, "inventory"), ModelRotation.X0_Y0);
+            Identifier materialItemId = MaterialHelper.getItemIdWithMaterial(materialId, materialItem.getRawIdentifier());
+            BakedModel materialModel = baker.bake(materialItemId, ModelRotation.X0_Y0);
             variants.put(materialId, materialModel);
         }
         return this;
@@ -56,11 +57,11 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Override public boolean isSideLit() { return false; }
     @Override
     public Sprite getParticleSprite() {
-        return MinecraftClient.getInstance().getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(new Identifier("block/cobblestone"));
+        return MinecraftClient.getInstance().getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(Identifier.of("block/cobblestone"));
     }
     @Override
     public ModelTransformation getTransformation() {
-        return ResourceHelper.loadTransformFromJson(new Identifier("minecraft:models/item/handheld"));
+        return ResourceHelper.loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
     }
     @Override public ModelOverrideList getOverrides() { return ModelOverrideList.EMPTY; }
 

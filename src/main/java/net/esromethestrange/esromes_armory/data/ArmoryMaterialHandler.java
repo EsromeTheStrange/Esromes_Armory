@@ -16,7 +16,7 @@ public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadLis
 
     @Override
     public Identifier getFabricId() {
-        return new Identifier(EsromesArmory.MOD_ID, "material");
+        return Identifier.of(EsromesArmory.MOD_ID, "material");
     }
 
     @Override
