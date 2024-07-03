@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract class EsromesArmoryItemStackMixin {
     @Shadow public abstract Item getItem();
 
+    //TODO Replace this with components system.
     @Inject(method = "getMaxDamage", at = @At("HEAD"), cancellable = true)
     private void esromes_armory$onGetMaxDamage(CallbackInfoReturnable<Integer> info) {
         if (this.getItem() instanceof ArmoryMiningToolItem){

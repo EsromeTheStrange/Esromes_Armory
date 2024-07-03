@@ -32,7 +32,8 @@ public class ArmoryModelProvider extends FabricModelProvider {
         for(MaterialItem item : MaterialItem.MATERIAL_ITEMS){
             Models.GENERATED.upload(ModelIds.getItemModelId((Item)item),
                     TextureMap.layer0(item.getRawIdentifier()
-                            .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ ArmoryMaterials.NONE.materialName)),
+                            .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ ArmoryMaterials.NONE.materialName)
+                            .withPrefixedPath("item/")),
                     itemModelGenerator.writer);
             for(ArmoryMaterial material : item.getValidMaterials()){
                 itemModelGenerator.register((Item)item,
