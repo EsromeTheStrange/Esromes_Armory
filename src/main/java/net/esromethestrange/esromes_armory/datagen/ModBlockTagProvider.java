@@ -16,7 +16,11 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
+        getOrCreateTagBuilder(BlockTags.AXE_MINEABLE).add(ModBlocks.WORKBENCH);
+        addPickaxeTag(ModBlocks.FORGE, 1);
+
         addPickaxeTag(ModBlocks.STEEL_BLOCK, 1);
+        addPickaxeTag(ModBlocks.CHARCOAL_BLOCK, 0);
     }
 
     /**
