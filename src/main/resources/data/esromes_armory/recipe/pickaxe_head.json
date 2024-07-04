@@ -1,8 +1,0 @@
-{
-  "type": "esromes_armory:forging",
-  "input": {
-    "fabric:type": "esromes_armory:material",
-    "ingredient": "esromes_armory:ingot"
-  },
-  "output": { "item": "esromes_armory:pickaxe_head" }
-}

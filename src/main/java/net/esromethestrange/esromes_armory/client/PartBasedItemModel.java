@@ -39,10 +39,10 @@ public class PartBasedItemModel implements UnbakedModel, BakedModel, FabricBaked
     @Nullable
     @Override
     public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
-//        for(MaterialItem materialItem : partBasedItem.getParts()){
-//            BakedModel itemModel = baker.bake(materialItem.getRawIdentifier(), ModelRotation.X0_Y0);
-//            components.put(materialItem, itemModel);
-//        }
+        for(MaterialItem materialItem : partBasedItem.getParts()){
+            BakedModel itemModel = baker.bake(materialItem.getRawIdentifier().withPrefixedPath("item/"), ModelRotation.X0_Y0);
+            components.put(materialItem, itemModel);
+        }
         return this;
     }
 

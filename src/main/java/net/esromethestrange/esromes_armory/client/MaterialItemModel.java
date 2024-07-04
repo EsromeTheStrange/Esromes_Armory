@@ -12,7 +12,6 @@ import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -35,12 +34,11 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
         this.materialItem = materialItem;
     }
 
-
     @Nullable
     @Override
     public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
         for(Identifier materialId : ArmoryMaterials.getMaterialIds()){
-            Identifier materialItemId = MaterialHelper.getItemIdWithMaterial(materialId, materialItem.getRawIdentifier());
+            Identifier materialItemId = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
             BakedModel materialModel = baker.bake(materialItemId, ModelRotation.X0_Y0);
             variants.put(materialId, materialModel);
         }

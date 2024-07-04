@@ -7,16 +7,14 @@ import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
-import net.minecraft.client.util.ModelIdentifier;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 
 @Environment(EnvType.CLIENT)
 public class ModModelLoadingPlugin implements ModelLoadingPlugin {
-    private final HashMap<ModelIdentifier, PartBasedItemModel> componentBasedItemModels = new HashMap<>();
-    private final HashMap<ModelIdentifier, MaterialItemModel> materialItemModels = new HashMap<>();
+    private final HashMap<Identifier, PartBasedItemModel> componentBasedItemModels = new HashMap<>();
+    private final HashMap<Identifier, MaterialItemModel> materialItemModels = new HashMap<>();
 
     @Override
     public void onInitializeModelLoader(Context pluginContext) {
@@ -25,31 +23,35 @@ public class ModModelLoadingPlugin implements ModelLoadingPlugin {
 
         for(Identifier materialId : ArmoryMaterials.getMaterialIds()){
             for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
-                Identifier id = MaterialHelper.getItemIdWithMaterial(materialId, materialItem.getRawIdentifier());
+                Identifier id = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
                 pluginContext.addModels(id);
             }
         }
 
         pluginContext.modifyModelOnLoad().register((original, context) -> {
-//            for(ModelIdentifier id : componentBasedItemModels.keySet())
-//                if (context.resourceId().equals(id.id()))
-//                    return componentBasedItemModels.get(id);
-//
-//            for(ModelIdentifier id : materialItemModels.keySet())
-//                if(context.resourceId().equals(id.id()))
-//                    return materialItemModels.get(id);
+            if(context.resourceId()==null)
+                return original;
+
+            for(Identifier id : componentBasedItemModels.keySet())
+                if (context.resourceId().equals(id))
+                    return componentBasedItemModels.get(id);
+
+
+            for(Identifier id : materialItemModels.keySet())
+                if(context.resourceId().equals(id))
+                    return materialItemModels.get(id);
 
             return original;
         });
     }
 
     private void addComponentBasedModel(PartBasedItem item){
-        ModelIdentifier modelIdentifier = ModelIdentifier.ofInventoryVariant(item.getRawIdentifier());
+        Identifier modelIdentifier = item.getRawIdentifier().withPrefixedPath("item/");
         componentBasedItemModels.put(modelIdentifier, new PartBasedItemModel(item));
     }
 
     private void addMaterialItemModel(MaterialItem item){
-        ModelIdentifier modelIdentifier = ModelIdentifier.ofInventoryVariant(item.getRawIdentifier()) ;
+        Identifier modelIdentifier = item.getRawIdentifier().withPrefixedPath("item/");
         materialItemModels.put(modelIdentifier, new MaterialItemModel(item));
     }
 }
