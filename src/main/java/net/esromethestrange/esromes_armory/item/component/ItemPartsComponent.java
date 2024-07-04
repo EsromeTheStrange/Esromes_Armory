@@ -1,5 +1,8 @@
 package net.esromethestrange.esromes_armory.item.component;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
@@ -17,25 +20,21 @@ public class ItemPartsComponent {
 
     public static final Codec<ItemPartsComponent> CODEC = Codec.STRING.xmap(
         code ->{
-            String[] components = code.split("|");
             ItemPartsComponent itemPartsComponent = new ItemPartsComponent();
 
-            if(components.length == 1 & components[0].isEmpty())
-                return itemPartsComponent;
-
-            for(String component : components){
-                String[] subparts = component.split("~");
-                itemPartsComponent.parts.put(Identifier.of(subparts[0]), Identifier.of(subparts[1]));
+            JsonObject jsonObject = JsonParser.parseString(code).getAsJsonObject();
+            for(String key : jsonObject.keySet()){
+                itemPartsComponent.parts.put(Identifier.of(key), Identifier.of(jsonObject.get(key).getAsString()));
             }
+
             return itemPartsComponent;
         },
         partsComponent -> {
-            String code = "";
+            JsonObject json = new JsonObject();
             for(Identifier entry : partsComponent.parts.keySet()){
-                code = code + entry.toString() + "~" +
-                        partsComponent.parts.get(entry).toString() + "|";
+                json.addProperty(entry.toString(), partsComponent.parts.get(entry).toString());
             }
-            return code;
+            return json.toString();
         }
     );
 

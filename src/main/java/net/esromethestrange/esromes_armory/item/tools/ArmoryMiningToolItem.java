@@ -8,6 +8,7 @@ import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.esromethestrange.esromes_armory.material.MaterialTypes;
 import net.minecraft.block.Block;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
