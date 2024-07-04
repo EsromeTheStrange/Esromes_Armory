@@ -27,6 +27,7 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
             ItemStack stack = getDefaultStack();
             setMaterial(stack, SWORD_GUARD, ArmoryMaterials.NONE);
             setMaterial(stack, getHeadComponent(), ArmoryMaterials.NONE);
+            setupComponents(stack);
             defaultStacks.add(stack);
         }
         for(ArmoryMaterial material : MaterialTypes.METAL){
@@ -36,6 +37,7 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
             }
             setMaterial(stack, SWORD_GUARD, material);
             setMaterial(stack, getHeadComponent(), material);
+            setupComponents(stack);
             defaultStacks.add(stack);
         }
         return defaultStacks;

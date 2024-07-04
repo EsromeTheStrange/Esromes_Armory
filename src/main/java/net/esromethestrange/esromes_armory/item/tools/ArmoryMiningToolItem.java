@@ -12,6 +12,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,42 +60,39 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
     }
 
     public static void setupComponents(ItemStack stack){
-        stack.set(DataComponentTypes.MAX_DAMAGE, ((ArmoryMiningToolItem)stack.getItem()).calculateDurability(stack));
+        ArmoryMiningToolItem miningToolItem = (ArmoryMiningToolItem)stack.getItem();
+        stack.set(DataComponentTypes.MAX_DAMAGE, miningToolItem.calculateDurability(stack));
+        stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder()
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID,
+                        ((ArmoryMiningToolItem) stack.getItem()).calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID,
+                        ((ArmoryMiningToolItem) stack.getItem()).calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                .build());
+        stack.set(DataComponentTypes.TOOL, new ToolComponent(List.of(
+                ToolComponent.Rule.ofNeverDropping(miningToolItem.getInverseTag(stack)),
+                ToolComponent.Rule.ofAlwaysDropping(miningToolItem.toolType.getEffectiveBlocks(), miningToolItem.calculateMiningSpeed(stack))
+        ), 1, 1));
     }
 
-    //TODO Is Suitable For
-//    @Override
-//    public boolean isSuitableFor(ItemStack stack, BlockState state) {
-//        return MiningLevelManager.getRequiredMiningLevel(state) <= calculateMiningLevel(stack);
-//    }
-    //TODO Mining Speed
-//    @Override
-//    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-//        return state.isIn(this.toolType.effectiveBlocks) ? calculateMiningSpeed(stack) : 1.0f;
-//    }
     public int getEnchantability(ItemStack stack) {
         return calculateEnchantability(stack);
     }
-
-    //TODO Entity Attribute Modifiers
-//    @Override
-//    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-//        if (slot == EquipmentSlot.MAINHAND) {
-//            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-//            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
-//                    calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADDITION));
-//            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
-//                    calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADDITION));
-//            return builder.build();
-//        }
-//        return super.getAttributeModifiers(stack, slot);
-//    }
-
+    public TagKey<Block> getInverseTag(ItemStack stack){
+        int miningLevel = calculateMiningLevel(stack);
+        return switch (miningLevel){
+            case 1 -> BlockTags.INCORRECT_FOR_STONE_TOOL;
+            case 2 -> BlockTags.INCORRECT_FOR_IRON_TOOL;
+            case 3 -> BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
+            case 4 -> BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
+            default -> BlockTags.INCORRECT_FOR_WOODEN_TOOL;
+        };
+    }
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
 
+        //TODO implement Tooltip thing in components
         if(EsromesArmory.CONFIG.componentTooltips()){
             for(MaterialItem item : getParts()){
                 item.addMaterialTooltip(item.getStack(getMaterial(stack, item)), tooltip, true);
