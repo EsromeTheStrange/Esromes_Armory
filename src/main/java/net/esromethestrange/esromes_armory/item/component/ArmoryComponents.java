@@ -3,6 +3,7 @@ package net.esromethestrange.esromes_armory.item.component;
 import com.mojang.serialization.Codec;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -13,6 +14,8 @@ import java.util.function.UnaryOperator;
 public class ArmoryComponents {
     public static final ComponentType<String> MATERIALS = register("materials", (builder) ->
             builder.codec(Codec.STRING).packetCodec(PacketCodecs.STRING));
+    public static final ComponentType<ItemPartsComponent> ITEM_PARTS = register("item_parts", (builder) ->
+            builder.codec(ItemPartsComponent.CODEC).packetCodec(ItemPartsComponent.PACKET_CODEC));
 
     public static void registerComponents(){ }
     private static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {

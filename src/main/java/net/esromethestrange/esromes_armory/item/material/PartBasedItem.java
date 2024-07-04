@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.item.component.ItemPartsComponent;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.minecraft.item.Item;
@@ -21,13 +22,21 @@ public interface PartBasedItem {
 
     default void setMaterial(ItemStack stack, MaterialItem part, ArmoryMaterial material){
         if(!containsPart(part)) return;
-        stack.set(ArmoryComponents.MATERIALS, material.id.toString());
+
+        ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
+        if(partsComponent == null)
+            partsComponent = new ItemPartsComponent();
+
+        stack.set(ArmoryComponents.ITEM_PARTS, partsComponent.withPart(part, material));
     }
 
     default ArmoryMaterial getMaterial(ItemStack stack, MaterialItem part){
-        String materialId = stack.get(ArmoryComponents.MATERIALS);
-        //TODO Components
-        return materialId == null ? ArmoryMaterials.NONE : ArmoryMaterials.getMaterial(Identifier.tryParse(materialId));
+        ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
+        if(partsComponent == null)
+            return ArmoryMaterials.NONE;
+
+        Identifier materialId = partsComponent.getPart(part);
+        return materialId == null ? ArmoryMaterials.NONE : ArmoryMaterials.getMaterial(materialId);
     }
 
     default boolean containsPart(MaterialItem component){
