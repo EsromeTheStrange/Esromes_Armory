@@ -8,7 +8,13 @@ import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
 import net.esromethestrange.esromes_armory.material.MaterialTypes;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
@@ -17,7 +23,9 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,15 +33,15 @@ import java.util.List;
 
 public abstract class ArmoryMiningToolItem extends MiningToolItem implements PartBasedItem {
     protected final ToolType toolType;
-    protected List<MaterialItem> components = new ArrayList<>();
+    protected List<MaterialItem> parts = new ArrayList<>();
 
     protected static final MaterialItem COMPONENT_BINDING = (MaterialItem) ArmoryItems.TOOL_BINDING;
     protected static final MaterialItem COMPONENT_HANDLE = (MaterialItem) ArmoryItems.TOOL_HANDLE;
 
-    public ArmoryMiningToolItem(Settings settings, ToolType toolType, MaterialItem... components) {
+    public ArmoryMiningToolItem(Settings settings, ToolType toolType, MaterialItem... parts) {
         super(ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
         this.toolType = toolType;
-        this.components.addAll(Arrays.asList(components));
+        this.parts.addAll(Arrays.asList(parts));
         PART_BASED_ITEMS.add(this);
     }
 
@@ -42,6 +50,16 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         MutableText materialText = Text.translatable(getMaterial(stack, getHeadComponent()).translatable_name);
         Text toolText = super.getName(stack);
         return materialText.append(toolText);
+    }
+
+    @Override
+    public void onCraft(ItemStack stack, World world) {
+        super.onCraft(stack, world);
+        setupComponents(stack);
+    }
+
+    public static void setupComponents(ItemStack stack){
+        stack.set(DataComponentTypes.MAX_DAMAGE, ((ArmoryMiningToolItem)stack.getItem()).calculateDurability(stack));
     }
 
     //TODO Is Suitable For
@@ -56,9 +74,6 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 //    }
     public int getEnchantability(ItemStack stack) {
         return calculateEnchantability(stack);
-    }
-    public final int getMaxDamage(ItemStack stack){
-        return calculateDurability(stack);
     }
 
     //TODO Entity Attribute Modifiers
@@ -89,11 +104,11 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        return Math.round(13.0f - (float)stack.getDamage() * 13.0f / (float)getMaxDamage(stack));
+        return Math.round(13.0f - (float)stack.getDamage() * 13.0f / (float)calculateDurability(stack));
     }
     @Override
     public int getItemBarColor(ItemStack stack) {
-        float f = Math.max(0.0f, ((float)getMaxDamage(stack) - (float)stack.getDamage()) / (float)getMaxDamage(stack));
+        float f = Math.max(0.0f, ((float)calculateDurability(stack) - (float)stack.getDamage()) / (float)calculateDurability(stack));
         return MathHelper.hsvToRgb(f / 3.0f, 1.0f, 1.0f);
     }
 
@@ -150,6 +165,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         if(includeNone){
             ItemStack stack = getDefaultStack();
             setMaterial(stack, getHeadComponent(), ArmoryMaterials.NONE);
+            setupComponents(stack);
             defaultStacks.add(stack);
         }
         for(ArmoryMaterial material : MaterialTypes.METAL){
@@ -158,6 +174,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
             }
             setMaterial(stack, getHeadComponent(), material);
+            setupComponents(stack);
             defaultStacks.add(stack);
         }
         return defaultStacks;
@@ -165,7 +182,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 
     @Override
     public List<MaterialItem> getParts() {
-        return components;
+        return parts;
     }
 
     public static class ToolType{

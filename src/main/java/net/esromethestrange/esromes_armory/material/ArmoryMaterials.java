@@ -14,7 +14,7 @@ public class ArmoryMaterials {
 
     public static final ArmoryMaterial NONE = new ArmoryMaterial(
             EsromesArmory.MOD_ID, "none", 0xffffff,
-            10, 0, 1,
+            1, 0, 1,
             0, 0, 1);
 
     //METALS
