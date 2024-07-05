@@ -2,6 +2,7 @@ package net.esromethestrange.esromes_armory.data.datagen.lang;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
@@ -80,6 +81,15 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         //Compat
         addRecipeTypeTranslation("forging", "Forging", translationBuilder);
 
+        //Heat Levels
+        addTranslation(HeatLevel.ROOM_TEMPERATURE, "Room Temperature", translationBuilder);
+        addTranslation(HeatLevel.HOT, "Hot", translationBuilder);
+        addTranslation(HeatLevel.VERY_HOT, "Very Hot", translationBuilder);
+        addTranslation(HeatLevel.RED, "Red", translationBuilder);
+        addTranslation(HeatLevel.ORANGE, "Orange", translationBuilder);
+        addTranslation(HeatLevel.YELLOW, "Yellow", translationBuilder);
+        addTranslation(HeatLevel.WHITE, "White", translationBuilder);
+
         //Other
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory", "Esrome's Armory");
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.default", "Esrome's Armory");
@@ -96,5 +106,9 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
     public void addRecipeTypeTranslation(String recipeType, String translation, TranslationBuilder translationBuilder){
         translationBuilder.add("rei." + EsromesArmory.MOD_ID + "." + recipeType, translation);
         translationBuilder.add("emi.category." + EsromesArmory.MOD_ID + "." + recipeType, translation);
+    }
+
+    public void addTranslation(HeatLevel heatLevel, String translation, TranslationBuilder translationBuilder){
+        translationBuilder.add(heatLevel.translation_key, translation);
     }
 }
