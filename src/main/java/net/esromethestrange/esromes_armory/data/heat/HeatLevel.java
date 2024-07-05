@@ -16,7 +16,7 @@ public enum HeatLevel {
 
     HeatLevel(float temperature){
         this.temperature = temperature;
-        translation_key = EsromesArmory.MOD_ID + ".temperature." + this.toString();
+        translation_key = EsromesArmory.MOD_ID + ".temperature." + this;
         EsromesArmory.LOGGER.info("Added new temperature: "+translation_key);
     }
 
