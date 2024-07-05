@@ -2,9 +2,9 @@ package net.esromethestrange.esromes_armory.item.tools;
 
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
-import net.esromethestrange.esromes_armory.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

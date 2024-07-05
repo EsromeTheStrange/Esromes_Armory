@@ -1,12 +1,11 @@
-package net.esromethestrange.esromes_armory.recipe;
+package net.esromethestrange.esromes_armory.data.recipe;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.fabricmc.fabric.impl.recipe.ingredient.CustomIngredientPayloadC2S;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;

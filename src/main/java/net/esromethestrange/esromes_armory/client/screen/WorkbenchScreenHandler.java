@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.screen;
+package net.esromethestrange.esromes_armory.client.screen;
 
 import net.esromethestrange.esromes_armory.block.entity.WorkbenchBlockEntity;
 import net.minecraft.block.entity.BlockEntity;

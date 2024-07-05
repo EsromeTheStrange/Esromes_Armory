@@ -1,9 +1,8 @@
-package net.esromethestrange.esromes_armory.item.component;
+package net.esromethestrange.esromes_armory.data.component;
 
 import com.mojang.serialization.Codec;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.minecraft.component.ComponentType;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

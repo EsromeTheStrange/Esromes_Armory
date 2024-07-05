@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.screen;
+package net.esromethestrange.esromes_armory.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.esromethestrange.esromes_armory.EsromesArmory;

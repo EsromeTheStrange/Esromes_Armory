@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.tools.*;
-import net.esromethestrange.esromes_armory.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

@@ -1,9 +1,7 @@
-package net.esromethestrange.esromes_armory.material;
+package net.esromethestrange.esromes_armory.data.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.injection.Inject;
 
 import java.util.*;
 

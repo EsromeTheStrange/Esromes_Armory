@@ -1,12 +1,11 @@
-package net.esromethestrange.esromes_armory.item.component;
+package net.esromethestrange.esromes_armory.data.component;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 
 public class ItemPartsComponent {
     /** Takes in the identifier of the {@link net.esromethestrange.esromes_armory.item.material.MaterialItem MaterialItem}
-     * and gives the identifier of the {@link net.esromethestrange.esromes_armory.material.ArmoryMaterial Material}.*/
+     * and gives the identifier of the {@link net.esromethestrange.esromes_armory.data.material.ArmoryMaterial Material}.*/
      HashMap<Identifier, Identifier> parts = new HashMap<>();
 
     public static final Codec<ItemPartsComponent> CODEC = Codec.STRING.xmap(

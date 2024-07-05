@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.datagen;
+package net.esromethestrange.esromes_armory.data.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;

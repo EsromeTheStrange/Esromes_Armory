@@ -1,8 +1,8 @@
 package net.esromethestrange.esromes_armory;
 
 import net.esromethestrange.esromes_armory.client.ArmoryModelLoadingPlugin;
-import net.esromethestrange.esromes_armory.screen.ArmoryScreenHandlers;
-import net.esromethestrange.esromes_armory.screen.WorkbenchScreen;
+import net.esromethestrange.esromes_armory.client.screen.ArmoryScreenHandlers;
+import net.esromethestrange.esromes_armory.client.screen.WorkbenchScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

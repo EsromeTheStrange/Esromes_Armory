@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.material;
+package net.esromethestrange.esromes_armory.data.material;
 
 import net.minecraft.util.Identifier;
 

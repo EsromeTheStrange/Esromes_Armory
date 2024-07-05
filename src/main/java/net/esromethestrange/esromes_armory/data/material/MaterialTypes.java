@@ -1,6 +1,4 @@
-package net.esromethestrange.esromes_armory.material;
-
-import net.minecraft.util.Arm;
+package net.esromethestrange.esromes_armory.data.material;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.recipe;
+package net.esromethestrange.esromes_armory.data.recipe;
 
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;

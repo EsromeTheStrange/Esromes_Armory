@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.screen;
+package net.esromethestrange.esromes_armory.client.screen;
 
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;

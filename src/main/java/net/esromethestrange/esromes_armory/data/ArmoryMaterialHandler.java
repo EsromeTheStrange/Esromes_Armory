@@ -1,15 +1,12 @@
 package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ArmoryMaterialHandler implements SimpleSynchronousResourceReloadListener {
     private static HashMap<Identifier, ArmoryMaterialIngredientInfo> materialIngredients = new HashMap<>();
