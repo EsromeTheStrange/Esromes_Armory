@@ -36,7 +36,5 @@ public class EsromesArmory implements ModInitializer {
 
 		ArmoryItemGroups.registerItemGroups();
 		ArmoryScreenHandlers.registerScreenHandlers();
-
-		LOGGER.info(HeatLevel.ROOM_TEMPERATURE.translation_key);
 	}
 }
