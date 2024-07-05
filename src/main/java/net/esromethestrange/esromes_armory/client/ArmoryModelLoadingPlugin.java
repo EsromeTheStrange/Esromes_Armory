@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.client;
 
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

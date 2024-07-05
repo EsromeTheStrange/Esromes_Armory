@@ -3,7 +3,6 @@ package net.esromethestrange.esromes_armory.util;
 import com.google.common.base.Charsets;
 import com.google.gson.*;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialIngredientInfo;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
@@ -14,8 +13,6 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ResourceHelper {
     public static final String JSON_ENTRIES = "entries";

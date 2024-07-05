@@ -1,6 +1,6 @@
 package net.esromethestrange.esromes_armory.client;
 
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
