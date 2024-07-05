@@ -1,12 +1,15 @@
 package net.esromethestrange.esromes_armory;
 
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.esromethestrange.esromes_armory.config.EsromesArmoryConfig;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
+import net.esromethestrange.esromes_armory.screen.ArmoryScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -30,7 +33,11 @@ public class EsromesArmory implements ModInitializer {
 
 		ArmoryItems.registerModItems();
 		ArmoryBlocks.registerModBlocks();
+		ArmoryBlockEntities.registerBlockEntities();
+
+		ArmoryRecipes.registerRecipes();
 
 		ArmoryItemGroups.registerItemGroups();
+		ArmoryScreenHandlers.registerScreenHandlers();
 	}
 }

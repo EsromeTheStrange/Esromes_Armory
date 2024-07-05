@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 
 @Environment(EnvType.CLIENT)
-public class ModModelLoadingPlugin implements ModelLoadingPlugin {
+public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
     private final HashMap<Identifier, PartBasedItemModel> componentBasedItemModels = new HashMap<>();
     private final HashMap<Identifier, MaterialItemModel> materialItemModels = new HashMap<>();
 
