@@ -2,11 +2,10 @@ package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.recipe.ArmoryRecipes;
-import net.esromethestrange.esromes_armory.data.recipe.WorkbenchRecipe;
-import net.esromethestrange.esromes_armory.data.recipe.WorkbenchRecipeInput;
 import net.esromethestrange.esromes_armory.client.screen.WorkbenchData;
 import net.esromethestrange.esromes_armory.client.screen.WorkbenchScreenHandler;
+import net.esromethestrange.esromes_armory.data.recipe.ArmoryRecipes;
+import net.esromethestrange.esromes_armory.data.recipe.WorkbenchRecipe;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -100,7 +99,7 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
         if (recipe.isEmpty()) return false;
 
         ItemStack output = getStack(OUTPUT_SLOT);
-        ItemStack recipeOutput = recipe.get().value().craft(new WorkbenchRecipeInput(inventory), world.getRegistryManager());
+        ItemStack recipeOutput = recipe.get().value().craft(WorkbenchRecipe.inputFrom(inventory), world.getRegistryManager());
 
         return  (output.isEmpty() || ItemStack.areItemsEqual(output, recipeOutput)) &&
                 output.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxCount();
@@ -111,14 +110,14 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
         for (int i=0; i<this.size(); i++){
             inv.setStack(i, this.getStack(i));
         }
-        return getWorld().getRecipeManager().getFirstMatch(ArmoryRecipes.WORKBENCH_RECIPE_TYPE, new WorkbenchRecipeInput(inventory), getWorld());
+        return getWorld().getRecipeManager().getFirstMatch(ArmoryRecipes.WORKBENCH_RECIPE_TYPE, WorkbenchRecipe.inputFrom(inventory), getWorld());
     }
 
     private void craftItem(){
         Optional<RecipeEntry<WorkbenchRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return;
 
-        ItemStack recipeOutput = recipe.get().value().craft(new WorkbenchRecipeInput(inventory), world.getRegistryManager());
+        ItemStack recipeOutput = recipe.get().value().craft(WorkbenchRecipe.inputFrom(inventory), world.getRegistryManager());
 
         for(int i=0; i<NUM_INPUTS; i++)
             this.removeStack(i, 1);

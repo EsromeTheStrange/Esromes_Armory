@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.config;
+package net.esromethestrange.esromes_armory.compat.config;
 
 import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.Modmenu;

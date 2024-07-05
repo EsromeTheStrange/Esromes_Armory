@@ -6,6 +6,7 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -13,6 +14,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -21,7 +23,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkbenchRecipe implements Recipe<WorkbenchRecipeInput> {
+public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeInput> {
     public static final Identifier ID = Identifier.of(EsromesArmory.MOD_ID, "workbench");
     public static final int NUM_INPUTS = 3;
 
@@ -82,6 +84,8 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipeInput> {
         return WorkbenchRecipe.Serializer.INSTANCE;
     }
 
+    public static WorkbenchRecipeInput inputFrom(SimpleInventory inventory) { return new WorkbenchRecipeInput(inventory); }
+
     public static class Serializer implements RecipeSerializer<WorkbenchRecipe> {
         public static final Serializer INSTANCE = new Serializer();
 
@@ -111,5 +115,23 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipeInput> {
         }
 
         @Override public String toString() { return ID.getPath(); }
+    }
+
+    public static class WorkbenchRecipeInput implements RecipeInput {
+        private final List<ItemStack> stacks;
+
+        protected WorkbenchRecipeInput(SimpleInventory inventory){
+            this.stacks = inventory.heldStacks;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return stacks.get(slot);
+        }
+
+        @Override
+        public int getSize() {
+            return 3;
+        }
     }
 }

@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory;
 
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
-import net.esromethestrange.esromes_armory.config.EsromesArmoryConfig;
+import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
 import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
