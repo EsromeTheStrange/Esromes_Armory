@@ -31,8 +31,7 @@ public class ForgeBlockEntity extends BlockEntity implements ImplementedInventor
 
     public void tick(World world, BlockPos pos, BlockState state) {
         if(world.isClient) return;
-
-        markDirty(world, pos, state);
+        markDirty();
     }
 
     public ItemStack getRenderStack(){ return this.getStack(0); }
@@ -63,6 +62,7 @@ public class ForgeBlockEntity extends BlockEntity implements ImplementedInventor
     @Override
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
+        inventory.clear();
         Inventories.readNbt(nbt, inventory.heldStacks, registryLookup);
     }
 

@@ -40,11 +40,7 @@ public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(ForgeBlock::new);
-        //TODO I have no idea what this is supposed to be doing.
-    }
-
+    protected MapCodec<? extends BlockWithEntity> getCodec() { return ForgeBlock.createCodec(ForgeBlock::new); }
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }
     @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
 
