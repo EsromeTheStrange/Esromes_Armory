@@ -20,9 +20,9 @@ public class ArmoryBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
 
     /**
-     * Sets a block to require a pickaxe in order to be mined.
+     * Sets a block to require a pickaxe.json in order to be mined.
      * @param block The block to add the tag to.
-     * @param level The pickaxe level required (0 - wood, 1 - stone, 2 - iron, 3 - diamond).
+     * @param level The pickaxe.json level required (0 - wood, 1 - stone, 2 - iron, 3 - diamond).
      */
     private void addPickaxeTag(Block block, int level){
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block);

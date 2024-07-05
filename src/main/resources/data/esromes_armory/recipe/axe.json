@@ -1,0 +1,11 @@
+{
+  "type": "esromes_armory:workbench",
+  "ingredients": [
+    {"item": "esromes_armory:tool_handle"},
+    {"item": "esromes_armory:tool_binding"},
+    {"item": "esromes_armory:axe_head"}
+  ],
+  "result": {
+    "id": "esromes_armory:axe"
+  }
+}

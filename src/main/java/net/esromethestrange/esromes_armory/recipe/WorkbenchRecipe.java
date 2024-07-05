@@ -1,20 +1,19 @@
 package net.esromethestrange.esromes_armory.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
+import net.fabricmc.fabric.impl.recipe.ingredient.CustomIngredientPayloadC2S;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -79,8 +78,6 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipeInput> {
         return result;
     }
 
-    //@Override public Identifier getId() { return id; }
-
     @Override
     public RecipeSerializer<?> getSerializer() {
         return WorkbenchRecipe.Serializer.INSTANCE;
@@ -90,7 +87,7 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipeInput> {
         public static final Serializer INSTANCE = new Serializer();
 
         MapCodec<WorkbenchRecipe> WORKBENCH_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Ingredient.ALLOW_EMPTY_CODEC.listOf().fieldOf("inputs").forGetter(WorkbenchRecipe::getIngredients),
+                Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients").forGetter(WorkbenchRecipe::getIngredients),
                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
         ).apply(instance, WorkbenchRecipe::new));
         public static final PacketCodec<RegistryByteBuf, WorkbenchRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
@@ -100,7 +97,7 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipeInput> {
 
         private static WorkbenchRecipe read(RegistryByteBuf buf) {
             List<Ingredient> ingredients = new ArrayList<>();
-            for(int i=0; i<3; i++){
+            for(int i=0; i<NUM_INPUTS; i++){
                 ingredients.add(Ingredient.PACKET_CODEC.decode(buf));
             }
             ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
