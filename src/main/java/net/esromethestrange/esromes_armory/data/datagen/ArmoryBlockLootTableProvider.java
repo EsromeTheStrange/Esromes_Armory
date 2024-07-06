@@ -14,8 +14,9 @@ public class ArmoryBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        addDrop(ArmoryBlocks.FORGE);
         addDrop(ArmoryBlocks.WORKBENCH);
+        addDrop(ArmoryBlocks.FORGE);
+        addDrop(ArmoryBlocks.ANVIL);
 
         addDrop(ArmoryBlocks.STEEL_BLOCK);
         addDrop(ArmoryBlocks.CHARCOAL_BLOCK);

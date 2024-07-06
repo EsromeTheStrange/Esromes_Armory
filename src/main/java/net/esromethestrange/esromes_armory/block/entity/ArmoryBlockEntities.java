@@ -12,6 +12,8 @@ public class ArmoryBlockEntities {
             Identifier.of(EsromesArmory.MOD_ID, "workbench"), BlockEntityType.Builder.create(WorkbenchBlockEntity::new, ArmoryBlocks.WORKBENCH).build());
     public static final BlockEntityType<ForgeBlockEntity> FORGE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(EsromesArmory.MOD_ID, "forge"), BlockEntityType.Builder.create(ForgeBlockEntity::new, ArmoryBlocks.FORGE).build());
+    public static final BlockEntityType<ArmoryAnvilBlockEntity> ANVIL_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(EsromesArmory.MOD_ID, "anvil"), BlockEntityType.Builder.create(ArmoryAnvilBlockEntity::new, ArmoryBlocks.ANVIL).build());
 
     public static void registerBlockEntities() {}
 }

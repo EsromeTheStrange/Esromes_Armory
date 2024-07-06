@@ -1,4 +1,5 @@
-// 1.21	2024-07-06T01:18:16.7189201	Esrome's Armory/Block Loot Tables
+// 1.21	2024-07-06T09:24:57.0504608	Esrome's Armory/Block Loot Tables
+f1ec51ed286f447c076f9e5265cda71e8d275b32 data\esromes_armory\loot_table\blocks\anvil.json
 1153ebe07ab18c1a22eac4579ac112dc445d0085 data\esromes_armory\loot_table\blocks\forge.json
 b1e08d76d0111a92dd0fe7182138cb625119be30 data\esromes_armory\loot_table\blocks\workbench.json
 cb1d3f8311ca2bca17949ac03d60c88977df3039 data\esromes_armory\loot_table\blocks\steel_block.json

@@ -65,8 +65,9 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ArmoryItems.STEEL_INGOT, "Steel Ingot");
 
         //Blocks
-        translationBuilder.add(ArmoryBlocks.FORGE, "Forge");
         translationBuilder.add(ArmoryBlocks.WORKBENCH, "Workbench");
+        translationBuilder.add(ArmoryBlocks.FORGE, "Forge");
+        translationBuilder.add(ArmoryBlocks.ANVIL, "Anvil");
 
         translationBuilder.add(ArmoryBlocks.STEEL_BLOCK, "Block of Steel");
         translationBuilder.add(ArmoryBlocks.CHARCOAL_BLOCK, "Block of Charcoal");

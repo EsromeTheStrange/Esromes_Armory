@@ -11,10 +11,12 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ArmoryBlocks {
-    public static final Block FORGE = registerBlock("forge",
-            new ForgeBlock(AbstractBlock.Settings.copy(Blocks.BRICKS).nonOpaque()));
     public static final Block WORKBENCH = registerBlock("workbench",
             new WorkbenchBlock(AbstractBlock.Settings.copy(Blocks.CRAFTING_TABLE).nonOpaque()));
+    public static final Block FORGE = registerBlock("forge",
+            new ForgeBlock(AbstractBlock.Settings.copy(Blocks.BRICKS).nonOpaque()));
+    public static final Block ANVIL = registerBlock("anvil",
+            new ArmoryAnvilBlock(AbstractBlock.Settings.copy(Blocks.ANVIL).nonOpaque()));
 
     public static final Block STEEL_BLOCK = registerBlock("steel_block",
             new Block(AbstractBlock.Settings.copy(Blocks.IRON_BLOCK)));

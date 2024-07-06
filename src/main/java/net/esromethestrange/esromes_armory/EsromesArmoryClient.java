@@ -1,5 +1,6 @@
 package net.esromethestrange.esromes_armory;
 
+import net.esromethestrange.esromes_armory.block.entity.ArmoryAnvilBlockEntityRenderer;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.esromethestrange.esromes_armory.block.entity.ForgeBlockEntityRenderer;
 import net.esromethestrange.esromes_armory.client.ArmoryModelLoadingPlugin;
@@ -22,5 +23,6 @@ public class EsromesArmoryClient implements ClientModInitializer {
         ModelLoadingPlugin.register(new ArmoryModelLoadingPlugin());
 
         BlockEntityRendererFactories.register(ArmoryBlockEntities.FORGE_BLOCK_ENTITY, ForgeBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(ArmoryBlockEntities.ANVIL_BLOCK_ENTITY, ArmoryAnvilBlockEntityRenderer::new);
     }
 }

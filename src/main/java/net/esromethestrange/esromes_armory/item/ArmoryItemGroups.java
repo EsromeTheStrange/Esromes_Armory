@@ -25,8 +25,9 @@ public class ArmoryItemGroups {
 
     public static void registerItemGroups() {
         ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryBlocks.FORGE), "default", (context, entries) ->{
-            entries.add(ArmoryBlocks.FORGE);
             entries.add(ArmoryBlocks.WORKBENCH);
+            entries.add(ArmoryBlocks.FORGE);
+            entries.add(ArmoryBlocks.ANVIL);
 
             entries.add(ArmoryBlocks.CHARCOAL_BLOCK);
             entries.add(ArmoryBlocks.STEEL_BLOCK);

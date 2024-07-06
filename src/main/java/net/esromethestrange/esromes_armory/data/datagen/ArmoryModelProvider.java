@@ -18,8 +18,9 @@ public class ArmoryModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.FORGE);
         blockStateModelGenerator.registerSimpleState(ArmoryBlocks.WORKBENCH);
+        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.FORGE);
+        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.ANVIL);
 
         blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.STEEL_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.CHARCOAL_BLOCK);

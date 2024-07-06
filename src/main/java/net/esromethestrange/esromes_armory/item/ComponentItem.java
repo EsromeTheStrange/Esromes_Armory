@@ -29,7 +29,6 @@ public class ComponentItem extends Item implements MaterialItem {
     public ItemStack getStack(ArmoryMaterial material) {
         ItemStack stack = getDefaultStack();
         setMaterial(stack, material);
-        stack.set(ArmoryComponents.HEAT, new HeatComponent(1000));
         return stack;
     }
 
