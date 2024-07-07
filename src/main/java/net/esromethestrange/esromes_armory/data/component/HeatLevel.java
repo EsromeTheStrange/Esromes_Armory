@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.heat;
+package net.esromethestrange.esromes_armory.data.component;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 

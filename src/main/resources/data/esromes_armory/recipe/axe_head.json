@@ -1,0 +1,14 @@
+{
+  "type": "esromes_armory:anvil",
+  "ingredients": [
+    {
+      "fabric:type": "esromes_armory:material",
+      "ingredient": "esromes_armory:block"
+    }
+  ],
+  "required_heat": 3,
+  "result": {
+    "id": "esromes_armory:axe_head",
+    "count": 3
+  }
+}

@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.recipe.ingredient;
+package net.esromethestrange.esromes_armory.recipe.ingredient;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.material.Material;

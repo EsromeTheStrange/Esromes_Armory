@@ -1,8 +1,8 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
-import net.esromethestrange.esromes_armory.data.recipe.AnvilRecipe;
-import net.esromethestrange.esromes_armory.data.recipe.ArmoryRecipes;
+import net.esromethestrange.esromes_armory.recipe.AnvilRecipe;
+import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -43,9 +43,9 @@ public class ArmoryAnvilBlockEntity extends BlockEntity implements ImplementedIn
         if(full())
             return false;
         if(getStack(0).isEmpty())
-            setStack(0, stack.copy());
+            setStack(0, stack.copyWithCount(1));
         else
-            setStack(1, stack.copy());
+            setStack(1, stack.copyWithCount(1));
         stack.setCount(stack.getCount() - 1);
         tryCraft();
         markDirty();
@@ -108,7 +108,6 @@ public class ArmoryAnvilBlockEntity extends BlockEntity implements ImplementedIn
 
     //Inventory Stuff
     @Override public DefaultedList<ItemStack> getItems() { return inventory; }
-    @Override public int getMaxCountPerStack() { return 1; }
     @Override
     public boolean isValid(int slot, ItemStack stack) {
         if(slot == OUTPUT_SLOT) return false;

@@ -1,0 +1,14 @@
+{
+  "type": "esromes_armory:anvil",
+  "ingredients": [
+    {
+      "fabric:type": "esromes_armory:material",
+      "ingredient": "esromes_armory:ingot"
+    },
+    {"item": "esromes_armory:bar"}
+  ],
+  "required_heat": 3,
+  "result": {
+    "id": "esromes_armory:shovel_head"
+  }
+}

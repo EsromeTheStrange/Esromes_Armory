@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.recipe;
+package net.esromethestrange.esromes_armory.recipe;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -6,6 +6,7 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -46,9 +47,12 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeIn
     public boolean matches(WorkbenchRecipeInput inventory, World world) {
         if(world.isClient()) return false;
 
-        for(int i=0; i<inputs.size(); i++)
+        for(int i=0; i<inputs.size(); i++){
+            if(inputs.get(i) == Ingredient.EMPTY)
+                continue;
             if (!inputs.get(i).test(inventory.getStackInSlot(i)))
                 return false;
+        }
 
         return true;
     }
@@ -56,16 +60,31 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeIn
     @Override
     public ItemStack craft(WorkbenchRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
         ItemStack craftOutput = result.copy();
-        if (!(craftOutput.getItem() instanceof PartBasedItem partBasedItem))
-            return craftOutput;
 
-        for(int i=0; i<NUM_INPUTS; i++){
-            ItemStack stack = inventory.getStackInSlot(i);
-            if(stack.isEmpty() || !(stack.getItem() instanceof MaterialItem materialItem))
-                continue;
+        if (craftOutput.getItem() instanceof PartBasedItem partBasedItem){
+            for(int i=0; i<NUM_INPUTS; i++){
+                ItemStack stack = inventory.getStackInSlot(i);
+                if(stack.isEmpty() || !(stack.getItem() instanceof MaterialItem materialItem))
+                    continue;
 
-            Material material = materialItem.getMaterial(stack);
-            partBasedItem.setMaterial(craftOutput, materialItem, material);
+                Material material = materialItem.getMaterial(stack);
+                partBasedItem.setMaterial(craftOutput, materialItem, material);
+            }
+        }
+        else if(craftOutput.getItem() instanceof MaterialItem materialItem){
+            for(int i=0; i<NUM_INPUTS; i++){
+                ItemStack stack = inventory.getStackInSlot(i);
+                if(stack.isEmpty())
+                    continue;
+                if(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient){
+                    materialItem.setMaterial(craftOutput, materialIngredient.getMaterial(stack));
+                    break;
+                }
+                if(stack.getItem() instanceof MaterialItem materialItemInput){
+                    materialItem.setMaterial(craftOutput, materialItemInput.getMaterial(stack));
+                    break;
+                }
+            }
         }
 
         return craftOutput;

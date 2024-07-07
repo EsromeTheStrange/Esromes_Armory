@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.recipe.ingredient;
+package net.esromethestrange.esromes_armory.recipe.ingredient;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -3,7 +3,7 @@ package net.esromethestrange.esromes_armory.block.entity;
 import io.wispforest.owo.util.ImplementedInventory;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.component.HeatComponent;
-import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
+import net.esromethestrange.esromes_armory.data.component.HeatLevel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;

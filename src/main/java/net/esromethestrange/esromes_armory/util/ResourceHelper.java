@@ -3,7 +3,7 @@ package net.esromethestrange.esromes_armory.util;
 import com.google.common.base.Charsets;
 import com.google.gson.*;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.recipe.ingredient.MaterialIngredientData;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredientData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;

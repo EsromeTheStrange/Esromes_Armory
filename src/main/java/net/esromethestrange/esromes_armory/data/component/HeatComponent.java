@@ -1,7 +1,6 @@
 package net.esromethestrange.esromes_armory.data.component;
 
 import com.mojang.serialization.Codec;
-import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.minecraft.item.Item;
 import net.minecraft.item.tooltip.TooltipAppender;
 import net.minecraft.item.tooltip.TooltipType;

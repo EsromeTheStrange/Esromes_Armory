@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.recipe;
+package net.esromethestrange.esromes_armory.recipe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -6,10 +6,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.component.HeatComponent;
-import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
+import net.esromethestrange.esromes_armory.data.component.HeatLevel;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
-import net.esromethestrange.esromes_armory.data.recipe.ingredient.MaterialIngredient;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -54,17 +54,21 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
         Material currentMaterial = null;
         for (int i = 0; i < inputs.size(); i++){
+            if(inputs.get(i) == Ingredient.EMPTY)
+                continue;
+
             HeatComponent stackHeat = inventory.getStackInSlot(i).get(ArmoryComponents.HEAT);
             if(stackHeat == null || stackHeat.getTemperature() < requiredHeat.temperature)
                 return false;
             if (!inputs.get(i).test(inventory.getStackInSlot(i)))
                 return false;
 
-            if(!(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient))
+            Material inputMaterial = getMaterialForInput(inventory, i);
+            if(inputMaterial == null)
                 continue;
             if(currentMaterial == null)
-                currentMaterial = materialIngredient.getMaterial(inventory.getStackInSlot(i));
-            if(materialIngredient.getMaterial(inventory.getStackInSlot(i)) != currentMaterial)
+                currentMaterial = inputMaterial;
+            if(inputMaterial != currentMaterial)
                 return false;
         }
 
@@ -79,14 +83,24 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
         Material outputMaterial = Materials.NONE;
         for(int i=0; i<inputs.size(); i++){
-            if(!(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient))
+            Material inputMaterial = getMaterialForInput(inventory, i);
+            if(inputMaterial == null)
                 continue;
-            outputMaterial = materialIngredient.getMaterial(inventory.getStackInSlot(i));
+            outputMaterial = inputMaterial;
             break;
         }
 
         materialItem.setMaterial(craftOutput, outputMaterial);
         return craftOutput;
+    }
+
+    private Material getMaterialForInput(AnvilRecipe.AnvilRecipeInput inventory, int index){
+        if(inputs.get(index).getCustomIngredient() instanceof MaterialIngredient materialIngredient)
+            return materialIngredient.getMaterial(inventory.getStackInSlot(index));
+        ItemStack inputStack = inventory.getStackInSlot(index);
+        if(inputStack.getItem() instanceof MaterialItem materialItem)
+            return materialItem.getMaterial(inputStack);
+        return null;
     }
 
     @Override
@@ -123,7 +137,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
         MapCodec<AnvilRecipe> ANVIL_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients").forGetter(AnvilRecipe::getIngredients),
-                Codec.INT.fieldOf("required_heat").forGetter(recipe -> recipe.requiredHeat.temperature),
+                Codec.INT.optionalFieldOf("required_heat", 0).forGetter(recipe -> recipe.requiredHeat.temperature),
                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
         ).apply(instance, AnvilRecipe::new));
         public static final PacketCodec<RegistryByteBuf, AnvilRecipe> PACKET_CODEC = PacketCodec.ofStatic(AnvilRecipe.Serializer::write, AnvilRecipe.Serializer::read);

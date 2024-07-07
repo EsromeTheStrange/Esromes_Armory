@@ -32,12 +32,24 @@ public class ArmoryAnvilBlockEntityRenderer implements BlockEntityRenderer<Armor
             matrices.push();
 
             matrices.translate(0.5f - 0.1f * xOff, 0.5f, 0.5f - 0.1f * yOff);
-            matrices.scale(0.5f, 0.5f, 0.5f);
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(270));
-            matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(entity.getRotation()));
 
-            itemRenderer.renderItem(outputStack, ModelTransformationMode.GUI, getLightLevel(entity.getWorld(), entity.getPos()),
-                    OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
+            int count = outputStack.getCount();
+            float outputXOffset = (xOff - yOff) * 0.05f;
+            float outputZOffset = (-xOff - yOff) * 0.05f;
+            matrices.translate(-outputXOffset * ((count+1) / 2f), -0.01f, -outputZOffset * ((count+1) / 2f));
+            for (int i=0; i<count; i++){
+                matrices.translate(outputXOffset, 0.01f, outputZOffset);
+
+                matrices.push();
+                matrices.scale(0.5f, 0.5f, 0.5f);
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(270));
+                matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(entity.getRotation()));
+
+                itemRenderer.renderItem(outputStack, ModelTransformationMode.GUI, getLightLevel(entity.getWorld(), entity.getPos()),
+                        OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
+
+                matrices.pop();
+            }
 
             matrices.pop();
         }

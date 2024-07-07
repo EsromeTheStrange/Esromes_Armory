@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.data.datagen.lang;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
-import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
+import net.esromethestrange.esromes_armory.data.component.HeatLevel;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.data.material.Material;
@@ -50,6 +50,8 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ArmoryItems.AXE, " Axe");
         translationBuilder.add(ArmoryItems.HOE, " Hoe");
         translationBuilder.add(ArmoryItems.SWORD, " Sword");
+
+        translationBuilder.add(ArmoryItems.BAR, " Bar");
 
         translationBuilder.add(ArmoryItems.TOOL_HANDLE, " Tool Handle");
         translationBuilder.add(ArmoryItems.TOOL_BINDING, " Tool Binding");
