@@ -1,0 +1,154 @@
+package net.esromethestrange.esromes_armory.data.recipe;
+
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
+import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
+    public static final Identifier ID = Identifier.of(EsromesArmory.MOD_ID, "anvil");
+    public static final int NUM_INPUTS = 2;
+
+    final ItemStack result;
+    final DefaultedList<Ingredient> inputs = DefaultedList.ofSize(NUM_INPUTS, Ingredient.EMPTY);
+
+    public AnvilRecipe(List<Ingredient> ingredients, ItemStack result) {
+        this.result = result;
+
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (i >= NUM_INPUTS) {
+                EsromesArmory.LOGGER.error("Too many ingredients provided to anvil recipe!");
+                break;
+            }
+            inputs.set(i, ingredients.get(i));
+        }
+    }
+
+    @Override
+    public boolean matches(AnvilRecipe.AnvilRecipeInput inventory, World world) {
+        if (world.isClient()) return false;
+
+        for (int i = 0; i < inputs.size(); i++)
+            if (!inputs.get(i).test(inventory.getStackInSlot(i)))
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public ItemStack craft(AnvilRecipe.AnvilRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
+        ItemStack craftOutput = result.copy();
+        if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
+            return craftOutput;
+        materialItem.setMaterial(craftOutput, ArmoryMaterials.IRON);
+
+        return craftOutput;
+    }
+
+    @Override
+    public boolean fits(int width, int height) {
+        return true;
+    }
+
+    @Override
+    public DefaultedList<Ingredient> getIngredients() {
+        return inputs;
+    }
+
+    @Override
+    public RecipeType<?> getType() {
+        return ArmoryRecipes.ANVIL_RECIPE_TYPE;
+    }
+
+    @Override
+    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
+        return result;
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return AnvilRecipe.Serializer.INSTANCE;
+    }
+
+    public static AnvilRecipe.AnvilRecipeInput inputFrom(DefaultedList<ItemStack> inventory) {
+        return new AnvilRecipe.AnvilRecipeInput(inventory);
+    }
+
+    public static class Serializer implements RecipeSerializer<AnvilRecipe> {
+        public static final AnvilRecipe.Serializer INSTANCE = new AnvilRecipe.Serializer();
+
+        MapCodec<AnvilRecipe> ANVIL_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients").forGetter(AnvilRecipe::getIngredients),
+                ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+        ).apply(instance, AnvilRecipe::new));
+        public static final PacketCodec<RegistryByteBuf, AnvilRecipe> PACKET_CODEC = PacketCodec.ofStatic(AnvilRecipe.Serializer::write, AnvilRecipe.Serializer::read);
+
+        @Override
+        public MapCodec<AnvilRecipe> codec() {
+            return ANVIL_RECIPE_CODEC;
+        }
+
+        @Override
+        public PacketCodec<RegistryByteBuf, AnvilRecipe> packetCodec() {
+            return PACKET_CODEC;
+        }
+
+        private static AnvilRecipe read(RegistryByteBuf buf) {
+            List<Ingredient> ingredients = new ArrayList<>();
+            for (int i = 0; i < NUM_INPUTS; i++) {
+                ingredients.add(Ingredient.PACKET_CODEC.decode(buf));
+            }
+            ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
+            return new AnvilRecipe(ingredients, result);
+        }
+
+        private static void write(RegistryByteBuf buf, AnvilRecipe recipe) {
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                Ingredient.PACKET_CODEC.encode(buf, ingredient);
+            }
+            ItemStack.PACKET_CODEC.encode(buf, recipe.result);
+        }
+
+        @Override
+        public String toString() {
+            return ID.getPath();
+        }
+    }
+
+    public static class AnvilRecipeInput implements RecipeInput {
+        private final List<ItemStack> stacks;
+
+        protected AnvilRecipeInput(DefaultedList<ItemStack> inventory) {
+            this.stacks = inventory;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return stacks.get(slot);
+        }
+
+        @Override
+        public int getSize() {
+            return NUM_INPUTS;
+        }
+    }
+}

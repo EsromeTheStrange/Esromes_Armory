@@ -2,11 +2,8 @@ package net.esromethestrange.esromes_armory.block;
 
 import com.mojang.serialization.MapCodec;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryAnvilBlockEntity;
-import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -82,26 +79,19 @@ public class ArmoryAnvilBlock extends BlockWithEntity implements BlockEntityProv
             return ItemActionResult.success(world.isClient);
         if(armoryAnvilBlockEntity == null)
             return ItemActionResult.FAIL;
-        if(armoryAnvilBlockEntity.full() || stack.isEmpty()){
+        if(armoryAnvilBlockEntity.outputFilled() || armoryAnvilBlockEntity.full() || stack.isEmpty()){
             Vec3d vec3d = Vec3d.add(pos, 0.5, 1.01, 0.5).addRandom(world.random, 0.7f);
             ItemEntity itemEntity = new ItemEntity(world, vec3d.getX(), vec3d.getY(), vec3d.getZ(), armoryAnvilBlockEntity.removeTopStack());
             itemEntity.setToDefaultPickupDelay();
             world.spawnEntity(itemEntity);
             return ItemActionResult.success(world.isClient);
         }
-        return armoryAnvilBlockEntity.receiveStack(stack) ? ItemActionResult.success(world.isClient) : ItemActionResult.FAIL;
+        return armoryAnvilBlockEntity.receiveStack(stack) ? ItemActionResult.success(world.isClient) : ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new ArmoryAnvilBlockEntity(pos, state);
-    }
-
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, ArmoryBlockEntities.ANVIL_BLOCK_ENTITY,
-                (world1, pos, state1, blockEntity) -> blockEntity.tick(world1, pos, state1));
     }
 }

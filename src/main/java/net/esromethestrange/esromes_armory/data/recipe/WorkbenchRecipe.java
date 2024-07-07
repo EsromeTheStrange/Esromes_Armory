@@ -131,7 +131,7 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeIn
 
         @Override
         public int getSize() {
-            return 3;
+            return NUM_INPUTS;
         }
     }
 }

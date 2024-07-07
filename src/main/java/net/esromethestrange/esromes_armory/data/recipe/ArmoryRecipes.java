@@ -9,8 +9,13 @@ public class ArmoryRecipes {
             new RecipeType<WorkbenchRecipe>() {
                 @Override public String toString() { return WorkbenchRecipe.ID.toString(); }
             });
+    public static final RecipeType<AnvilRecipe> ANVIL_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, AnvilRecipe.ID,
+            new RecipeType<AnvilRecipe>() {
+                @Override public String toString() { return AnvilRecipe.ID.toString(); }
+            });
 
     public static void registerRecipes(){
         Registry.register(Registries.RECIPE_SERIALIZER, WorkbenchRecipe.ID, WorkbenchRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, AnvilRecipe.ID, AnvilRecipe.Serializer.INSTANCE);
     }
 }
