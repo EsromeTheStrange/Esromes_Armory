@@ -20,7 +20,7 @@ public class ArmoryModelProvider extends FabricModelProvider {
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleState(ArmoryBlocks.WORKBENCH);
         blockStateModelGenerator.registerSimpleState(ArmoryBlocks.FORGE);
-        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.ANVIL);
+        blockStateModelGenerator.registerNorthDefaultHorizontalRotation(ArmoryBlocks.ANVIL);
 
         blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.STEEL_BLOCK);
         blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.CHARCOAL_BLOCK);

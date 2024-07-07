@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "esromes_armory:block/anvil",
+      "y": 90
+    },
+    "facing=north": {
       "model": "esromes_armory:block/anvil"
+    },
+    "facing=south": {
+      "model": "esromes_armory:block/anvil",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "esromes_armory:block/anvil",
+      "y": 270
     }
   }
 }

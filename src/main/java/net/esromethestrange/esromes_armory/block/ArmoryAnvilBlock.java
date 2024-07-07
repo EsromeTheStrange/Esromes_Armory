@@ -34,7 +34,12 @@ public class ArmoryAnvilBlock extends BlockWithEntity implements BlockEntityProv
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() { return ArmoryAnvilBlock.createCodec(ArmoryAnvilBlock::new); }
-    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return VoxelShapes.cuboid(0,0,0,1,0.5f,1); }
+    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return switch (state.get(FACING)){
+            case Direction.EAST, Direction.WEST -> VoxelShapes.cuboid(0.2f,0,0,0.8f,0.5f,1);
+            default -> VoxelShapes.cuboid(0,0,0.2f,1,0.5f,0.8f);
+        };
+    }
     @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
 
     @Nullable

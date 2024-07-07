@@ -29,7 +29,11 @@ public class ArmoryAnvilBlockEntityRenderer implements BlockEntityRenderer<Armor
 
         if(!stack.isEmpty()){
             matrices.push();
-            matrices.translate(0.75f, 0.5f, 0.5f);
+
+            float xOff = (float)Math.cos(Math.toRadians(entity.getRotation()));
+            float yOff = (float)Math.sin(Math.toRadians(entity.getRotation()));
+
+            matrices.translate(0.5f - 0.25f * xOff, 0.5f, 0.5f - 0.25f * yOff);
 
             matrices.push();
             matrices.scale(0.4f, 0.4f, 0.4f);
@@ -40,7 +44,7 @@ public class ArmoryAnvilBlockEntityRenderer implements BlockEntityRenderer<Armor
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
 
             matrices.pop();
-            matrices.translate(-0.4f, 0, 0);
+            matrices.translate(0.4f * xOff, 0, 0.4f * yOff);
 
             matrices.scale(0.4f, 0.4f, 0.4f);
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(270));
