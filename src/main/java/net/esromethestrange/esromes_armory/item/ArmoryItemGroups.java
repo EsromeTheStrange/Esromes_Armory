@@ -6,8 +6,8 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ArmoryItemGroups {
-    static HashMap<ArmoryMaterial, List<ItemStack>> itemMap = new HashMap<>();
+    static HashMap<Material, List<ItemStack>> itemMap = new HashMap<>();
 
     public static final OwoItemGroup ESROMES_ARMORY = OwoItemGroup
             .builder(Identifier.of(EsromesArmory.MOD_ID, "esromes_armory"), () -> Icon.of(ArmoryItems.STEEL_INGOT))
@@ -40,10 +40,10 @@ public class ArmoryItemGroups {
             for(PartBasedItem partBasedItem : PartBasedItem.PART_BASED_ITEMS){
                 mapItems(partBasedItem.getDefaultStacks(true));
             }
-            for(ArmoryMaterial armoryMaterial : ArmoryMaterials.getMaterials()){
-                if(!itemMap.containsKey(armoryMaterial))
+            for(Material material : Materials.getMaterials()){
+                if(!itemMap.containsKey(material))
                     continue;
-                List<ItemStack> stacks = itemMap.get(armoryMaterial);
+                List<ItemStack> stacks = itemMap.get(material);
                 entries.addAll(stacks);
             }
         }, false);
@@ -61,7 +61,7 @@ public class ArmoryItemGroups {
         for(ItemStack stack : stacks){
             if(!(stack.getItem() instanceof PartBasedItem partBasedItem))
                 return;
-            ArmoryMaterial material = partBasedItem.getPrimaryMaterial(stack);
+            Material material = partBasedItem.getPrimaryMaterial(stack);
             if(!itemMap.containsKey(material))
                 itemMap.put(material, new ArrayList<>());
             itemMap.get(material).add(stack);

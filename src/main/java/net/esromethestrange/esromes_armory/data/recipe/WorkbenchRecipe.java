@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.Material;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -64,7 +64,7 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeIn
             if(stack.isEmpty() || !(stack.getItem() instanceof MaterialItem materialItem))
                 continue;
 
-            ArmoryMaterial material = materialItem.getMaterial(stack);
+            Material material = materialItem.getMaterial(stack);
             partBasedItem.setMaterial(craftOutput, materialItem, material);
         }
 

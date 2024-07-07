@@ -2,8 +2,8 @@ package net.esromethestrange.esromes_armory.item.tools;
 
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,12 +25,12 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, SWORD_GUARD, ArmoryMaterials.NONE);
-            setMaterial(stack, getHeadComponent(), ArmoryMaterials.NONE);
+            setMaterial(stack, SWORD_GUARD, Materials.NONE);
+            setMaterial(stack, getHeadComponent(), Materials.NONE);
             setupComponents(stack);
             defaultStacks.add(stack);
         }
-        for(ArmoryMaterial material : MaterialTypes.METAL){
+        for(Material material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
             for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
@@ -45,9 +45,9 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
 
     @Override
     protected int calculateDurability(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
-        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
-        ArmoryMaterial handleMaterial = getHandleMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
+        Material bindingMaterial = getBindingMaterial(stack);
+        Material handleMaterial = getHandleMaterial(stack);
         return (int) (
                 headMaterial.durability * 5 +
                         bindingMaterial.durability * 5 +

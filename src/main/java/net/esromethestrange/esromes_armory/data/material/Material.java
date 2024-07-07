@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.data.material;
 
 import net.minecraft.util.Identifier;
 
-public class ArmoryMaterial {
+public class Material {
     public final String translatable_name;
     public final Identifier id;
     public final String modId;
@@ -17,7 +17,7 @@ public class ArmoryMaterial {
     public final float attackSpeed;
     public final int enchantability;
 
-    public ArmoryMaterial(String modId, String materialName, int color, float durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
+    public Material(String modId, String materialName, int color, float durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
         this.translatable_name = modId + ".material." + materialName;
         this.modId = modId;
         this.materialName = materialName;
@@ -32,6 +32,6 @@ public class ArmoryMaterial {
         this.attackSpeed = attackSpeed;
         this.enchantability = enchantability;
 
-        ArmoryMaterials.addMaterial(this);
+        Materials.addMaterial(this);
     }
 }

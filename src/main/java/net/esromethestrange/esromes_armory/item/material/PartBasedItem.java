@@ -2,8 +2,8 @@ package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.component.ItemPartsComponent;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -18,9 +18,9 @@ public interface PartBasedItem {
     List<MaterialItem> getParts();
     default List<ItemStack> getDefaultStacks() { return getDefaultStacks(false); }
     List<ItemStack> getDefaultStacks(boolean includeNone);
-    ArmoryMaterial getPrimaryMaterial(ItemStack stack);
+    Material getPrimaryMaterial(ItemStack stack);
 
-    default void setMaterial(ItemStack stack, MaterialItem part, ArmoryMaterial material){
+    default void setMaterial(ItemStack stack, MaterialItem part, Material material){
         if(!containsPart(part)) return;
 
         ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
@@ -30,13 +30,13 @@ public interface PartBasedItem {
         stack.set(ArmoryComponents.ITEM_PARTS, partsComponent.withPart(part, material));
     }
 
-    default ArmoryMaterial getMaterial(ItemStack stack, MaterialItem part){
+    default Material getMaterial(ItemStack stack, MaterialItem part){
         ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
         if(partsComponent == null)
-            return ArmoryMaterials.NONE;
+            return Materials.NONE;
 
         Identifier materialId = partsComponent.getPart(part);
-        return materialId == null ? ArmoryMaterials.NONE : ArmoryMaterials.getMaterial(materialId);
+        return materialId == null ? Materials.NONE : Materials.getMaterial(materialId);
     }
 
     default boolean containsPart(MaterialItem component){

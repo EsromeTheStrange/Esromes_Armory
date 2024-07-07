@@ -2,10 +2,10 @@ package net.esromethestrange.esromes_armory.data.datagen;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -33,16 +33,16 @@ public class ArmoryModelProvider extends FabricModelProvider {
         for(MaterialItem item : MaterialItem.MATERIAL_ITEMS){
             Models.GENERATED.upload(ModelIds.getItemModelId((Item)item),
                     TextureMap.layer0(item.getRawIdentifier()
-                            .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ ArmoryMaterials.NONE.materialName)
+                            .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ Materials.NONE.materialName)
                             .withPrefixedPath("item/")),
                     itemModelGenerator.writer);
-            for(ArmoryMaterial material : item.getValidMaterials()){
+            for(Material material : item.getValidMaterials()){
                 itemModelGenerator.register((Item)item,
                         "_" + material.id.getNamespace() + "_" + material.id.getPath(),
                         Models.GENERATED);
             }
             itemModelGenerator.register((Item)item,
-                    "_" + ArmoryMaterials.NONE.modId + "_" + ArmoryMaterials.NONE.materialName,
+                    "_" + Materials.NONE.modId + "_" + Materials.NONE.materialName,
                     Models.GENERATED);
         }
     }

@@ -4,8 +4,8 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
@@ -20,28 +20,28 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         //Materials
-        addTranslation(ArmoryMaterials.NONE, "Blank", translationBuilder);
+        addTranslation(Materials.NONE, "Blank", translationBuilder);
 
-        addTranslation(ArmoryMaterials.OAK, "Oak", translationBuilder);
-        addTranslation(ArmoryMaterials.ACACIA, "Acacia", translationBuilder);
-        addTranslation(ArmoryMaterials.BAMBOO, "Bamboo", translationBuilder);
-        addTranslation(ArmoryMaterials.BIRCH, "Birch", translationBuilder);
-        addTranslation(ArmoryMaterials.CHERRY, "Cherry", translationBuilder);
-        addTranslation(ArmoryMaterials.CRIMSON, "Crimson", translationBuilder);
-        addTranslation(ArmoryMaterials.DARK_OAK, "Dark Oak", translationBuilder);
-        addTranslation(ArmoryMaterials.JUNGLE, "Jungle", translationBuilder);
-        addTranslation(ArmoryMaterials.MANGROVE, "Mangrove", translationBuilder);
-        addTranslation(ArmoryMaterials.SPRUCE, "Spruce", translationBuilder);
-        addTranslation(ArmoryMaterials.WARPED, "Warped", translationBuilder);
+        addTranslation(Materials.OAK, "Oak", translationBuilder);
+        addTranslation(Materials.ACACIA, "Acacia", translationBuilder);
+        addTranslation(Materials.BAMBOO, "Bamboo", translationBuilder);
+        addTranslation(Materials.BIRCH, "Birch", translationBuilder);
+        addTranslation(Materials.CHERRY, "Cherry", translationBuilder);
+        addTranslation(Materials.CRIMSON, "Crimson", translationBuilder);
+        addTranslation(Materials.DARK_OAK, "Dark Oak", translationBuilder);
+        addTranslation(Materials.JUNGLE, "Jungle", translationBuilder);
+        addTranslation(Materials.MANGROVE, "Mangrove", translationBuilder);
+        addTranslation(Materials.SPRUCE, "Spruce", translationBuilder);
+        addTranslation(Materials.WARPED, "Warped", translationBuilder);
 
-        addTranslation(ArmoryMaterials.COPPER, "Copper", translationBuilder);
-        addTranslation(ArmoryMaterials.IRON, "Iron", translationBuilder);
-        addTranslation(ArmoryMaterials.GOLD, "Gold", translationBuilder);
-        addTranslation(ArmoryMaterials.NETHERITE, "Netherite", translationBuilder);
-        addTranslation(ArmoryMaterials.STEEL, "Steel", translationBuilder);
+        addTranslation(Materials.COPPER, "Copper", translationBuilder);
+        addTranslation(Materials.IRON, "Iron", translationBuilder);
+        addTranslation(Materials.GOLD, "Gold", translationBuilder);
+        addTranslation(Materials.NETHERITE, "Netherite", translationBuilder);
+        addTranslation(Materials.STEEL, "Steel", translationBuilder);
 
-        addTranslation(ArmoryMaterials.STRING, "String", translationBuilder);
-        addTranslation(ArmoryMaterials.SLIME, "Slime", translationBuilder);
+        addTranslation(Materials.STRING, "String", translationBuilder);
+        addTranslation(Materials.SLIME, "Slime", translationBuilder);
 
         //Items
         translationBuilder.add(ArmoryItems.SHOVEL, " Shovel");
@@ -98,7 +98,7 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.tool_components", "Components");
     }
 
-    public void addTranslation(ArmoryMaterial material, String materialName, TranslationBuilder translationBuilder){
+    public void addTranslation(Material material, String materialName, TranslationBuilder translationBuilder){
         translationBuilder.add(material.translatable_name, materialName);
     }
     public void addConfigTranslation(String configKey, String translation, TranslationBuilder translationBuilder){

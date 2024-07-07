@@ -19,7 +19,7 @@ public class HeatComponent implements TooltipAppender {
     }
 
     public static final Codec<HeatComponent> CODEC = Codec.FLOAT.xmap(
-            code -> new HeatComponent(code),
+            HeatComponent::new,
             partsComponent -> partsComponent.heatLevel
     );
 

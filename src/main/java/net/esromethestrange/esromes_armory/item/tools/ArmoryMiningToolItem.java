@@ -4,8 +4,8 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.minecraft.block.Block;
 import net.minecraft.component.DataComponentTypes;
@@ -108,17 +108,17 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
     }
 
     protected int calculateMiningLevel(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
         return headMaterial.miningLevel;
     }
     protected float calculateMiningSpeed(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
         return headMaterial.miningSpeed;
     }
     protected int calculateDurability(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
-        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
-        ArmoryMaterial handleMaterial = getHandleMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
+        Material bindingMaterial = getBindingMaterial(stack);
+        Material handleMaterial = getHandleMaterial(stack);
         return (int) (
                 headMaterial.durability * 25 +
                 bindingMaterial.durability * 50 +
@@ -126,27 +126,27 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         );
     }
     protected double calculateAttackDamage(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
         return (double)headMaterial.attackDamage * toolType.getAttackDamageMultiplier();
     }
     protected double calculateAttackSpeed(ItemStack stack) {
-        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
+        Material bindingMaterial = getBindingMaterial(stack);
         return toolType.getAttackSpeed() +
                 (double)bindingMaterial.attackSpeed * toolType.getAttackSpeedMultiplier();
     }
     protected int calculateEnchantability(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
+        Material headMaterial = getMaterial(stack, getHeadComponent());
         return headMaterial.enchantability;
     }
 
     @Override
-    public ArmoryMaterial getPrimaryMaterial(ItemStack stack) {
+    public Material getPrimaryMaterial(ItemStack stack) {
         return getMaterial(stack, getHeadComponent());
     }
-    public ArmoryMaterial getBindingMaterial(ItemStack stack){
+    public Material getBindingMaterial(ItemStack stack){
         return getMaterial(stack, getBindingComponent());
     }
-    public ArmoryMaterial getHandleMaterial(ItemStack stack){
+    public Material getHandleMaterial(ItemStack stack){
         return getMaterial(stack, getHandleComponent());
     }
 
@@ -159,11 +159,11 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), ArmoryMaterials.NONE);
+            setMaterial(stack, getHeadComponent(), Materials.NONE);
             setupComponents(stack);
             defaultStacks.add(stack);
         }
-        for(ArmoryMaterial material : MaterialTypes.METAL){
+        for(Material material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
             for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());

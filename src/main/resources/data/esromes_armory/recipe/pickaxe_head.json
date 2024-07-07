@@ -1,8 +1,14 @@
 {
   "type": "esromes_armory:anvil",
   "ingredients": [
-    {"item": "minecraft:iron_ingot"},
-    {"item": "minecraft:iron_ingot"}
+    {
+      "fabric:type": "esromes_armory:material",
+      "ingredient": "esromes_armory:ingot"
+    },
+    {
+      "fabric:type": "esromes_armory:material",
+      "ingredient": "esromes_armory:ingot"
+    }
   ],
   "result": {
     "id": "esromes_armory:pickaxe_head"

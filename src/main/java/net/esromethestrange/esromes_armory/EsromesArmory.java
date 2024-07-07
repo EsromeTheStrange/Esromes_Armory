@@ -4,6 +4,7 @@ import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
+import net.esromethestrange.esromes_armory.data.recipe.ingredient.ArmoryIngredients;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
@@ -11,6 +12,8 @@ import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.data.recipe.ArmoryRecipes;
 import net.esromethestrange.esromes_armory.client.screen.ArmoryScreenHandlers;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +27,8 @@ public class EsromesArmory implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Loading Esrome's Armory...");
 
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryIngredients());
+
 		ArmoryComponents.registerComponents();
 
 		MaterialTypes.registerMaterialTypes();
@@ -32,6 +37,7 @@ public class EsromesArmory implements ModInitializer {
 		ArmoryBlocks.registerModBlocks();
 		ArmoryBlockEntities.registerBlockEntities();
 
+		ArmoryIngredients.registerIngredients();
 		ArmoryRecipes.registerRecipes();
 
 		ArmoryItemGroups.registerItemGroups();

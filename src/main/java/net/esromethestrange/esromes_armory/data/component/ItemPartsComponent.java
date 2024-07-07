@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class ItemPartsComponent {
     /** Takes in the identifier of the {@link net.esromethestrange.esromes_armory.item.material.MaterialItem MaterialItem}
-     * and gives the identifier of the {@link net.esromethestrange.esromes_armory.data.material.ArmoryMaterial Material}.*/
+     * and gives the identifier of the {@link Material Material}.*/
      HashMap<Identifier, Identifier> parts = new HashMap<>();
 
     public static final Codec<ItemPartsComponent> CODEC = Codec.STRING.xmap(
@@ -61,12 +61,12 @@ public class ItemPartsComponent {
 
     public Identifier getPart(MaterialItem materialItem){
         if(!parts.containsKey(materialItem.getRawIdentifier()))
-            return ArmoryMaterials.NONE.id;
+            return Materials.NONE.id;
         return parts.get(materialItem.getRawIdentifier());
     }
 
-    public ItemPartsComponent withPart(MaterialItem materialItem, ArmoryMaterial armoryMaterial){
-        parts.put(materialItem.getRawIdentifier(), armoryMaterial.id);
+    public ItemPartsComponent withPart(MaterialItem materialItem, Material material){
+        parts.put(materialItem.getRawIdentifier(), material.id);
         return this;
     }
 }

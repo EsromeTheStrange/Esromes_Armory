@@ -3,11 +3,10 @@ package net.esromethestrange.esromes_armory.data.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.data.recipe.ingredient.MaterialIngredient;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -47,9 +46,17 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
     public boolean matches(AnvilRecipe.AnvilRecipeInput inventory, World world) {
         if (world.isClient()) return false;
 
-        for (int i = 0; i < inputs.size(); i++)
+        Material currentMaterial = null;
+        for (int i = 0; i < inputs.size(); i++){
             if (!inputs.get(i).test(inventory.getStackInSlot(i)))
                 return false;
+            if(!(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient))
+                continue;
+            if(currentMaterial == null)
+                currentMaterial = materialIngredient.getMaterial(inventory.getStackInSlot(i));
+            if(materialIngredient.getMaterial(inventory.getStackInSlot(i)) != currentMaterial)
+                return false;
+        }
 
         return true;
     }
@@ -59,8 +66,16 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
         ItemStack craftOutput = result.copy();
         if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
             return craftOutput;
-        materialItem.setMaterial(craftOutput, ArmoryMaterials.IRON);
 
+        Material outputMaterial = Materials.NONE;
+        for(int i=0; i<inputs.size(); i++){
+            if(!(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient))
+                continue;
+            outputMaterial = materialIngredient.getMaterial(inventory.getStackInSlot(i));
+            break;
+        }
+
+        materialItem.setMaterial(craftOutput, outputMaterial);
         return craftOutput;
     }
 

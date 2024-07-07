@@ -1,6 +1,6 @@
 package net.esromethestrange.esromes_armory.client;
 
-import net.esromethestrange.esromes_armory.data.material.ArmoryMaterial;
+import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
@@ -71,7 +71,7 @@ public class PartBasedItemModel implements UnbakedModel, BakedModel, FabricBaked
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         for (MaterialItem materialItem : ((PartBasedItem)stack.getItem()).getParts()){
-            ArmoryMaterial material = materialItem.getMaterial(stack);
+            Material material = materialItem.getMaterial(stack);
             ItemStack materialStack = materialItem.getStack(material);
             components.get(materialItem).emitItemQuads(materialStack, randomSupplier, context);
         }

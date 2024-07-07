@@ -4,30 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialTypes {
-    public static List<ArmoryMaterial> WOOD = new ArrayList<>();
-    public static List<ArmoryMaterial> METAL = new ArrayList<>();
-    public static List<ArmoryMaterial> BINDING = new ArrayList<>();
+    public static List<Material> WOOD = new ArrayList<>();
+    public static List<Material> METAL = new ArrayList<>();
+    public static List<Material> BINDING = new ArrayList<>();
 
     public static void registerMaterialTypes(){
-        WOOD.add(ArmoryMaterials.OAK);
-        WOOD.add(ArmoryMaterials.ACACIA);
-        WOOD.add(ArmoryMaterials.BAMBOO);
-        WOOD.add(ArmoryMaterials.BIRCH);
-        WOOD.add(ArmoryMaterials.CHERRY);
-        WOOD.add(ArmoryMaterials.CRIMSON);
-        WOOD.add(ArmoryMaterials.DARK_OAK);
-        WOOD.add(ArmoryMaterials.JUNGLE);
-        WOOD.add(ArmoryMaterials.MANGROVE);
-        WOOD.add(ArmoryMaterials.SPRUCE);
-        WOOD.add(ArmoryMaterials.WARPED);
+        WOOD.add(Materials.OAK);
+        WOOD.add(Materials.ACACIA);
+        WOOD.add(Materials.BAMBOO);
+        WOOD.add(Materials.BIRCH);
+        WOOD.add(Materials.CHERRY);
+        WOOD.add(Materials.CRIMSON);
+        WOOD.add(Materials.DARK_OAK);
+        WOOD.add(Materials.JUNGLE);
+        WOOD.add(Materials.MANGROVE);
+        WOOD.add(Materials.SPRUCE);
+        WOOD.add(Materials.WARPED);
 
-        METAL.add(ArmoryMaterials.COPPER);
-        METAL.add(ArmoryMaterials.IRON);
-        METAL.add(ArmoryMaterials.GOLD);
-        METAL.add(ArmoryMaterials.STEEL);
-        METAL.add(ArmoryMaterials.NETHERITE);
+        METAL.add(Materials.COPPER);
+        METAL.add(Materials.IRON);
+        METAL.add(Materials.GOLD);
+        METAL.add(Materials.STEEL);
+        METAL.add(Materials.NETHERITE);
 
-        BINDING.add(ArmoryMaterials.STRING);
-        BINDING.add(ArmoryMaterials.SLIME);
+        BINDING.add(Materials.STRING);
+        BINDING.add(Materials.SLIME);
     }
 }
