@@ -1,6 +1,9 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
+import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.data.component.HeatComponent;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -31,6 +34,15 @@ public class ForgeBlockEntity extends BlockEntity implements ImplementedInventor
 
     public void tick(World world, BlockPos pos, BlockState state) {
         if(world.isClient) return;
+
+        if(inventory.getStack(0).isEmpty())
+            return;
+
+        HeatComponent currentHeat = inventory.getStack(0).get(ArmoryComponents.HEAT);
+        if(currentHeat == null) currentHeat = new HeatComponent(HeatLevel.ROOM_TEMPERATURE.temperature);
+        inventory.getStack(0).set(ArmoryComponents.HEAT, new HeatComponent(
+                (int)Math.clamp(currentHeat.getTemperature() + 1, 0, HeatLevel.YELLOW.temperature)
+        ));
         markDirty();
     }
 

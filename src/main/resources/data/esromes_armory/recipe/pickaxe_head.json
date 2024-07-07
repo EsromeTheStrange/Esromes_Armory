@@ -10,6 +10,7 @@
       "ingredient": "esromes_armory:ingot"
     }
   ],
+  "required_heat": 3,
   "result": {
     "id": "esromes_armory:pickaxe_head"
   }

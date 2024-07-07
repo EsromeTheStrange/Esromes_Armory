@@ -1,8 +1,12 @@
 package net.esromethestrange.esromes_armory.data.recipe;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.data.component.HeatComponent;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.recipe.ingredient.MaterialIngredient;
@@ -28,10 +32,12 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
     public static final int NUM_INPUTS = 2;
 
     final ItemStack result;
+    final HeatLevel requiredHeat;
     final DefaultedList<Ingredient> inputs = DefaultedList.ofSize(NUM_INPUTS, Ingredient.EMPTY);
 
-    public AnvilRecipe(List<Ingredient> ingredients, ItemStack result) {
+    public AnvilRecipe(List<Ingredient> ingredients, int requiredHeat, ItemStack result) {
         this.result = result;
+        this.requiredHeat = HeatLevel.values()[requiredHeat];
 
         for (int i = 0; i < ingredients.size(); i++) {
             if (i >= NUM_INPUTS) {
@@ -48,8 +54,12 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
         Material currentMaterial = null;
         for (int i = 0; i < inputs.size(); i++){
+            HeatComponent stackHeat = inventory.getStackInSlot(i).get(ArmoryComponents.HEAT);
+            if(stackHeat == null || stackHeat.getTemperature() < requiredHeat.temperature)
+                return false;
             if (!inputs.get(i).test(inventory.getStackInSlot(i)))
                 return false;
+
             if(!(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient))
                 continue;
             if(currentMaterial == null)
@@ -101,7 +111,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return AnvilRecipe.Serializer.INSTANCE;
+        return Serializer.INSTANCE;
     }
 
     public static AnvilRecipe.AnvilRecipeInput inputFrom(DefaultedList<ItemStack> inventory) {
@@ -113,6 +123,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
         MapCodec<AnvilRecipe> ANVIL_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients").forGetter(AnvilRecipe::getIngredients),
+                Codec.INT.fieldOf("required_heat").forGetter(recipe -> recipe.requiredHeat.temperature),
                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
         ).apply(instance, AnvilRecipe::new));
         public static final PacketCodec<RegistryByteBuf, AnvilRecipe> PACKET_CODEC = PacketCodec.ofStatic(AnvilRecipe.Serializer::write, AnvilRecipe.Serializer::read);
@@ -132,14 +143,16 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
             for (int i = 0; i < NUM_INPUTS; i++) {
                 ingredients.add(Ingredient.PACKET_CODEC.decode(buf));
             }
+            int requiredHeatLevel = buf.readInt();
             ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
-            return new AnvilRecipe(ingredients, result);
+            return new AnvilRecipe(ingredients, requiredHeatLevel, result);
         }
 
         private static void write(RegistryByteBuf buf, AnvilRecipe recipe) {
             for (Ingredient ingredient : recipe.getIngredients()) {
                 Ingredient.PACKET_CODEC.encode(buf, ingredient);
             }
+            buf.writeInt(recipe.requiredHeat.ordinal());
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
         }
 

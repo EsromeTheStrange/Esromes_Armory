@@ -12,30 +12,34 @@ import net.minecraft.text.Text;
 import java.util.function.Consumer;
 
 public class HeatComponent implements TooltipAppender {
-    private float heatLevel;
+    private int temperature;
 
-    public HeatComponent(float heatLevel){
-        this.heatLevel = heatLevel;
+    public HeatComponent(int temperature){
+        this.temperature = temperature;
     }
 
-    public static final Codec<HeatComponent> CODEC = Codec.FLOAT.xmap(
+    public static final Codec<HeatComponent> CODEC = Codec.INT.xmap(
             HeatComponent::new,
-            partsComponent -> partsComponent.heatLevel
+            partsComponent -> partsComponent.temperature
     );
 
     public static final PacketCodec<PacketByteBuf, HeatComponent> PACKET_CODEC = PacketCodec.of(
-            (value, buf) -> buf.writeFloat(value.heatLevel),
-            buf -> new HeatComponent(buf.readFloat())
+            (value, buf) -> buf.writeInt(value.temperature),
+            buf -> new HeatComponent(buf.readInt())
     );
 
     public HeatLevel getHeatLevel(){
-        return HeatLevel.getHeatLevel(heatLevel);
+        return HeatLevel.getHeatLevel(temperature);
+    }
+
+    public float getTemperature(){
+        return temperature;
     }
 
     @Override
     public void appendTooltip(Item.TooltipContext context, Consumer<Text> tooltip, TooltipType type) {
         if(getHeatLevel() == HeatLevel.ROOM_TEMPERATURE)
             return;
-        tooltip.accept(Text.translatable(getHeatLevel().translation_key));
+        tooltip.accept(Text.translatable(getHeatLevel().translation_key).withColor(getHeatLevel().color));
     }
 }
