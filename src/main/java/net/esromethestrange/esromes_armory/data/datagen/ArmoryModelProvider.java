@@ -3,6 +3,7 @@ package net.esromethestrange.esromes_armory.data.datagen;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.data.material.Materials;
@@ -45,5 +46,7 @@ public class ArmoryModelProvider extends FabricModelProvider {
                     "_" + Materials.NONE.modId + "_" + Materials.NONE.materialName,
                     Models.GENERATED);
         }
+
+        itemModelGenerator.register(ArmoryFluids.STEEL_BUCKET, Models.GENERATED);
     }
 }

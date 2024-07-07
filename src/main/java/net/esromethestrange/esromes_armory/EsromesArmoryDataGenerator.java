@@ -11,8 +11,11 @@ public class EsromesArmoryDataGenerator implements DataGeneratorEntrypoint {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
 		pack.addProvider(ArmoryBlockLootTableProvider::new);
+
 		pack.addProvider(ArmoryBlockTagProvider::new);
 		pack.addProvider(ArmoryItemTagProvider::new);
+		pack.addProvider(ArmoryFluidTagProvider::new);
+
 		pack.addProvider(ArmoryModelProvider::new);
 		pack.addProvider(ArmoryRecipeProvider::new);
 

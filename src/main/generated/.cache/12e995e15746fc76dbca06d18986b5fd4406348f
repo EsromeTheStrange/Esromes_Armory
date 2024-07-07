@@ -1,4 +1,4 @@
-// 1.21	2024-07-07T09:39:28.6125396	Esrome's Armory/Model Definitions
+// 1.21	2024-07-07T21:15:32.9897985	Esrome's Armory/Model Definitions
 ff585a5f8198f516d6d30968c966ada89bee11e0 assets\esromes_armory\models\item\sword_grip_minecraft_oak.json
 f273bfd24f2c6da132b2fd7b44be562f5ce90670 assets\esromes_armory\blockstates\workbench.json
 2aa070a9547e15364edd6884ce6ce7d5f5651060 assets\esromes_armory\models\item\sword_guard_minecraft_iron.json
@@ -19,6 +19,7 @@ faa74ea51bafecd6c886c436c19a110b67389766 assets\esromes_armory\models\item\tool_
 2c3a952e0d4a2e12bdc75d0fa74cef258cf3f421 assets\esromes_armory\models\item\sword_guard.json
 acc58a20d8855a8e908573f9ced278d057513efe assets\esromes_armory\models\item\axe_head_minecraft_netherite.json
 bd934ee761d15953e3f24610a737dcfdb193bdbd assets\esromes_armory\models\item\axe_head.json
+aed3870f925e98b7f5d1a8dbfee49c21d75af258 assets\esromes_armory\models\item\molten_steel_bucket.json
 f4d9b5921828ae61327159f54fde737cc655f507 assets\esromes_armory\blockstates\anvil.json
 9ede32e1b23e8ac4f16124c799c4b0294d360667 assets\esromes_armory\models\item\tool_handle_minecraft_mangrove.json
 591cb9b4c550de35417ec6a252acecba8284d07a assets\esromes_armory\models\item\forge.json
@@ -42,8 +43,8 @@ ca300c11cde2c344b92895e20d5e99d3d84d81c9 assets\esromes_armory\models\item\sword
 c39b32fdd38a854a8c4b98f6bdaa69a198bbcb36 assets\esromes_armory\models\item\axe_head_minecraft_gold.json
 10e6e728996109ee6bf1e7eddd6528235785db05 assets\esromes_armory\models\item\sword_grip_esromes_armory_none.json
 3b6d9ad8f563d912015451a8a9d4c6db0b8c54b9 assets\esromes_armory\models\item\sword_blade_minecraft_copper.json
-dadf9783e6b21f503c396be0ea8b5a36a574043c assets\esromes_armory\models\item\pickaxe_head_minecraft_gold.json
 29e23fa6b410504fe6a47a48b61e67b0153e97a0 assets\esromes_armory\models\item\sword_blade_minecraft_iron.json
+dadf9783e6b21f503c396be0ea8b5a36a574043c assets\esromes_armory\models\item\pickaxe_head_minecraft_gold.json
 03079c91135cd90a4393f7089648e113fecca2ee assets\esromes_armory\models\item\axe_head_minecraft_copper.json
 579767bb19d5fc1f8552a5e6098c19f67aff2f1d assets\esromes_armory\models\item\shovel_head.json
 890fe6cefdfcee3a7e436786671eb6e883f207d3 assets\esromes_armory\models\item\tool_handle_minecraft_cherry.json

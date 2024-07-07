@@ -4,6 +4,7 @@ import io.wispforest.owo.itemgroup.Icon;
 import io.wispforest.owo.itemgroup.OwoItemGroup;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.data.material.Material;
@@ -52,6 +53,10 @@ public class ArmoryItemGroups {
             for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
                 entries.addAll(materialItem.getDefaultStacks(true));
             }
+        }, false);
+
+        ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryFluids.STEEL_BUCKET), "fluids", (context, entries) ->{
+            entries.add(ArmoryFluids.STEEL_BUCKET);
         }, false);
 
         ESROMES_ARMORY.initialize();

@@ -5,6 +5,7 @@ import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.recipe.ingredient.ArmoryIngredients;
+import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
@@ -36,6 +37,7 @@ public class EsromesArmory implements ModInitializer {
 		ArmoryItems.registerModItems();
 		ArmoryBlocks.registerModBlocks();
 		ArmoryBlockEntities.registerBlockEntities();
+		ArmoryFluids.registerFluids();
 
 		ArmoryIngredients.registerIngredients();
 		ArmoryRecipes.registerRecipes();
