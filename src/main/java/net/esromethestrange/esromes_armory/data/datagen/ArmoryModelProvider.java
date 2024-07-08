@@ -19,7 +19,6 @@ public class ArmoryModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleState(ArmoryBlocks.WORKBENCH);
         blockStateModelGenerator.registerSimpleState(ArmoryBlocks.FORGE);
         blockStateModelGenerator.registerNorthDefaultHorizontalRotation(ArmoryBlocks.ANVIL);
 
