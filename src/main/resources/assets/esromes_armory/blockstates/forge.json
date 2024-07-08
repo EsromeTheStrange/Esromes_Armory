@@ -1,0 +1,93 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_base"
+      }
+    },
+
+
+
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_corner",
+        "uvlock": true
+      },
+      "when": {
+        "northeast": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_corner",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "southeast": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_corner",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "southwest": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_corner",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "northwest": "false"
+      }
+    },
+
+
+
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_wall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_wall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_wall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "esromes_armory:block/forge_wall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "false"
+      }
+    }
+  ]
+}

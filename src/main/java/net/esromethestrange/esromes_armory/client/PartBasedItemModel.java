@@ -61,7 +61,7 @@ public class PartBasedItemModel implements UnbakedModel, BakedModel, FabricBaked
     }
     @Override
     public ModelTransformation getTransformation() {
-        return ResourceHelper.loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
+        return ResourceHelper.HANDHELD_TRANSFORMATION;
     }
     @Override public ModelOverrideList getOverrides() { return ModelOverrideList.EMPTY; }
 

@@ -15,6 +15,8 @@ import net.minecraft.util.Identifier;
 import java.io.*;
 
 public class ResourceHelper {
+    public static final ModelTransformation HANDHELD_TRANSFORMATION = loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
+
     public static final String JSON_ENTRIES = "entries";
 
     //Material Ingredients

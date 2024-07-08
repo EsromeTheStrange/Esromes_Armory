@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.*;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -21,8 +22,15 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.stream.Stream;
+
 public class ArmoryAnvilBlock extends BlockWithEntity implements BlockEntityProvider {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+
+    public static final VoxelShape NORTH_SHAPE = GeneratedVoxels.ANVIL_SHAPE;
+    public static final VoxelShape EAST_SHAPE = rotateShape(Direction.NORTH, Direction.EAST, GeneratedVoxels.ANVIL_SHAPE);
+    public static final VoxelShape SOUTH_SHAPE = rotateShape(Direction.NORTH, Direction.SOUTH, GeneratedVoxels.ANVIL_SHAPE);
+    public static final VoxelShape WEST_SHAPE = rotateShape(Direction.NORTH, Direction.WEST, GeneratedVoxels.ANVIL_SHAPE);
 
     protected ArmoryAnvilBlock(Settings settings) {
         super(settings);
@@ -31,13 +39,29 @@ public class ArmoryAnvilBlock extends BlockWithEntity implements BlockEntityProv
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() { return ArmoryAnvilBlock.createCodec(ArmoryAnvilBlock::new); }
+    @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
+
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return switch (state.get(FACING)){
-            case Direction.EAST, Direction.WEST -> VoxelShapes.cuboid(0.2f,0,0,0.8f,0.5f,1);
-            default -> VoxelShapes.cuboid(0,0,0.2f,1,0.5f,0.8f);
+        return switch(state.get(FACING)){
+            case NORTH -> NORTH_SHAPE;
+            case EAST -> EAST_SHAPE;
+            case WEST -> WEST_SHAPE;
+            case SOUTH -> SOUTH_SHAPE;
+            default -> VoxelShapes.cuboid(0,0,0,1,1,1);
         };
     }
-    @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
+    public static VoxelShape rotateShape(Direction from, Direction to, VoxelShape shape) {
+        VoxelShape[] buffer = new VoxelShape[]{ shape, VoxelShapes.empty() };
+
+        int times = (to.getHorizontal() - from.getHorizontal() + 4) % 4;
+        for (int i = 0; i < times; i++) {
+            buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) -> buffer[1] = VoxelShapes.union(buffer[1], VoxelShapes.cuboid(1-maxZ, minY, minX, 1-minZ, maxY, maxX)));
+            buffer[0] = buffer[1];
+            buffer[1] = VoxelShapes.empty();
+        }
+
+        return buffer[0];
+    }
 
     @Nullable
     @Override

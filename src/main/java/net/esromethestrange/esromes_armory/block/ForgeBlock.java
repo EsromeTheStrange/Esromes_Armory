@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
@@ -22,32 +23,128 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
     VoxelShape BASE_SHAPE = Block.createCuboidShape(0,0,0,16,14,16);
-    VoxelShape WALL_1 = Block.createCuboidShape(0,14,0,16, 16,2);
-    VoxelShape WALL_2 = Block.createCuboidShape(0,14,0,2,16,16);
-    VoxelShape WALL_3 = Block.createCuboidShape(0,14,14,16,16,16);
-    VoxelShape WALL_4 = Block.createCuboidShape(14,14,0,16,16,16);
-    VoxelShape SHAPE = VoxelShapes.union(BASE_SHAPE, WALL_1, WALL_2, WALL_3, WALL_4);
+
+    VoxelShape WALL_N = Block.createCuboidShape(2,14,0, 14, 16, 2);
+    VoxelShape WALL_E = Block.createCuboidShape(14,14,2, 16, 16, 14);
+    VoxelShape WALL_S = Block.createCuboidShape(2,14,14, 14, 16, 16);
+    VoxelShape WALL_W = Block.createCuboidShape(0,14,2, 2, 16, 14);
+
+    VoxelShape CORNER_NE = Block.createCuboidShape(14,14,0,16, 16,2);
+    VoxelShape CORNER_ES = Block.createCuboidShape(14,14,14,16, 16,16);
+    VoxelShape CORNER_SW = Block.createCuboidShape(0,14,14,2, 16,16);
+    VoxelShape CORNER_WN = Block.createCuboidShape(0,14,0,2, 16,2);
+
+
+    public static final BooleanProperty NORTH = ConnectingBlock.NORTH;
+    public static final BooleanProperty EAST = ConnectingBlock.EAST;
+    public static final BooleanProperty SOUTH = ConnectingBlock.SOUTH;
+    public static final BooleanProperty WEST = ConnectingBlock.WEST;
+
+    public static final BooleanProperty NORTHEAST = BooleanProperty.of("northeast");
+    public static final BooleanProperty SOUTHEAST = BooleanProperty.of("southeast");
+    public static final BooleanProperty SOUTHWEST = BooleanProperty.of("southwest");
+    public static final BooleanProperty NORTHWEST = BooleanProperty.of("northwest");
+
+    protected static final Map<Direction, BooleanProperty> FACING_PROPERTIES = ConnectingBlock.FACING_PROPERTIES.entrySet().stream()
+            .filter(entry -> (entry.getKey()).getAxis().isHorizontal())
+            .collect(Util.toMap());
 
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     protected ForgeBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(FACING, Direction.NORTH)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false)
+                .with(NORTHEAST, false)
+                .with(SOUTHEAST, false)
+                .with(SOUTHWEST, false)
+                .with(NORTHWEST, false));
     }
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() { return ForgeBlock.createCodec(ForgeBlock::new); }
-    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }
+    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        VoxelShape shape = VoxelShapes.union(BASE_SHAPE);
+
+        if(!state.get(NORTH)) shape = VoxelShapes.union(shape, WALL_N);
+        if(!state.get(EAST))  shape = VoxelShapes.union(shape, WALL_E);
+        if(!state.get(SOUTH)) shape = VoxelShapes.union(shape, WALL_S);
+        if(!state.get(WEST))  shape = VoxelShapes.union(shape, WALL_W);
+
+        if(!state.get(NORTHEAST)) shape = VoxelShapes.union(shape, CORNER_NE);
+        if(!state.get(SOUTHEAST)) shape = VoxelShapes.union(shape, CORNER_ES);
+        if(!state.get(SOUTHWEST)) shape = VoxelShapes.union(shape, CORNER_SW);
+        if(!state.get(NORTHWEST)) shape = VoxelShapes.union(shape, CORNER_WN);
+
+        return shape;
+    }
     @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
+
+    //Block State Stuff
+
+    public boolean canConnect(BlockState state) {
+        Block block = state.getBlock();
+        return block == this;
+    }
+
+    @Override
+    protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        if (direction.getAxis().getType() == Direction.Type.HORIZONTAL) {
+            BlockState updateState = state;
+            if(this.canConnect(neighborState)){
+                if(direction == Direction.NORTH || direction == Direction.EAST)
+                    updateState = updateState.with(NORTHEAST,
+                            this.canConnect(world.getBlockState(pos.north())) &&
+                            this.canConnect(world.getBlockState(pos.east())) &&
+                            this.canConnect(world.getBlockState(pos.north().east())));
+                if(direction == Direction.EAST || direction == Direction.SOUTH)
+                    updateState = updateState.with(SOUTHEAST,
+                            this.canConnect(world.getBlockState(pos.east())) &&
+                            this.canConnect(world.getBlockState(pos.south())) &&
+                            this.canConnect(world.getBlockState(pos.east().south())));
+                if(direction == Direction.SOUTH || direction == Direction.WEST)
+                    updateState = updateState.with(SOUTHWEST,
+                            this.canConnect(world.getBlockState(pos.south())) &&
+                            this.canConnect(world.getBlockState(pos.west())) &&
+                            this.canConnect(world.getBlockState(pos.south().west())));
+                if(direction == Direction.WEST || direction == Direction.NORTH)
+                    updateState = updateState.with(NORTHWEST,
+                            this.canConnect(world.getBlockState(pos.west())) &&
+                            this.canConnect(world.getBlockState(pos.north())) &&
+                            this.canConnect(world.getBlockState(pos.west().north())));
+                world.updateNeighbors(pos, this);
+            }
+            return updateState.with(FACING_PROPERTIES.get(direction), this.canConnect(neighborState));
+        }
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
 
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        World blockView = ctx.getWorld();
+        BlockPos blockPos = ctx.getBlockPos();
+        BlockState northState = blockView.getBlockState(blockPos.north());
+        BlockState eastState = blockView.getBlockState(blockPos.east());
+        BlockState southState = blockView.getBlockState(blockPos.south());
+        BlockState westState = blockView.getBlockState(blockPos.west());
+        return super.getPlacementState(ctx)
+                .with(FACING, ctx.getHorizontalPlayerFacing().getOpposite())
+                .with(NORTH, this.canConnect(northState))
+                .with(EAST, this.canConnect(eastState))
+                .with(SOUTH, this.canConnect(southState))
+                .with(WEST, this.canConnect(westState));
     }
 
     @Override
@@ -62,7 +159,8 @@ public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, NORTH, EAST, SOUTH, WEST,
+                NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
 
     @Override
@@ -77,6 +175,7 @@ public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
         }
     }
 
+    //Block Entity Stuff
     @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ForgeBlockEntity forgeBlockEntity = (ForgeBlockEntity) world.getBlockEntity(pos);
