@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.component;
+package net.esromethestrange.esromes_armory.data.heat;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 
@@ -29,6 +29,14 @@ public enum HeatLevel {
                 return values()[i-1];
             }
         }
+        return HeatLevel.ROOM_TEMPERATURE;
+    }
+
+    public static HeatLevel tryParse(String key){
+        for(HeatLevel heatLevel : values())
+            if (heatLevel.toString().equals(key))
+                return heatLevel;
+        EsromesArmory.LOGGER.error("No heat level found with key: " + key + "!");
         return HeatLevel.ROOM_TEMPERATURE;
     }
 

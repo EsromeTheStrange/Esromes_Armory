@@ -3,6 +3,8 @@ package net.esromethestrange.esromes_armory.util;
 import com.google.common.base.Charsets;
 import com.google.gson.*;
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.heat.HeatData;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredientData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
@@ -18,6 +20,42 @@ public class ResourceHelper {
     public static final ModelTransformation HANDHELD_TRANSFORMATION = loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
 
     public static final String JSON_ENTRIES = "entries";
+    public static final String JSON_FLUID = "fluid";
+    public static final String JSON_ITEM = "item";
+
+    //Heat Data
+    public static HeatData readHeatData(Identifier id, ResourceManager manager){
+        String[] idParts = id.getPath().split("/");
+        String materialTypeName = idParts[idParts.length-1].split(".json")[0];
+
+        try(InputStream stream = manager.getResource(id).get().getInputStream()) {
+            JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new InputStreamReader(stream));
+            return parseHeatData(jsonObject, id.getNamespace(), materialTypeName);
+        } catch(Exception e) {
+            EsromesArmory.LOGGER.error("Error occurred while loading Heat Data resource json" + id.toString(), e);
+        }
+        return HeatData.EMPTY;
+    }
+
+
+    private static HeatData parseHeatData(JsonObject json, String modId, String materialTypeName){
+        HeatData newHeatData = new HeatData(Identifier.of(modId, materialTypeName));
+
+        JsonObject results = json.get(JSON_ENTRIES).getAsJsonObject();
+        for (String key : results.keySet()){
+            JsonObject resultJson = results.getAsJsonObject(key);
+            if(resultJson.has(JSON_ITEM)){
+                Identifier itemId = Identifier.tryParse(resultJson.get(JSON_ITEM).getAsString());
+                newHeatData.addEntry(HeatLevel.tryParse(key), new HeatData.HeatingResult(Registries.ITEM.get(itemId)));
+            }
+            if(resultJson.has(JSON_FLUID)){
+                Identifier fluidId = Identifier.tryParse(resultJson.get(JSON_FLUID).getAsString());
+                newHeatData.addEntry(HeatLevel.tryParse(key), new HeatData.HeatingResult(Registries.FLUID.get(fluidId)));
+            }
+        }
+
+        return newHeatData;
+    }
 
     //Material Ingredients
     public static MaterialIngredientData readMaterialIngredient(Identifier id, ResourceManager manager){
@@ -28,7 +66,7 @@ public class ResourceHelper {
             JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new InputStreamReader(stream));
             return parseMaterialIngredient(jsonObject, id.getNamespace(), materialTypeName);
         } catch(Exception e) {
-            EsromesArmory.LOGGER.error("Error occurred while loading resource json" + id.toString(), e);
+            EsromesArmory.LOGGER.error("Error occurred while loading Material Ingredient resource json" + id.toString(), e);
         }
         return MaterialIngredientData.EMPTY;
     }
@@ -52,7 +90,10 @@ public class ResourceHelper {
      */
     public static ModelTransformation loadTransformFromJson(Identifier location) {
         try {
-            return JsonUnbakedModel.deserialize(getReaderForResource(location)).getTransformations();
+            Reader reader = getReaderForResource(location);
+            ModelTransformation modelTransformation = JsonUnbakedModel.deserialize(reader).getTransformations();
+            reader.close();
+            return modelTransformation;
         } catch (IOException exception) {
             EsromesArmory.LOGGER.warn("Can't load resource " + location);
             exception.printStackTrace();

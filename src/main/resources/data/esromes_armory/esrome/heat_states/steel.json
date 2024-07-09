@@ -1,0 +1,10 @@
+{
+  "entries": {
+    "room_temperature": {
+      "item": "esromes_armory:steel_ingot"
+    },
+    "orange": {
+      "fluid": "esromes_armory:molten_steel"
+    }
+  }
+}

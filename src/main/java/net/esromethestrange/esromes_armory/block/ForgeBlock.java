@@ -163,6 +163,7 @@ public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
                 NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
     }
 
+    //Block Entity Stuff
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
@@ -175,7 +176,6 @@ public class ForgeBlock extends BlockWithEntity implements BlockEntityProvider {
         }
     }
 
-    //Block Entity Stuff
     @Override
     protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ForgeBlockEntity forgeBlockEntity = (ForgeBlockEntity) world.getBlockEntity(pos);

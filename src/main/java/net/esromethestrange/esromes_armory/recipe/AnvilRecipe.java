@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.component.HeatComponent;
-import net.esromethestrange.esromes_armory.data.component.HeatLevel;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
