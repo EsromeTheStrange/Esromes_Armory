@@ -4,15 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
-import net.esromethestrange.esromes_armory.data.component.HeatComponent;
-import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
-import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -21,14 +14,10 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.input.RecipeInput;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
     public static final Identifier ID = Identifier.of(EsromesArmory.MOD_ID, "casting");
@@ -88,6 +77,8 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         return result;
     }
 
+    public Ingredient getInput(){ return input; }
+    public ItemStack getOutput(){ return result; }
     public FluidVariant getFluid(){ return fluid; }
     public long getFluidAmount(){ return fluidAmount; }
 

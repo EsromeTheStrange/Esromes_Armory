@@ -47,4 +47,20 @@ public class MaterialIngredientData {
 
         return Materials.NONE;
     }
+
+    public List<Material> getMaterials(){
+        List<Material> materials = new ArrayList<>();
+        for(Identifier material : validItems.keySet())
+            materials.add(Materials.getMaterial(material));
+        return materials;
+    }
+
+    public List<ItemStack> getMatchingStacksForMaterial(Material material){
+        if(!validItems.containsKey(material.id))
+            return List.of();
+        List<ItemStack> matching = new ArrayList<>();
+        for(Item item : validItems.get(material.id))
+            matching.add(item.getDefaultStack());
+        return matching;
+    }
 }

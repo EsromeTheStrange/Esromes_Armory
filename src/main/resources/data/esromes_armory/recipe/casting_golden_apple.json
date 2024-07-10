@@ -4,9 +4,9 @@
     "item": "minecraft:apple"
   },
   "fluid": {
-    "fluid": "esromes_armory:molten_steel"
+    "fluid": "esromes_armory:molten_gold"
   },
-  "fluid_amount": 81000,
+  "fluid_amount": 72000,
   "result": {
     "id": "minecraft:golden_apple"
   }

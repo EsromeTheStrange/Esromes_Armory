@@ -16,21 +16,13 @@ public class HeatHelper implements SimpleSynchronousResourceReloadListener {
 
     @Override
     public void reload(ResourceManager manager) {
-        EsromesArmory.LOGGER.info("Loading Heat Data...");
-
         heatDataMap.clear();
         for(Identifier id : manager.findResources("esrome/heat_states", i -> i.toString().endsWith(".json")).keySet()){
             HeatData heatData = ResourceHelper.readHeatData(id, manager);
             heatDataMap.put(heatData.id, heatData);
         }
 
-        EsromesArmory.LOGGER.info(getHeatData(Identifier.of("esromes_armory:steel")).toString());
-    }
-
-    public static HeatData getHeatData(Identifier id){
-        if(heatDataMap.containsKey(id))
-            return heatDataMap.get(id);
-        return HeatData.EMPTY;
+        EsromesArmory.LOGGER.info("Loaded " + heatDataMap.size() + " heat states");
     }
 
     public static HeatData getHeatData(Item item){

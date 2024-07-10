@@ -20,6 +20,7 @@ public class ArmoryFluidRendering {
         //});
 
         registerMoltenMetal(ArmoryFluids.MOLTEN_STEEL, ArmoryFluids.MOLTEN_STEEL_FLOWING, Materials.STEEL.color);
+        registerMoltenMetal(ArmoryFluids.MOLTEN_GOLD, ArmoryFluids.MOLTEN_GOLD_FLOWING, Materials.GOLD.color);
     }
 
     private static void registerMoltenMetal(Fluid stillState, Fluid flowingState, int color){

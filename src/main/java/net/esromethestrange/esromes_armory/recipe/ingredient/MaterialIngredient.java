@@ -25,9 +25,17 @@ public class MaterialIngredient implements CustomIngredient {
         return ArmoryIngredients.getMaterialIngredient(ingredientType).isValid(stack);
     }
 
+    public List<Material> getMaterials(){
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getMaterials();
+    }
+
     @Override
     public List<ItemStack> getMatchingStacks() {
         return ArmoryIngredients.getMaterialIngredient(ingredientType).matchingStacks;
+    }
+
+    public List<ItemStack> getMatchingStacksForMaterial(Material material){
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getMatchingStacksForMaterial(material);
     }
 
     @Override

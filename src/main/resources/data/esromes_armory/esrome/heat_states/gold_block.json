@@ -1,0 +1,11 @@
+{
+  "entries": {
+    "room_temperature": {
+      "item": "minecraft:gold_block"
+    },
+    "orange": {
+      "fluid": "esromes_armory:molten_gold",
+      "amount": 81000
+    }
+  }
+}

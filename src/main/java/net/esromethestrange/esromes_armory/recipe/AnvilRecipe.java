@@ -123,6 +123,8 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
         return result;
     }
 
+    public HeatLevel getRequiredHeatLevel(){ return requiredHeat; }
+
     @Override
     public RecipeSerializer<?> getSerializer() {
         return Serializer.INSTANCE;

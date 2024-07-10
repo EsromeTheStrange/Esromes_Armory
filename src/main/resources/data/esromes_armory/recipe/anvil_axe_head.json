@@ -6,7 +6,7 @@
       "ingredient": "esromes_armory:block"
     }
   ],
-  "required_heat": 3,
+  "required_heat": 4,
   "result": {
     "id": "esromes_armory:axe_head",
     "count": 3

@@ -1,7 +1,9 @@
 package net.esromethestrange.esromes_armory.data.datagen.lang;
 
+import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.compat.emi.EmiAnvilRecipe;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
@@ -79,6 +81,8 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         //Fluids
         translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BUCKET, "Bucket of Molten Steel");
         translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BLOCK, "Molten Steel");
+        translationBuilder.add(ArmoryFluids.MOLTEN_GOLD_BUCKET, "Bucket of Molten Gold");
+        translationBuilder.add(ArmoryFluids.MOLTEN_GOLD_BLOCK, "Molten Gold");
 
         //Config
         addConfigTranslation("title", "Esrome's Armory", translationBuilder);
@@ -88,7 +92,12 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         addConfigTranslation("option.componentTooltips", "Material Tooltips", translationBuilder);
 
         //Compat
+        addRecipeTypeTranslation("casting", "Casting", translationBuilder);
         addRecipeTypeTranslation("forging", "Forging", translationBuilder);
+        addRecipeTypeTranslation("workbench", "Workbench", translationBuilder);
+        addRecipeTypeTranslation("anvil", "Anvil", translationBuilder);
+
+        translationBuilder.add(EmiAnvilRecipe.HEATING_TRANSLATION_KEY, "This is the required heat level of the input items. Heating can be done at the Forge.");
 
         //Heat Levels
         addTranslation(HeatLevel.ROOM_TEMPERATURE, "Room Temperature", translationBuilder);
@@ -117,7 +126,6 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("rei." + EsromesArmory.MOD_ID + "." + recipeType, translation);
         translationBuilder.add("emi.category." + EsromesArmory.MOD_ID + "." + recipeType, translation);
     }
-
     public void addTranslation(HeatLevel heatLevel, String translation, TranslationBuilder translationBuilder){
         translationBuilder.add(heatLevel.translation_key, translation);
     }
