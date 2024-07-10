@@ -1,0 +1,13 @@
+{
+  "type": "esromes_armory:casting",
+  "ingredient": {
+    "item": "minecraft:apple"
+  },
+  "fluid": {
+    "fluid": "esromes_armory:molten_steel"
+  },
+  "fluid_amount": 81000,
+  "result": {
+    "id": "minecraft:golden_apple"
+  }
+}

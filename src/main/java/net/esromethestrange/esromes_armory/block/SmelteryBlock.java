@@ -81,13 +81,17 @@ public class SmelteryBlock extends BlockWithEntity implements BlockEntityProvide
             return ItemActionResult.success(world.isClient);
         if(smelteryBlockEntity == null)
             return ItemActionResult.FAIL;
-//        if(forgeBlockEntity.containsItem()){
-//            Vec3d vec3d = Vec3d.add(pos, 0.5, 1.01, 0.5).addRandom(world.random, 0.7f);
-//            ItemEntity itemEntity = new ItemEntity(world, vec3d.getX(), vec3d.getY(), vec3d.getZ(), forgeBlockEntity.removeStack(0));
-//            itemEntity.setToDefaultPickupDelay();
-//            world.spawnEntity(itemEntity);
-//            return ItemActionResult.success(world.isClient);
-//        }
+
+        if(smelteryBlockEntity.hasFluid())
+            if(smelteryBlockEntity.tryCast(stack))
+                return ItemActionResult.SUCCESS;
+        if(smelteryBlockEntity.containsItem()){
+            Vec3d vec3d = Vec3d.add(pos, 0.5, 1.01, 0.5).addRandom(world.random, 0.7f);
+            ItemEntity itemEntity = new ItemEntity(world, vec3d.getX(), vec3d.getY(), vec3d.getZ(), smelteryBlockEntity.removeStack(0));
+            itemEntity.setToDefaultPickupDelay();
+            world.spawnEntity(itemEntity);
+            return ItemActionResult.success(world.isClient);
+        }
         return smelteryBlockEntity.receiveStack(stack) ? ItemActionResult.success(world.isClient) : ItemActionResult.FAIL;
     }
 
