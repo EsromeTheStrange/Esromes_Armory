@@ -19,7 +19,7 @@ public class ArmoryFluidRendering {
         //    registry.register(new Identifier("tutorial:block/custom_fluid_flowing"));
         //});
 
-        registerMoltenMetal(ArmoryFluids.STEEL_STILL, ArmoryFluids.STEEL_FLOWING, Materials.STEEL.color);
+        registerMoltenMetal(ArmoryFluids.MOLTEN_STEEL, ArmoryFluids.MOLTEN_STEEL_FLOWING, Materials.STEEL.color);
     }
 
     private static void registerMoltenMetal(Fluid stillState, Fluid flowingState, int color){

@@ -16,6 +16,6 @@ public class ArmoryFluidTagProvider extends FabricTagProvider.FluidTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         getOrCreateTagBuilder(FluidTags.LAVA)
-                .add(ArmoryFluids.STEEL_STILL, ArmoryFluids.STEEL_FLOWING);
+                .add(ArmoryFluids.MOLTEN_STEEL, ArmoryFluids.MOLTEN_STEEL_FLOWING);
     }
 }

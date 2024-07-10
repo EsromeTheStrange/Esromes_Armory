@@ -13,22 +13,22 @@ public class SteelFluid {
     public static class Still extends MetalFluid.Still {
         @Override
         public Fluid getStill() {
-            return ArmoryFluids.STEEL_STILL;
+            return ArmoryFluids.MOLTEN_STEEL;
         }
 
         @Override
         public Fluid getFlowing() {
-            return ArmoryFluids.STEEL_FLOWING;
+            return ArmoryFluids.MOLTEN_STEEL_FLOWING;
         }
 
         @Override
         public Item getBucketItem() {
-            return ArmoryFluids.STEEL_BUCKET;
+            return ArmoryFluids.MOLTEN_STEEL_BUCKET;
         }
 
         @Override
         protected BlockState toBlockState(FluidState fluidState) {
-            return ArmoryFluids.STEEL_FLUID_BLOCK.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(fluidState));
+            return ArmoryFluids.MOLTEN_STEEL_BLOCK.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(fluidState));
         }
 
         @Override
@@ -40,22 +40,22 @@ public class SteelFluid {
     public static class Flowing extends MetalFluid.Flowing{
         @Override
         public Fluid getStill() {
-            return ArmoryFluids.STEEL_STILL;
+            return ArmoryFluids.MOLTEN_STEEL;
         }
 
         @Override
         public Fluid getFlowing() {
-            return ArmoryFluids.STEEL_FLOWING;
+            return ArmoryFluids.MOLTEN_STEEL_FLOWING;
         }
 
         @Override
         public Item getBucketItem() {
-            return ArmoryFluids.STEEL_BUCKET;
+            return ArmoryFluids.MOLTEN_STEEL_BUCKET;
         }
 
         @Override
         protected BlockState toBlockState(FluidState fluidState) {
-            return ArmoryFluids.STEEL_FLUID_BLOCK.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(fluidState));
+            return ArmoryFluids.MOLTEN_STEEL_BLOCK.getDefaultState().with(Properties.LEVEL_15, getBlockStateLevel(fluidState));
         }
 
         @Override

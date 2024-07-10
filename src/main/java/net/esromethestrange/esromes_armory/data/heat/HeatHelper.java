@@ -1,17 +1,15 @@
 package net.esromethestrange.esromes_armory.data.heat;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
-import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredientData;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.item.Item;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 
-public class HeatResourceLoader implements SimpleSynchronousResourceReloadListener {
+public class HeatHelper implements SimpleSynchronousResourceReloadListener {
     private static HashMap<Identifier, HeatData> heatDataMap = new HashMap<>();
 
     @Override public Identifier getFabricId() { return Identifier.of(EsromesArmory.MOD_ID, "heat"); }
@@ -32,6 +30,14 @@ public class HeatResourceLoader implements SimpleSynchronousResourceReloadListen
     public static HeatData getHeatData(Identifier id){
         if(heatDataMap.containsKey(id))
             return heatDataMap.get(id);
+        return HeatData.EMPTY;
+    }
+
+    public static HeatData getHeatData(Item item){
+        for(HeatData heatData : heatDataMap.values()){
+            if (heatData.matches(item))
+                return heatData;
+        }
         return HeatData.EMPTY;
     }
 }

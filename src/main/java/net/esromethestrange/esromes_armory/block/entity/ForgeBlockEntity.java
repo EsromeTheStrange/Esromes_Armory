@@ -88,6 +88,4 @@ public class ForgeBlockEntity extends BlockEntity implements ImplementedInventor
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
         return createNbt(registryLookup);
     }
-
-    @Override public BlockEntityType<?> getType() { return ArmoryBlockEntities.FORGE_BLOCK_ENTITY; }
 }

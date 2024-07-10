@@ -3,7 +3,7 @@ package net.esromethestrange.esromes_armory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
-import net.esromethestrange.esromes_armory.data.heat.HeatResourceLoader;
+import net.esromethestrange.esromes_armory.data.heat.HeatHelper;
 import net.esromethestrange.esromes_armory.recipe.ingredient.ArmoryIngredients;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
@@ -29,7 +29,7 @@ public class EsromesArmory implements ModInitializer {
 		LOGGER.info("Loading Esrome's Armory...");
 
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryIngredients());
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new HeatResourceLoader());
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new HeatHelper());
 
 		ArmoryComponents.registerComponents();
 

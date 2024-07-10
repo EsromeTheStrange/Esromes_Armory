@@ -17,6 +17,8 @@ public class ArmoryBlocks {
             new ForgeBlock(AbstractBlock.Settings.copy(Blocks.BRICKS).nonOpaque()));
     public static final Block ANVIL = registerBlock("anvil",
             new ArmoryAnvilBlock(AbstractBlock.Settings.copy(Blocks.ANVIL).nonOpaque()));
+    public static final Block SMELTERY = registerBlock("smeltery",
+            new SmelteryBlock(AbstractBlock.Settings.copy(Blocks.STONE).nonOpaque()));
 
     public static final Block STEEL_BLOCK = registerBlock("steel_block",
             new Block(AbstractBlock.Settings.copy(Blocks.IRON_BLOCK)));

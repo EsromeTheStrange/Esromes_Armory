@@ -45,6 +45,6 @@ public class ArmoryModelProvider extends FabricModelProvider {
                     Models.GENERATED);
         }
 
-        itemModelGenerator.register(ArmoryFluids.STEEL_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ArmoryFluids.MOLTEN_STEEL_BUCKET, Models.GENERATED);
     }
 }

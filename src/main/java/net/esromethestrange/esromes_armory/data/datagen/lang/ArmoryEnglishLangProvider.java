@@ -71,13 +71,14 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ArmoryBlocks.WORKBENCH, "Workbench");
         translationBuilder.add(ArmoryBlocks.FORGE, "Forge");
         translationBuilder.add(ArmoryBlocks.ANVIL, "Anvil");
+        translationBuilder.add(ArmoryBlocks.SMELTERY, "Smeltery");
 
         translationBuilder.add(ArmoryBlocks.STEEL_BLOCK, "Block of Steel");
         translationBuilder.add(ArmoryBlocks.CHARCOAL_BLOCK, "Block of Charcoal");
 
         //Fluids
-        translationBuilder.add(ArmoryFluids.STEEL_BUCKET, "Bucket of Molten Steel");
-        translationBuilder.add(ArmoryFluids.STEEL_FLUID_BLOCK, "Molten Steel");
+        translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BUCKET, "Bucket of Molten Steel");
+        translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BLOCK, "Molten Steel");
 
         //Config
         addConfigTranslation("title", "Esrome's Armory", translationBuilder);

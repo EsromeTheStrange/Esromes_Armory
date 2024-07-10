@@ -1,10 +1,8 @@
 package net.esromethestrange.esromes_armory.data.heat;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
@@ -22,6 +20,20 @@ public class HeatData {
 
     public void addEntry(HeatLevel heatLevel, HeatingResult heatingResult){
         heatingResults.put(heatLevel, heatingResult);
+    }
+
+    public boolean matches(Item item){
+        for(HeatingResult heatingResult : heatingResults.values()){
+            try {
+                if(heatingResult.type == ResultType.ITEM &&
+                    heatingResult.getItemOutput() == item)
+                    return true;
+            } catch (ResultTypeException e) {
+                //This will never happen.
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override

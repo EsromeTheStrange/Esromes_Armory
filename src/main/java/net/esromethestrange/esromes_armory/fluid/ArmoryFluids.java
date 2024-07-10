@@ -15,17 +15,17 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ArmoryFluids {
-    public static FlowableFluid STEEL_STILL;
-    public static FlowableFluid STEEL_FLOWING;
-    public static Item STEEL_BUCKET;
-    public static Block STEEL_FLUID_BLOCK;
+    public static FlowableFluid MOLTEN_STEEL;
+    public static FlowableFluid MOLTEN_STEEL_FLOWING;
+    public static Item MOLTEN_STEEL_BUCKET;
+    public static Block MOLTEN_STEEL_BLOCK;
 
     public static void registerFluids(){
-        STEEL_STILL = Registry.register(Registries.FLUID, Identifier.of(EsromesArmory.MOD_ID, "molten_steel"), new SteelFluid.Still());
-        STEEL_FLOWING = Registry.register(Registries.FLUID, Identifier.of(EsromesArmory.MOD_ID, "molten_steel_flowing"), new SteelFluid.Flowing());
-        STEEL_BUCKET = Registry.register(Registries.ITEM, Identifier.of(EsromesArmory.MOD_ID, "molten_steel_bucket"),
-                new BucketItem(STEEL_STILL, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1)));
-        STEEL_FLUID_BLOCK = Registry.register(Registries.BLOCK, Identifier.of(EsromesArmory.MOD_ID, "molten_steel"),
-                new FluidBlock(STEEL_STILL, AbstractBlock.Settings.copy(Blocks.LAVA)){});
+        MOLTEN_STEEL = Registry.register(Registries.FLUID, Identifier.of(EsromesArmory.MOD_ID, "molten_steel"), new SteelFluid.Still());
+        MOLTEN_STEEL_FLOWING = Registry.register(Registries.FLUID, Identifier.of(EsromesArmory.MOD_ID, "molten_steel_flowing"), new SteelFluid.Flowing());
+        MOLTEN_STEEL_BUCKET = Registry.register(Registries.ITEM, Identifier.of(EsromesArmory.MOD_ID, "molten_steel_bucket"),
+                new BucketItem(MOLTEN_STEEL, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1)));
+        MOLTEN_STEEL_BLOCK = Registry.register(Registries.BLOCK, Identifier.of(EsromesArmory.MOD_ID, "molten_steel"),
+                new FluidBlock(MOLTEN_STEEL, AbstractBlock.Settings.copy(Blocks.LAVA)){});
     }
 }

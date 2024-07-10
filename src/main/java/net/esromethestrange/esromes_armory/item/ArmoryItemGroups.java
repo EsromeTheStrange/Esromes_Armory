@@ -29,6 +29,7 @@ public class ArmoryItemGroups {
             entries.add(ArmoryBlocks.WORKBENCH);
             entries.add(ArmoryBlocks.FORGE);
             entries.add(ArmoryBlocks.ANVIL);
+            entries.add(ArmoryBlocks.SMELTERY);
 
             entries.add(ArmoryBlocks.CHARCOAL_BLOCK);
             entries.add(ArmoryBlocks.STEEL_BLOCK);
@@ -55,8 +56,8 @@ public class ArmoryItemGroups {
             }
         }, false);
 
-        ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryFluids.STEEL_BUCKET), "fluids", (context, entries) ->{
-            entries.add(ArmoryFluids.STEEL_BUCKET);
+        ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryFluids.MOLTEN_STEEL_BUCKET), "fluids", (context, entries) ->{
+            entries.add(ArmoryFluids.MOLTEN_STEEL_BUCKET);
         }, false);
 
         ESROMES_ARMORY.initialize();
