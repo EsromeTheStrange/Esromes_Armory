@@ -6,7 +6,7 @@
       "ingredient": "esromes_armory:block"
     }
   ],
-  "required_heat": 4,
+  "required_heat": "orange",
   "result": {
     "id": "esromes_armory:axe_head",
     "count": 3

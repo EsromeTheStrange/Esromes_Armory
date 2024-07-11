@@ -10,7 +10,7 @@
       "ingredient": "esromes_armory:ingot"
     }
   ],
-  "required_heat": 3,
+  "required_heat": "red",
   "result": {
     "id": "esromes_armory:bar"
   }

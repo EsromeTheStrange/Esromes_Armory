@@ -35,9 +35,9 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
     final HeatLevel requiredHeat;
     final DefaultedList<Ingredient> inputs = DefaultedList.ofSize(NUM_INPUTS, Ingredient.EMPTY);
 
-    public AnvilRecipe(List<Ingredient> ingredients, int requiredHeat, ItemStack result) {
+    public AnvilRecipe(List<Ingredient> ingredients, String requiredHeat, ItemStack result) {
         this.result = result;
-        this.requiredHeat = HeatLevel.values()[requiredHeat];
+        this.requiredHeat = HeatLevel.tryParse(requiredHeat);
 
         for (int i = 0; i < ingredients.size(); i++) {
             if (i >= NUM_INPUTS) {
@@ -139,7 +139,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
 
         MapCodec<AnvilRecipe> ANVIL_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients").forGetter(AnvilRecipe::getIngredients),
-                Codec.INT.optionalFieldOf("required_heat", 0).forGetter(recipe -> recipe.requiredHeat.temperature),
+                Codec.STRING.optionalFieldOf("required_heat", HeatLevel.ROOM_TEMPERATURE.toString().toLowerCase()).forGetter(recipe -> recipe.requiredHeat.toString().toLowerCase()),
                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
         ).apply(instance, AnvilRecipe::new));
         public static final PacketCodec<RegistryByteBuf, AnvilRecipe> PACKET_CODEC = PacketCodec.ofStatic(AnvilRecipe.Serializer::write, AnvilRecipe.Serializer::read);
@@ -159,7 +159,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
             for (int i = 0; i < NUM_INPUTS; i++) {
                 ingredients.add(Ingredient.PACKET_CODEC.decode(buf));
             }
-            int requiredHeatLevel = buf.readInt();
+            String requiredHeatLevel = buf.readString();
             ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
             return new AnvilRecipe(ingredients, requiredHeatLevel, result);
         }
@@ -168,7 +168,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
             for (Ingredient ingredient : recipe.getIngredients()) {
                 Ingredient.PACKET_CODEC.encode(buf, ingredient);
             }
-            buf.writeInt(recipe.requiredHeat.ordinal());
+            buf.writeString(recipe.requiredHeat.toString().toLowerCase());
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
         }
 

@@ -79,10 +79,16 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ArmoryBlocks.CHARCOAL_BLOCK, "Block of Charcoal");
 
         //Fluids
-        translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BUCKET, "Bucket of Molten Steel");
-        translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BLOCK, "Molten Steel");
+        translationBuilder.add(ArmoryFluids.MOLTEN_COPPER_BUCKET, "Bucket of Molten Copper");
+        translationBuilder.add(ArmoryFluids.MOLTEN_COPPER_BLOCK, "Molten Copper");
+        translationBuilder.add(ArmoryFluids.MOLTEN_IRON_BUCKET, "Bucket of Molten Iron");
+        translationBuilder.add(ArmoryFluids.MOLTEN_IRON_BLOCK, "Molten Iron");
         translationBuilder.add(ArmoryFluids.MOLTEN_GOLD_BUCKET, "Bucket of Molten Gold");
         translationBuilder.add(ArmoryFluids.MOLTEN_GOLD_BLOCK, "Molten Gold");
+        translationBuilder.add(ArmoryFluids.MOLTEN_NETHERITE_BUCKET, "Bucket of Molten Netherite");
+        translationBuilder.add(ArmoryFluids.MOLTEN_NETHERITE_BLOCK, "Molten Netherite");
+        translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BUCKET, "Bucket of Molten Steel");
+        translationBuilder.add(ArmoryFluids.MOLTEN_STEEL_BLOCK, "Molten Steel");
 
         //Config
         addConfigTranslation("title", "Esrome's Armory", translationBuilder);

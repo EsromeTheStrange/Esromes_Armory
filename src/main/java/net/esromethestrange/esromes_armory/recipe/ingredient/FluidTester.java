@@ -2,6 +2,8 @@ package net.esromethestrange.esromes_armory.recipe.ingredient;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -51,6 +53,12 @@ public class FluidTester {
         this.id = id.orElse(null);
         this.matchingFluid = fluid.orElse(null);
         this.singleTarget = fluid.isPresent();
+    }
+
+    public Material getMaterial(FluidVariant fluid){
+        if(!singleTarget)
+            return ArmoryIngredients.getMaterialIngredient(id).getMaterial(fluid);
+        return Materials.NONE;
     }
 
     public boolean matches(FluidVariant fluid){

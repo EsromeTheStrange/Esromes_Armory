@@ -53,8 +53,7 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
             return craftOutput;
 
-        //TODO apply material
-
+        materialItem.setMaterial(craftOutput, fluidTester.getMaterial(inventory.fluidType));
         return craftOutput;
     }
 

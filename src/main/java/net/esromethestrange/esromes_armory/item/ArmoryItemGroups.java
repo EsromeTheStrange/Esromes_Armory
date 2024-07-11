@@ -57,6 +57,10 @@ public class ArmoryItemGroups {
         }, false);
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryFluids.MOLTEN_STEEL_BUCKET), "fluids", (context, entries) ->{
+            entries.add(ArmoryFluids.MOLTEN_COPPER_BUCKET);
+            entries.add(ArmoryFluids.MOLTEN_IRON_BUCKET);
+            entries.add(ArmoryFluids.MOLTEN_GOLD_BUCKET);
+            entries.add(ArmoryFluids.MOLTEN_NETHERITE_BUCKET);
             entries.add(ArmoryFluids.MOLTEN_STEEL_BUCKET);
         }, false);
 

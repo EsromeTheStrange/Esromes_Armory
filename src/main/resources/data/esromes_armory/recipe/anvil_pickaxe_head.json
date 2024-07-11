@@ -4,7 +4,7 @@
     {"item": "esromes_armory:bar"},
     {"item": "esromes_armory:bar"}
   ],
-  "required_heat": 3,
+  "required_heat": "red",
   "result": {
     "id": "esromes_armory:pickaxe_head"
   }

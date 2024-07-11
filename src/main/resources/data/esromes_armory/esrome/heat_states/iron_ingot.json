@@ -1,0 +1,11 @@
+{
+  "entries": {
+    "room_temperature": {
+      "item": "minecraft:iron_ingot"
+    },
+    "orange": {
+      "fluid": "esromes_armory:molten_iron",
+      "amount": 9000
+    }
+  }
+}
