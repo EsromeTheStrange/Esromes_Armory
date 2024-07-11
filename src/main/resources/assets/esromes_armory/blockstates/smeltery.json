@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "block/furnace",
+      "model": "esromes_armory:block/smeltery",
       "y": 90
     },
     "facing=north": {
-      "model": "block/furnace"
+      "model": "esromes_armory:block/smeltery"
     },
     "facing=south": {
-      "model": "block/furnace",
+      "model": "esromes_armory:block/smeltery",
       "y": 180
     },
     "facing=west": {
-      "model": "block/furnace",
+      "model": "esromes_armory:block/smeltery",
       "y": 270
     }
   }

@@ -23,6 +23,10 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class SmelteryBlock extends BlockWithEntity implements BlockEntityProvider {
+    private static final VoxelShape BOTTOM = VoxelShapes.cuboid(0,0,0,1,0.5,1);
+    private static final VoxelShape TOP = VoxelShapes.cuboid((1/8f),0.5f,(1/8f),(7/8f),1,(7/8f));
+    private static final VoxelShape SHAPE = VoxelShapes.union(BOTTOM, TOP);
+
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     protected SmelteryBlock(Settings settings) {
@@ -33,9 +37,7 @@ public class SmelteryBlock extends BlockWithEntity implements BlockEntityProvide
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() { return SmelteryBlock.createCodec(SmelteryBlock::new); }
-    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.cuboid(0,0,0,1,1,1);
-    }
+    @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) { return SHAPE; }
     @Override public BlockRenderType getRenderType(BlockState state) { return BlockRenderType.MODEL; }
 
     //Block State Stuff
