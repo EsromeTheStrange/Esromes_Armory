@@ -1,17 +1,22 @@
 package net.esromethestrange.esromes_armory.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.*;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.input.RecipeInput;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -19,21 +24,19 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkbenchRecipe implements Recipe<SimpleInventory> {
-    public static final Identifier ID = new Identifier(EsromesArmory.MOD_ID, "workbench");
+public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeInput> {
+    public static final Identifier ID = Identifier.of(EsromesArmory.MOD_ID, "workbench");
     public static final int NUM_INPUTS = 3;
 
-    private final Identifier id;
-    private final ItemStack output;
-    private final DefaultedList<Ingredient> inputs = DefaultedList.ofSize(NUM_INPUTS, Ingredient.EMPTY);
+    final ItemStack result;
+    final DefaultedList<Ingredient> inputs = DefaultedList.ofSize(NUM_INPUTS, Ingredient.EMPTY);
 
-    public WorkbenchRecipe(Identifier id, List<Ingredient> ingredients, ItemStack output){
-        this.id = id;
-        this.output = output;
+    public WorkbenchRecipe(List<Ingredient> ingredients, ItemStack result){
+        this.result = result;
 
         for(int i=0; i<ingredients.size(); i++){
             if(i >= NUM_INPUTS){
-                EsromesArmory.LOGGER.error("Too many ingredients provided to workbench recipe: "+id.toString()+"!");
+                EsromesArmory.LOGGER.error("Too many ingredients provided to workbench recipe!");
                 break;
             }
             inputs.set(i, ingredients.get(i));
@@ -41,78 +44,113 @@ public class WorkbenchRecipe implements Recipe<SimpleInventory> {
     }
 
     @Override
-    public boolean matches(SimpleInventory inventory, World world) {
+    public boolean matches(WorkbenchRecipeInput inventory, World world) {
         if(world.isClient()) return false;
 
-        for(int i=0; i<inputs.size(); i++)
-            if (!inputs.get(i).test(inventory.getStack(i)))
+        for(int i=0; i<inputs.size(); i++){
+            if(inputs.get(i) == Ingredient.EMPTY)
+                continue;
+            if (!inputs.get(i).test(inventory.getStackInSlot(i)))
                 return false;
+        }
 
         return true;
     }
 
-    @Override public ItemStack craft(SimpleInventory inventory, DynamicRegistryManager registryManager) {
-        ItemStack craftOutput = output.copy();
-        if (!(craftOutput.getItem() instanceof ComponentBasedItem componentBasedItem))
-            return craftOutput;
+    @Override
+    public ItemStack craft(WorkbenchRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
+        ItemStack craftOutput = result.copy();
 
-        for(int i=0; i<NUM_INPUTS; i++){
-            ItemStack stack = inventory.getStack(i);
-            if(stack.isEmpty() || !(stack.getItem() instanceof MaterialItem materialItem))
-                continue;
+        if (craftOutput.getItem() instanceof PartBasedItem partBasedItem){
+            for(int i=0; i<NUM_INPUTS; i++){
+                ItemStack stack = inventory.getStackInSlot(i);
+                if(stack.isEmpty() || !(stack.getItem() instanceof MaterialItem materialItem))
+                    continue;
 
-            ArmoryMaterial material = materialItem.getMaterial(stack);
-            componentBasedItem.setMaterial(craftOutput, materialItem, material);
+                Material material = materialItem.getMaterial(stack);
+                partBasedItem.setMaterial(craftOutput, materialItem, material);
+            }
+        }
+        else if(craftOutput.getItem() instanceof MaterialItem materialItem){
+            for(int i=0; i<NUM_INPUTS; i++){
+                ItemStack stack = inventory.getStackInSlot(i);
+                if(stack.isEmpty())
+                    continue;
+                if(inputs.get(i).getCustomIngredient() instanceof MaterialIngredient materialIngredient){
+                    materialItem.setMaterial(craftOutput, materialIngredient.getMaterial(stack));
+                    break;
+                }
+                if(stack.getItem() instanceof MaterialItem materialItemInput){
+                    materialItem.setMaterial(craftOutput, materialItemInput.getMaterial(stack));
+                    break;
+                }
+            }
         }
 
         return craftOutput;
     }
     @Override public boolean fits(int width, int height) { return true; }
-    @Override public ItemStack getOutput(DynamicRegistryManager registryManager) { return output; }
     @Override public DefaultedList<Ingredient> getIngredients(){ return inputs; }
+    @Override public RecipeType<?> getType() { return ArmoryRecipes.WORKBENCH_RECIPE_TYPE; }
 
-    @Override public Identifier getId() { return id; }
-    @Override public RecipeType<?> getType() { return ModRecipes.WORKBENCH_RECIPE_TYPE; }
+    @Override
+    public ItemStack getResult(RegistryWrapper.WrapperLookup registriesLookup) {
+        return result;
+    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
         return WorkbenchRecipe.Serializer.INSTANCE;
     }
 
+    public static WorkbenchRecipeInput inputFrom(SimpleInventory inventory) { return new WorkbenchRecipeInput(inventory); }
+
     public static class Serializer implements RecipeSerializer<WorkbenchRecipe> {
         public static final Serializer INSTANCE = new Serializer();
 
-        @Override
-        public WorkbenchRecipe read(Identifier id, JsonObject json) {
-            JsonArray inputArray = json.getAsJsonArray("inputs");
-            List<Ingredient> inputs = new ArrayList<>();
-            for(JsonElement input : inputArray)
-                inputs.add(Ingredient.fromJson(input));
+        MapCodec<WorkbenchRecipe> WORKBENCH_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Ingredient.DISALLOW_EMPTY_CODEC.listOf().fieldOf("ingredients").forGetter(WorkbenchRecipe::getIngredients),
+                ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+        ).apply(instance, WorkbenchRecipe::new));
+        public static final PacketCodec<RegistryByteBuf, WorkbenchRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
 
-            ItemStack output = ShapedRecipe.outputFromJson(json.getAsJsonObject("output"));
-            return new WorkbenchRecipe(id, inputs, output);
+        @Override public MapCodec<WorkbenchRecipe> codec() { return WORKBENCH_RECIPE_CODEC; }
+        @Override public PacketCodec<RegistryByteBuf, WorkbenchRecipe> packetCodec() { return PACKET_CODEC; }
+
+        private static WorkbenchRecipe read(RegistryByteBuf buf) {
+            List<Ingredient> ingredients = new ArrayList<>();
+            for(int i=0; i<NUM_INPUTS; i++){
+                ingredients.add(Ingredient.PACKET_CODEC.decode(buf));
+            }
+            ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
+            return new WorkbenchRecipe(ingredients, result);
         }
 
-        @Override
-        public void write(PacketByteBuf buf, WorkbenchRecipe recipe) {
-            buf.writeInt(recipe.inputs.size());
-            for(int i=0; i<recipe.inputs.size(); i++)
-                recipe.inputs.get(i).write(buf);
-
-            buf.writeItemStack(recipe.output);
-        }
-
-        @Override
-        public WorkbenchRecipe read(Identifier id, PacketByteBuf buf) {
-            int numInputs = buf.readInt();
-            List<Ingredient> inputs = new ArrayList<>();
-            for(int i=0; i<numInputs; i++)
-                inputs.add(Ingredient.fromPacket(buf));
-
-            ItemStack output = buf.readItemStack();
-            return new WorkbenchRecipe(id, inputs, output);
+        private static void write(RegistryByteBuf buf, WorkbenchRecipe recipe) {
+            for(Ingredient ingredient : recipe.getIngredients()){
+                Ingredient.PACKET_CODEC.encode(buf, ingredient);
+            }
+            ItemStack.PACKET_CODEC.encode(buf, recipe.result);
         }
 
         @Override public String toString() { return ID.getPath(); }
+    }
+
+    public static class WorkbenchRecipeInput implements RecipeInput {
+        private final List<ItemStack> stacks;
+
+        protected WorkbenchRecipeInput(SimpleInventory inventory){
+            this.stacks = inventory.heldStacks;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return stacks.get(slot);
+        }
+
+        @Override
+        public int getSize() {
+            return NUM_INPUTS;
+        }
     }
 }

@@ -1,0 +1,11 @@
+{
+  "entries": {
+    "room_temperature": {
+      "item": "minecraft:netherite_block"
+    },
+    "orange": {
+      "fluid": "esromes_armory:molten_netherite",
+      "amount": 81000
+    }
+  }
+}

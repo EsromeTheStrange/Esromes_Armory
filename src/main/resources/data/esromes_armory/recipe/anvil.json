@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "minecraft:iron_block"
+    },
+    "I": {
+      "tag": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "B",
+    "I",
+    "B"
+  ],
+  "result": {
+    "id": "esromes_armory:anvil"
+  }
+}

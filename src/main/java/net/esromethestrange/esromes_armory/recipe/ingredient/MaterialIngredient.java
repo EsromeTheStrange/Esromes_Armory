@@ -1,19 +1,21 @@
 package net.esromethestrange.esromes_armory.recipe.ingredient;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
+import net.esromethestrange.esromes_armory.data.material.Material;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
 
 public class MaterialIngredient implements CustomIngredient {
-    public static final Identifier ID = new Identifier(EsromesArmory.MOD_ID, "material");
+    public static final Identifier ID = Identifier.of(EsromesArmory.MOD_ID, "material");
     private final Identifier ingredientType;
 
     public MaterialIngredient(Identifier ingredientType){
@@ -21,12 +23,20 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public boolean test(ItemStack stack){
-        return ArmoryMaterialHandler.getMaterialIngredient(ingredientType).isValid(stack);
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).isValid(stack);
+    }
+
+    public List<Material> getMaterials(){
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getItemMaterials();
+    }
+
+    public List<FluidVariant> getFluids(){
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getFluids();
     }
 
     @Override
     public List<ItemStack> getMatchingStacks() {
-        return ArmoryMaterialHandler.getMaterialIngredient(ingredientType).matchingStacks;
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).matchingStacks;
     }
 
     @Override
@@ -34,40 +44,30 @@ public class MaterialIngredient implements CustomIngredient {
 
     @Override
     public CustomIngredientSerializer<?> getSerializer() {
-        return null;
+        return Serializer.INSTANCE;
     }
 
-    public ArmoryMaterial getMaterial(ItemStack stack){
-        return ArmoryMaterialHandler.getMaterialIngredient(ingredientType).getMaterial(stack);
+    public Material getMaterial(ItemStack stack){
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getMaterial(stack);
     }
 
-    public static class Serializer implements CustomIngredientSerializer<MaterialIngredient>{
+    public static class Serializer implements CustomIngredientSerializer<MaterialIngredient> {
         public static final Serializer INSTANCE = new Serializer();
-        public final String KEY_INGREDIENT = "ingredient";
+        public static final String KEY_INGREDIENT = "ingredient";
 
         @Override
         public Identifier getIdentifier() { return MaterialIngredient.ID; }
 
-        @Override
-        public MaterialIngredient read(JsonObject json) {
-            Identifier ingredientId = Identifier.tryParse(json.get(KEY_INGREDIENT).getAsString());
-            return new MaterialIngredient(ingredientId);
-        }
+        public static final MapCodec<MaterialIngredient> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Identifier.CODEC.fieldOf(KEY_INGREDIENT).forGetter(ingredient -> ingredient.ingredientType)
+        ).apply(instance, MaterialIngredient::new));
 
-        @Override
-        public void write(JsonObject json, MaterialIngredient ingredient) {
-            json.addProperty(KEY_INGREDIENT, ingredient.ingredientType.toString());
-        }
+        public static final PacketCodec<RegistryByteBuf, MaterialIngredient> PACKET_CODEC = PacketCodec.of(
+                (value, buf) -> buf.writeIdentifier(value.ingredientType),
+                buf -> new MaterialIngredient(buf.readIdentifier())
+        );
 
-        @Override
-        public MaterialIngredient read(PacketByteBuf buf) {
-            Identifier materialId = Identifier.tryParse(buf.readString());
-            return new MaterialIngredient(materialId);
-        }
-
-        @Override
-        public void write(PacketByteBuf buf, MaterialIngredient ingredient) {
-            buf.writeString(ingredient.ingredientType.toString());
-        }
+        @Override public MapCodec<MaterialIngredient> getCodec(boolean allowEmpty) { return CODEC; }
+        @Override public PacketCodec<RegistryByteBuf, MaterialIngredient> getPacketCodec() { return PACKET_CODEC; }
     }
 }

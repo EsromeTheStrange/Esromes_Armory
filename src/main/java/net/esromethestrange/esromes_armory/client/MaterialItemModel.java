@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.client;
 
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
@@ -12,7 +12,6 @@ import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -37,10 +36,10 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
 
     @Nullable
     @Override
-    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
-        for(Identifier materialId : ArmoryMaterials.getMaterialIds()){
-            Identifier materialItemId = MaterialHelper.getItemIdWithMaterial(materialId, modelId);
-            BakedModel materialModel = baker.bake(new ModelIdentifier(materialItemId, "inventory"), ModelRotation.X0_Y0);
+    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
+        for(Identifier materialId : Materials.getMaterialIds()){
+            Identifier materialItemId = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
+            BakedModel materialModel = baker.bake(materialItemId, ModelRotation.X0_Y0);
             variants.put(materialId, materialModel);
         }
         return this;
@@ -56,11 +55,11 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Override public boolean isSideLit() { return false; }
     @Override
     public Sprite getParticleSprite() {
-        return MinecraftClient.getInstance().getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(new Identifier("block/cobblestone"));
+        return MinecraftClient.getInstance().getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(Identifier.of("block/cobblestone"));
     }
     @Override
     public ModelTransformation getTransformation() {
-        return ResourceHelper.loadTransformFromJson(new Identifier("minecraft:models/item/handheld"));
+        return ResourceHelper.HANDHELD_TRANSFORMATION;
     }
     @Override public ModelOverrideList getOverrides() { return ModelOverrideList.EMPTY; }
 

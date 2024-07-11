@@ -1,0 +1,15 @@
+{
+  "type": "esromes_armory:casting",
+  "ingredient": {
+    "item": "esromes_armory:axe_mold"
+  },
+  "fluid_tester": {
+    "fluid_variant":{
+      "fluid": "esromes_armory:molten_gold"
+    }
+  },
+  "fluid_amount": 72000,
+  "result": {
+    "id": "minecraft:golden_apple"
+  }
+}

@@ -1,16 +1,17 @@
 package net.esromethestrange.esromes_armory;
 
-import net.esromethestrange.esromes_armory.block.ModBlocks;
-import net.esromethestrange.esromes_armory.block.entity.ModBlockEntities;
-import net.esromethestrange.esromes_armory.config.EsromesArmoryConfig;
-import net.esromethestrange.esromes_armory.data.ArmoryMaterialHandler;
-import net.esromethestrange.esromes_armory.item.ModItemGroups;
-import net.esromethestrange.esromes_armory.item.ModItems;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
-import net.esromethestrange.esromes_armory.material.MaterialTypes;
-import net.esromethestrange.esromes_armory.recipe.ModRecipes;
-import net.esromethestrange.esromes_armory.recipe.ingredient.ModIngredients;
-import net.esromethestrange.esromes_armory.screen.ModScreenHandlers;
+import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
+import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
+import net.esromethestrange.esromes_armory.data.heat.HeatHelper;
+import net.esromethestrange.esromes_armory.recipe.ingredient.ArmoryIngredients;
+import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
+import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
+import net.esromethestrange.esromes_armory.item.ArmoryItems;
+import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
+import net.esromethestrange.esromes_armory.client.screen.ArmoryScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -26,18 +27,23 @@ public class EsromesArmory implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Loading Esrome's Armory...");
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryMaterialHandler());
+
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryIngredients());
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new HeatHelper());
+
+		ArmoryComponents.registerComponents();
 
 		MaterialTypes.registerMaterialTypes();
 
-		ModItems.registerModItems();
-		ModBlocks.registerModBlocks();
-		ModBlockEntities.registerBlockEntities();
+		ArmoryItems.registerModItems();
+		ArmoryBlocks.registerModBlocks();
+		ArmoryBlockEntities.registerBlockEntities();
+		ArmoryFluids.registerFluids();
 
-		ModIngredients.registerIngredients();
-		ModRecipes.registerRecipes();
+		ArmoryIngredients.registerIngredients();
+		ArmoryRecipes.registerRecipes();
 
-		ModItemGroups.registerItemGroups();
-		ModScreenHandlers.registerScreenHandlers();
+		ArmoryItemGroups.registerItemGroups();
+		ArmoryScreenHandlers.registerScreenHandlers();
 	}
 }

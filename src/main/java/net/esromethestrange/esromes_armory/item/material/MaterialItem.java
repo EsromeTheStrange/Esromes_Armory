@@ -1,11 +1,11 @@
 package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
+import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -18,39 +18,32 @@ public interface MaterialItem {
 
     String NBT_MATERIAL = EsromesArmory.MOD_ID + ".material";
 
-    ItemStack getStack(ArmoryMaterial material);
-    void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean componentNameIncluded);
+    ItemStack getStack(Material material);
+    void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean partNameIncluded);
 
     default List<ItemStack> getDefaultStacks(){ return getDefaultStacks(false); }
     List<ItemStack> getDefaultStacks(boolean includeNone);
-    List<ArmoryMaterial> getValidMaterials();
-    ArmoryMaterial getDefaultMaterial();
+    List<Material> getValidMaterials();
+    Material getDefaultMaterial();
 
     default void addMaterialTooltip(ItemStack stack, List<Text> tooltip){
         addMaterialTooltip(stack, tooltip, false);
     }
 
-    default void setMaterial(ItemStack stack, ArmoryMaterial material){
-        NbtCompound nbt = stack.getNbt();
-        if(nbt == null)
-            nbt = new NbtCompound();
-        nbt.putString(NBT_MATERIAL, material.id.toString());
-        stack.setNbt(nbt);
+    default void setMaterial(ItemStack stack, Material material){
+        stack.set(ArmoryComponents.MATERIALS, material.id.toString());
     }
 
-    default ArmoryMaterial getMaterial(ItemStack stack){
-        NbtCompound nbt = stack.getNbt();
-        if(nbt == null)
-            return ArmoryMaterials.NONE;
-
+    default Material getMaterial(ItemStack stack){
         if(stack.getItem() instanceof MaterialItem){
-            String materialId = nbt.getString(NBT_MATERIAL);
-            return ArmoryMaterials.getMaterial(Identifier.tryParse(materialId));
+            String material = stack.get(ArmoryComponents.MATERIALS);
+            if(material != null)
+                return Materials.getMaterial(Identifier.tryParse(material));
         }
-        if(stack.getItem() instanceof ComponentBasedItem componentBasedItem){
-            return componentBasedItem.getMaterial(stack, this);
+        else if(stack.getItem() instanceof PartBasedItem partBasedItem){
+            return partBasedItem.getMaterial(stack, this);
         }
-        return ArmoryMaterials.NONE;
+        return Materials.NONE;
     }
 
     default Identifier getRawIdentifier() {

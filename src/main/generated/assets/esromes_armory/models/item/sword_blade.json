@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "esromes_armory:sword_blade_esromes_armory_none"
+    "layer0": "esromes_armory:item/sword_blade_esromes_armory_none"
   }
 }

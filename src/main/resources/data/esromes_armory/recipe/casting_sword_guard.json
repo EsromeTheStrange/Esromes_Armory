@@ -1,0 +1,13 @@
+{
+  "type": "esromes_armory:casting",
+  "ingredient": {
+    "item": "esromes_armory:sword_guard_mold"
+  },
+  "fluid_tester": {
+    "material_ingredient": "esromes_armory:molten_metal"
+  },
+  "fluid_amount": 9000,
+  "result": {
+    "id": "esromes_armory:sword_guard"
+  }
+}

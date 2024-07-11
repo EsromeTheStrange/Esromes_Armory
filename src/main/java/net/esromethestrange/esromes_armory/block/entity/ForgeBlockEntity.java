@@ -1,77 +1,63 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
-import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.recipe.ForgingRecipe;
-import net.esromethestrange.esromes_armory.recipe.ModRecipes;
-import net.esromethestrange.esromes_armory.screen.ForgeScreenHandler;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import io.wispforest.owo.util.ImplementedInventory;
+import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.data.component.HeatComponent;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
+public class ForgeBlockEntity extends BlockEntity implements ImplementedInventory {
+    public final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
-public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, ImplementedInventory {
-    private final SimpleInventory inventory = new SimpleInventory(2);
-
-    public static final int INPUT_SLOT = 0;
-    public static final int OUTPUT_SLOT = 1;
-
-    private static final String NBT_PROGRESS = EsromesArmory.MOD_ID + ".forge.progress";
-    private static final String NBT_INVENTORY = EsromesArmory.MOD_ID + ".forge.inventory";
-
-    public static final String CONTAINER_TRANSLATION_KEY = "container."+EsromesArmory.MOD_ID+".forge";
-
-    protected final PropertyDelegate propertyDelegate;
-    private int progress = 0;
-    private int max_progress = 72;
+    SimpleInventory inventory = new SimpleInventory(1);
 
     public ForgeBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FORGE_BLOCK_ENTITY, pos, state);
-        this.propertyDelegate = new PropertyDelegate() {
-            @Override
-            public int get(int index) {
-                return switch(index){
-                    case 0 -> ForgeBlockEntity.this.progress;
-                    case 1 -> ForgeBlockEntity.this.max_progress;
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int index, int value) {
-                switch(index){
-                    case 0 -> ForgeBlockEntity.this.progress = value;
-                    case 1 -> ForgeBlockEntity.this.max_progress = value;
-                };
-            }
-
-            @Override
-            public int size() {
-                return 2;
-            }
-        };
+        super(ArmoryBlockEntities.FORGE_BLOCK_ENTITY, pos, state);
     }
 
-    public ItemStack getRenderStack(){ return this.getStack(INPUT_SLOT); }
+    public void tick(World world, BlockPos pos, BlockState state) {
+        if(world.isClient) return;
+
+        if(inventory.getStack(0).isEmpty())
+            return;
+
+        HeatComponent currentHeat = inventory.getStack(0).get(ArmoryComponents.HEAT);
+        if(currentHeat == null) currentHeat = new HeatComponent(HeatLevel.ROOM_TEMPERATURE.temperature);
+        inventory.getStack(0).set(ArmoryComponents.HEAT, new HeatComponent(
+                (int)Math.clamp(currentHeat.getTemperature() + 1, 0, HeatLevel.YELLOW.temperature)
+        ));
+        markDirty();
+    }
+
+    public ItemStack getRenderStack(){ return this.getStack(0); }
+    public float getRotation(){ return getCachedState().get(FACING).asRotation(); }
+    public boolean containsItem(){ return !this.getStack(0).isEmpty(); }
+
+    public boolean receiveStack(ItemStack stack){
+        if(containsItem())
+            return false;
+        setStack(0, stack.copyAndEmpty());
+        return true;
+    }
+
+    @Override public DefaultedList<ItemStack> getItems() { return inventory.heldStacks; }
 
     @Override
     public void markDirty() {
@@ -80,91 +66,16 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() {
-        return inventory.stacks;
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+        Inventories.writeNbt(nbt, inventory.heldStacks, registryLookup);
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        nbt.put(NBT_INVENTORY + ".input", inventory.getStack(INPUT_SLOT).writeNbt(new NbtCompound()));
-        nbt.put(NBT_INVENTORY + ".output", inventory.getStack(OUTPUT_SLOT).writeNbt(new NbtCompound()));
-        nbt.putInt(NBT_PROGRESS, progress);
-    }
-
-    @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        inventory.setStack(INPUT_SLOT, ItemStack.fromNbt(nbt.getCompound(NBT_INVENTORY + ".input")));
-        inventory.setStack(OUTPUT_SLOT, ItemStack.fromNbt(nbt.getCompound(NBT_INVENTORY + ".output")));
-        progress = nbt.getInt(NBT_PROGRESS);
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeBlockPos(this.pos);
-    }
-
-    @Override
-    public Text getDisplayName() {
-        return Text.translatable(CONTAINER_TRANSLATION_KEY);
-    }
-
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new ForgeScreenHandler(syncId, playerInventory, this, this.propertyDelegate);
-    }
-
-    public void tick(World world, BlockPos pos, BlockState state) {
-        if(world.isClient) return;
-
-        if(isOutputSlotEmptyOrReceivable() && this.hasRecipe()){
-            progress++;
-            if (progress >= max_progress)
-                craftItem();
-        }
-        else progress = 0;
-        markDirty(world, pos, state);
-    }
-
-    private boolean isOutputSlotEmptyOrReceivable(){
-        ItemStack output = getStack(OUTPUT_SLOT);
-        return  output.isEmpty() ||
-                output.getCount() < output.getMaxCount();
-    }
-
-    private boolean hasRecipe(){
-        Optional<ForgingRecipe> recipe = getCurrentRecipe();
-        if (recipe.isEmpty()) return false;
-
-        ItemStack output = getStack(OUTPUT_SLOT);
-        ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
-
-        return  (output.isEmpty() || ItemStack.areItemsEqual(output, recipeOutput)) &&
-                output.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxCount();
-    }
-
-    private Optional<ForgingRecipe> getCurrentRecipe(){
-        SimpleInventory inv = new SimpleInventory(this.size());
-        for (int i=0; i<this.size(); i++){
-            inv.setStack(i, this.getStack(i));
-        }
-        return getWorld().getRecipeManager().getFirstMatch(ModRecipes.FORGE_RECIPE_TYPE, inv, getWorld());
-    }
-
-    private void craftItem(){
-        Optional<ForgingRecipe> recipe = getCurrentRecipe();
-        if (recipe.isEmpty()) return;
-
-        ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
-
-        this.removeStack(INPUT_SLOT, 1);
-        if(this.getStack(OUTPUT_SLOT).isEmpty())
-            this.setStack(OUTPUT_SLOT, recipeOutput);
-        else
-            this.getStack(OUTPUT_SLOT).increment(recipeOutput.getCount());
-        progress = 0;
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+        inventory.clear();
+        Inventories.readNbt(nbt, inventory.heldStacks, registryLookup);
     }
 
     @Nullable
@@ -174,7 +85,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedScreenHandl
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
     }
 }

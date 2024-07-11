@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:terracotta"
+    },
+    "C": [
+      {
+        "item": "minecraft:coal_block"
+      },
+      {
+        "item": "esromes_armory:charcoal_block"
+      }
+    ]
+  },
+  "pattern": [
+    "# #",
+    "#C#",
+    "###"
+  ],
+  "result": {
+    "id": "esromes_armory:forge"
+  }
+}

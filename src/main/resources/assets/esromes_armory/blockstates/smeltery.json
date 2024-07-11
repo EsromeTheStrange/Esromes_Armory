@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "esromes_armory:block/smeltery",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "esromes_armory:block/smeltery"
+    },
+    "facing=south": {
+      "model": "esromes_armory:block/smeltery",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "esromes_armory:block/smeltery",
+      "y": 270
+    }
+  }
+}

@@ -1,9 +1,11 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
+import io.wispforest.owo.util.ImplementedInventory;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.recipe.ModRecipes;
+import net.esromethestrange.esromes_armory.client.screen.WorkbenchData;
+import net.esromethestrange.esromes_armory.client.screen.WorkbenchScreenHandler;
+import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
 import net.esromethestrange.esromes_armory.recipe.WorkbenchRecipe;
-import net.esromethestrange.esromes_armory.screen.WorkbenchScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,10 +15,11 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -36,7 +39,7 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
     public static final String CONTAINER_TRANSLATION_KEY = "container."+ EsromesArmory.MOD_ID+".workbench";
 
     public WorkbenchBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.WORKBENCH_BLOCK_ENTITY, pos, state);
+        super(ArmoryBlockEntities.WORKBENCH_BLOCK_ENTITY, pos, state);
     }
 
     @Override
@@ -46,28 +49,28 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        Inventories.writeNbt(nbt, inventory.stacks);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+        Inventories.writeNbt(nbt, inventory.heldStacks, registryLookup);
     }
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        Inventories.readNbt(nbt, inventory.stacks);
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+        Inventories.readNbt(nbt, inventory.heldStacks, registryLookup);
     }
 
     @Override
-    public DefaultedList<ItemStack> getItems() { return inventory.stacks; }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeBlockPos(this.pos);
-    }
+    public DefaultedList<ItemStack> getItems() { return inventory.heldStacks; }
 
     @Override
     public Text getDisplayName() {
         return Text.translatable(CONTAINER_TRANSLATION_KEY);
+    }
+
+    @Override
+    public Object getScreenOpeningData(ServerPlayerEntity player) {
+        return new WorkbenchData(this.pos);
     }
 
     @Nullable
@@ -92,29 +95,29 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
     }
 
     private boolean hasRecipe(){
-        Optional<WorkbenchRecipe> recipe = getCurrentRecipe();
+        Optional<RecipeEntry<WorkbenchRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return false;
 
         ItemStack output = getStack(OUTPUT_SLOT);
-        ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
+        ItemStack recipeOutput = recipe.get().value().craft(WorkbenchRecipe.inputFrom(inventory), world.getRegistryManager());
 
         return  (output.isEmpty() || ItemStack.areItemsEqual(output, recipeOutput)) &&
                 output.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxCount();
     }
 
-    private Optional<WorkbenchRecipe> getCurrentRecipe(){
+    private Optional<RecipeEntry<WorkbenchRecipe>> getCurrentRecipe(){
         SimpleInventory inv = new SimpleInventory(this.size());
         for (int i=0; i<this.size(); i++){
             inv.setStack(i, this.getStack(i));
         }
-        return getWorld().getRecipeManager().getFirstMatch(ModRecipes.WORKBENCH_RECIPE_TYPE, inv, getWorld());
+        return getWorld().getRecipeManager().getFirstMatch(ArmoryRecipes.WORKBENCH_RECIPE_TYPE, WorkbenchRecipe.inputFrom(inventory), getWorld());
     }
 
     private void craftItem(){
-        Optional<WorkbenchRecipe> recipe = getCurrentRecipe();
+        Optional<RecipeEntry<WorkbenchRecipe>> recipe = getCurrentRecipe();
         if (recipe.isEmpty()) return;
 
-        ItemStack recipeOutput = recipe.get().craft(inventory, world.getRegistryManager());
+        ItemStack recipeOutput = recipe.get().value().craft(WorkbenchRecipe.inputFrom(inventory), world.getRegistryManager());
 
         for(int i=0; i<NUM_INPUTS; i++)
             this.removeStack(i, 1);
@@ -132,7 +135,7 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
     }
 }

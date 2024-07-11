@@ -1,0 +1,11 @@
+{
+  "type": "esromes_armory:workbench",
+  "ingredients": [
+    {"item": "esromes_armory:sword_grip"},
+    {"item": "esromes_armory:sword_guard"},
+    {"item": "esromes_armory:sword_blade"}
+  ],
+  "result": {
+    "id": "esromes_armory:sword"
+  }
+}

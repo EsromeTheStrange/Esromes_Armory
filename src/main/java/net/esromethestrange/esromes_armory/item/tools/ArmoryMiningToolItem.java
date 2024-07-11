@@ -1,50 +1,46 @@
 package net.esromethestrange.esromes_armory.item.tools;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.item.ModItems;
-import net.esromethestrange.esromes_armory.item.material.ComponentBasedItem;
+import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterial;
-import net.esromethestrange.esromes_armory.material.ArmoryMaterials;
-import net.esromethestrange.esromes_armory.material.MaterialTypes;
-import net.fabricmc.fabric.api.mininglevel.v1.MiningLevelManager;
+import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
-import net.minecraft.item.Vanishable;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class ArmoryMiningToolItem extends MiningToolItem implements ComponentBasedItem, Vanishable {
+public abstract class ArmoryMiningToolItem extends MiningToolItem implements PartBasedItem {
     protected final ToolType toolType;
-    protected List<MaterialItem> components = new ArrayList<>();
+    protected List<MaterialItem> parts = new ArrayList<>();
 
-    protected static final MaterialItem COMPONENT_BINDING = (MaterialItem) ModItems.TOOL_BINDING;
-    protected static final MaterialItem COMPONENT_HANDLE = (MaterialItem) ModItems.TOOL_HANDLE;
+    protected static final MaterialItem COMPONENT_BINDING = (MaterialItem) ArmoryItems.TOOL_BINDING;
+    protected static final MaterialItem COMPONENT_HANDLE = (MaterialItem) ArmoryItems.TOOL_HANDLE;
 
-    public ArmoryMiningToolItem(Settings settings, ToolType toolType, MaterialItem... components) {
-        super(1, 1, ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
+    public ArmoryMiningToolItem(Settings settings, ToolType toolType, MaterialItem... parts) {
+        super(ToolMaterials.WOOD, toolType.effectiveBlocks, settings);
         this.toolType = toolType;
-        this.components.addAll(Arrays.asList(components));
-        COMPONENT_BASED_ITEMS.add(this);
+        this.parts.addAll(Arrays.asList(parts));
+        PART_BASED_ITEMS.add(this);
     }
 
     @Override
@@ -55,39 +51,47 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
     }
 
     @Override
-    public boolean isSuitableFor(ItemStack stack, BlockState state) {
-        return MiningLevelManager.getRequiredMiningLevel(state) <= calculateMiningLevel(stack);
+    public void onCraft(ItemStack stack, World world) {
+        super.onCraft(stack, world);
+        setupComponents(stack);
     }
-    @Override
-    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-        return state.isIn(this.toolType.effectiveBlocks) ? calculateMiningSpeed(stack) : 1.0f;
+
+    public static void setupComponents(ItemStack stack){
+        ArmoryMiningToolItem miningToolItem = (ArmoryMiningToolItem)stack.getItem();
+        stack.set(DataComponentTypes.MAX_DAMAGE, miningToolItem.calculateDurability(stack));
+        stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, AttributeModifiersComponent.builder()
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID,
+                        ((ArmoryMiningToolItem) stack.getItem()).calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID,
+                        ((ArmoryMiningToolItem) stack.getItem()).calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND)
+                .build());
+        stack.set(DataComponentTypes.TOOL, new ToolComponent(List.of(
+                ToolComponent.Rule.ofNeverDropping(miningToolItem.getInverseTag(stack)),
+                ToolComponent.Rule.ofAlwaysDropping(miningToolItem.toolType.getEffectiveBlocks(), miningToolItem.calculateMiningSpeed(stack))
+        ), 1, 1));
     }
+
     public int getEnchantability(ItemStack stack) {
         return calculateEnchantability(stack);
     }
-    public final int getMaxDamage(ItemStack stack){
-        return calculateDurability(stack);
+    public TagKey<Block> getInverseTag(ItemStack stack){
+        int miningLevel = calculateMiningLevel(stack);
+        return switch (miningLevel){
+            case 1 -> BlockTags.INCORRECT_FOR_STONE_TOOL;
+            case 2 -> BlockTags.INCORRECT_FOR_IRON_TOOL;
+            case 3 -> BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
+            case 4 -> BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
+            default -> BlockTags.INCORRECT_FOR_WOODEN_TOOL;
+        };
     }
 
     @Override
-    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
-        if (slot == EquipmentSlot.MAINHAND) {
-            ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier",
-                    calculateAttackDamage(stack), EntityAttributeModifier.Operation.ADDITION));
-            builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier",
-                    calculateAttackSpeed(stack), EntityAttributeModifier.Operation.ADDITION));
-            return builder.build();
-        }
-        return super.getAttributeModifiers(stack, slot);
-    }
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+        super.appendTooltip(stack, context, tooltip, type);
 
-    @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        super.appendTooltip(stack, world, tooltip, context);
-
+        //TODO implement Tooltip thing in components
         if(EsromesArmory.CONFIG.componentTooltips()){
-            for(MaterialItem item : getComponents()){
+            for(MaterialItem item : getParts()){
                 item.addMaterialTooltip(item.getStack(getMaterial(stack, item)), tooltip, true);
             }
         }
@@ -95,26 +99,26 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        return Math.round(13.0f - (float)stack.getDamage() * 13.0f / (float)getMaxDamage(stack));
+        return Math.round(13.0f - (float)stack.getDamage() * 13.0f / (float)calculateDurability(stack));
     }
     @Override
     public int getItemBarColor(ItemStack stack) {
-        float f = Math.max(0.0f, ((float)getMaxDamage(stack) - (float)stack.getDamage()) / (float)getMaxDamage(stack));
+        float f = Math.max(0.0f, ((float)calculateDurability(stack) - (float)stack.getDamage()) / (float)calculateDurability(stack));
         return MathHelper.hsvToRgb(f / 3.0f, 1.0f, 1.0f);
     }
 
     protected int calculateMiningLevel(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
         return headMaterial.miningLevel;
     }
     protected float calculateMiningSpeed(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
         return headMaterial.miningSpeed;
     }
     protected int calculateDurability(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
-        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
-        ArmoryMaterial handleMaterial = getHandleMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
+        Material bindingMaterial = getBindingMaterial(stack);
+        Material handleMaterial = getHandleMaterial(stack);
         return (int) (
                 headMaterial.durability * 25 +
                 bindingMaterial.durability * 50 +
@@ -122,27 +126,27 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         );
     }
     protected double calculateAttackDamage(ItemStack stack) {
-        ArmoryMaterial headMaterial = getPrimaryMaterial(stack);
+        Material headMaterial = getPrimaryMaterial(stack);
         return (double)headMaterial.attackDamage * toolType.getAttackDamageMultiplier();
     }
     protected double calculateAttackSpeed(ItemStack stack) {
-        ArmoryMaterial bindingMaterial = getBindingMaterial(stack);
+        Material bindingMaterial = getBindingMaterial(stack);
         return toolType.getAttackSpeed() +
                 (double)bindingMaterial.attackSpeed * toolType.getAttackSpeedMultiplier();
     }
     protected int calculateEnchantability(ItemStack stack) {
-        ArmoryMaterial headMaterial = getMaterial(stack, getHeadComponent());
+        Material headMaterial = getMaterial(stack, getHeadComponent());
         return headMaterial.enchantability;
     }
 
     @Override
-    public ArmoryMaterial getPrimaryMaterial(ItemStack stack) {
+    public Material getPrimaryMaterial(ItemStack stack) {
         return getMaterial(stack, getHeadComponent());
     }
-    public ArmoryMaterial getBindingMaterial(ItemStack stack){
+    public Material getBindingMaterial(ItemStack stack){
         return getMaterial(stack, getBindingComponent());
     }
-    public ArmoryMaterial getHandleMaterial(ItemStack stack){
+    public Material getHandleMaterial(ItemStack stack){
         return getMaterial(stack, getHandleComponent());
     }
 
@@ -155,23 +159,25 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Com
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), ArmoryMaterials.NONE);
+            setMaterial(stack, getHeadComponent(), Materials.NONE);
+            setupComponents(stack);
             defaultStacks.add(stack);
         }
-        for(ArmoryMaterial material : MaterialTypes.METAL){
+        for(Material material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
-            for(MaterialItem materialItem : getComponents()){
+            for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
             }
             setMaterial(stack, getHeadComponent(), material);
+            setupComponents(stack);
             defaultStacks.add(stack);
         }
         return defaultStacks;
     }
 
     @Override
-    public List<MaterialItem> getComponents() {
-        return components;
+    public List<MaterialItem> getParts() {
+        return parts;
     }
 
     public static class ToolType{

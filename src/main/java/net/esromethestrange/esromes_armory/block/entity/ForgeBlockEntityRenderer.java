@@ -16,7 +16,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class ForgeBlockEntityRenderer implements BlockEntityRenderer<ForgeBlockEntity> {
-    public ForgeBlockEntityRenderer(BlockEntityRendererFactory.Context context){ }
+    public ForgeBlockEntityRenderer(BlockEntityRendererFactory.Context context){}
 
     @Override
     public void render(ForgeBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -27,6 +27,7 @@ public class ForgeBlockEntityRenderer implements BlockEntityRenderer<ForgeBlockE
             matrices.translate(0.5f, (15f / 16f), 0.5f);
             matrices.scale(0.6f, 0.6f, 0.6f);
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(270));
+            matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(entity.getRotation()));
 
             itemRenderer.renderItem(stack, ModelTransformationMode.GUI, getLightLevel(entity.getWorld(), entity.getPos()),
                     OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, entity.getWorld(), 1);
