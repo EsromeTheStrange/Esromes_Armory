@@ -35,6 +35,12 @@ public class ArmoryItemGroups {
             entries.add(ArmoryBlocks.STEEL_BLOCK);
 
             entries.add(ArmoryItems.STEEL_INGOT);
+
+            entries.add(ArmoryItems.SHOVEL_HEAD_MOLD);
+            entries.add(ArmoryItems.AXE_HEAD_MOLD);
+            entries.add(ArmoryItems.HOE_HEAD_MOLD);
+            entries.add(ArmoryItems.SWORD_GUARD_MOLD);
+            entries.add(ArmoryItems.SWORD_BLADE_MOLD);
         }, true);
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryItems.PICKAXE), "tools", (context, entries) ->{

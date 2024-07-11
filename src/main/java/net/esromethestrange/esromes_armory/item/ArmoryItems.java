@@ -11,7 +11,11 @@ import net.minecraft.util.Identifier;
 public class ArmoryItems {
     public static final Item STEEL_INGOT = registerItem("steel_ingot", new Item(new Item.Settings()));
 
-    public static final Item BAR = registerItem("bar", new ComponentItem(new Item.Settings(), MaterialTypes.METAL));
+    public static final Item SHOVEL_HEAD_MOLD = registerItem("shovel_head_mold", new Item(new Item.Settings()));
+    public static final Item AXE_HEAD_MOLD = registerItem("axe_head_mold", new Item(new Item.Settings()));
+    public static final Item HOE_HEAD_MOLD = registerItem("hoe_head_mold", new Item(new Item.Settings()));
+    public static final Item SWORD_GUARD_MOLD = registerItem("sword_guard_mold", new Item(new Item.Settings()));
+    public static final Item SWORD_BLADE_MOLD = registerItem("sword_blade_mold", new Item(new Item.Settings()));
 
     public static final Item TOOL_HANDLE = registerItem("tool_handle", new ComponentItem(new Item.Settings(), MaterialTypes.WOOD));
     public static final Item TOOL_BINDING = registerItem("tool_binding", new ComponentItem(new Item.Settings(), MaterialTypes.BINDING));

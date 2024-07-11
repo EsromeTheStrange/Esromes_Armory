@@ -47,13 +47,19 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(Materials.SLIME, "Slime", translationBuilder);
 
         //Items
+        translationBuilder.add(ArmoryItems.STEEL_INGOT, "Steel Ingot");
+
+        translationBuilder.add(ArmoryItems.SHOVEL_HEAD_MOLD, "Shovel Head Mold");
+        translationBuilder.add(ArmoryItems.AXE_HEAD_MOLD, "Axe Head Mold");
+        translationBuilder.add(ArmoryItems.HOE_HEAD_MOLD, "Hoe Head Mold");
+        translationBuilder.add(ArmoryItems.SWORD_GUARD_MOLD, "Sword Guard Mold");
+        translationBuilder.add(ArmoryItems.SWORD_BLADE_MOLD, "Sword Blade Mold");
+
         translationBuilder.add(ArmoryItems.SHOVEL, " Shovel");
         translationBuilder.add(ArmoryItems.PICKAXE, " Pickaxe");
         translationBuilder.add(ArmoryItems.AXE, " Axe");
         translationBuilder.add(ArmoryItems.HOE, " Hoe");
         translationBuilder.add(ArmoryItems.SWORD, " Sword");
-
-        translationBuilder.add(ArmoryItems.BAR, " Bar");
 
         translationBuilder.add(ArmoryItems.TOOL_HANDLE, " Tool Handle");
         translationBuilder.add(ArmoryItems.TOOL_BINDING, " Tool Binding");
@@ -66,8 +72,6 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ArmoryItems.SWORD_GRIP, " Sword Grip");
         translationBuilder.add(ArmoryItems.SWORD_GUARD, " Sword Guard");
         translationBuilder.add(ArmoryItems.SWORD_BLADE, " Sword Blade");
-
-        translationBuilder.add(ArmoryItems.STEEL_INGOT, "Steel Ingot");
 
         //Blocks
         translationBuilder.add(ArmoryBlocks.WORKBENCH, "Workbench");

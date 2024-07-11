@@ -29,6 +29,12 @@ public class ArmoryModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ArmoryItems.STEEL_INGOT, Models.GENERATED);
 
+        itemModelGenerator.register(ArmoryItems.SHOVEL_HEAD_MOLD, Models.GENERATED);
+        itemModelGenerator.register(ArmoryItems.AXE_HEAD_MOLD, Models.GENERATED);
+        itemModelGenerator.register(ArmoryItems.HOE_HEAD_MOLD, Models.GENERATED);
+        itemModelGenerator.register(ArmoryItems.SWORD_GUARD_MOLD, Models.GENERATED);
+        itemModelGenerator.register(ArmoryItems.SWORD_BLADE_MOLD, Models.GENERATED);
+
         for(MaterialItem item : MaterialItem.MATERIAL_ITEMS){
             Models.GENERATED.upload(ModelIds.getItemModelId((Item)item),
                     TextureMap.layer0(item.getRawIdentifier()
@@ -45,6 +51,10 @@ public class ArmoryModelProvider extends FabricModelProvider {
                     Models.GENERATED);
         }
 
+        itemModelGenerator.register(ArmoryFluids.MOLTEN_COPPER_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ArmoryFluids.MOLTEN_IRON_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ArmoryFluids.MOLTEN_GOLD_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ArmoryFluids.MOLTEN_NETHERITE_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ArmoryFluids.MOLTEN_STEEL_BUCKET, Models.GENERATED);
     }
 }

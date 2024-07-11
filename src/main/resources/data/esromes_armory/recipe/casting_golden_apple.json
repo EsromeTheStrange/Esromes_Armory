@@ -1,7 +1,7 @@
 {
   "type": "esromes_armory:casting",
   "ingredient": {
-    "item": "minecraft:apple"
+    "item": "esromes_armory:axe_mold"
   },
   "fluid_tester": {
     "fluid_variant":{

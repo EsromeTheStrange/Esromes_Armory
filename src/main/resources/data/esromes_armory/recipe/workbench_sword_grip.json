@@ -1,0 +1,16 @@
+{
+  "type": "esromes_armory:workbench",
+  "ingredients": [
+    {
+      "fabric:type": "esromes_armory:material",
+      "ingredient": "esromes_armory:planks"
+    },
+    {
+      "fabric:type": "esromes_armory:material",
+      "ingredient": "esromes_armory:planks"
+    }
+  ],
+  "result": {
+    "id": "esromes_armory:sword_grip"
+  }
+}

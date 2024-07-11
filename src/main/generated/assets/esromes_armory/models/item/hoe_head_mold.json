@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "esromes_armory:item/bar_minecraft_netherite"
+    "layer0": "esromes_armory:item/hoe_head_mold"
   }
 }
