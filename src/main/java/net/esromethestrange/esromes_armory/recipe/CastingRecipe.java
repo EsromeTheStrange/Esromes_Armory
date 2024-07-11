@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.recipe.ingredient.FluidTester;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -24,13 +25,13 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
 
     final ItemStack result;
     final Ingredient input;
-    final FluidVariant fluid;
+    final FluidTester fluidTester;
     final long fluidAmount;
 
-    public CastingRecipe(ItemStack result, Ingredient input, FluidVariant fluid, long fluidAmount) {
+    public CastingRecipe(ItemStack result, Ingredient input, FluidTester fluidTester, long fluidAmount) {
         this.result = result;
         this.input = input;
-        this.fluid = fluid;
+        this.fluidTester = fluidTester;
         this.fluidAmount = fluidAmount;
     }
 
@@ -39,7 +40,7 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         if (world.isClient()) return false;
 
         if( !input.test(inventory.getStackInSlot(0)) ||
-            !inventory.fluidType.equals(fluid) ||
+            !fluidTester.matches(inventory.fluidType) ||
             !(inventory.fluidAmount >= fluidAmount))
                 return false;
 
@@ -79,7 +80,7 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
 
     public Ingredient getInput(){ return input; }
     public ItemStack getOutput(){ return result; }
-    public FluidVariant getFluid(){ return fluid; }
+    public FluidTester getFluidTester(){ return fluidTester; }
     public long getFluidAmount(){ return fluidAmount; }
 
     @Override
@@ -97,7 +98,7 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         MapCodec<CastingRecipe> CASTING_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
                 Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input),
-                FluidVariant.CODEC.fieldOf("fluid").forGetter(recipe -> recipe.fluid),
+                FluidTester.CODEC.fieldOf("fluid_tester").forGetter(recipe -> recipe.fluidTester),
                 Codec.LONG.fieldOf("fluid_amount").forGetter(recipe -> recipe.fluidAmount)
         ).apply(instance, CastingRecipe::new));
         public static final PacketCodec<RegistryByteBuf, CastingRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
@@ -115,15 +116,15 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         private static CastingRecipe read(RegistryByteBuf buf) {
             ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
             Ingredient ingredient = Ingredient.PACKET_CODEC.decode(buf);
-            FluidVariant fluid = FluidVariant.PACKET_CODEC.decode(buf);
+            FluidTester fluidTester = FluidTester.PACKET_CODEC.decode(buf);
             long fluidAmount = buf.readLong();
-            return new CastingRecipe(result, ingredient, fluid, fluidAmount);
+            return new CastingRecipe(result, ingredient, fluidTester, fluidAmount);
         }
 
         private static void write(RegistryByteBuf buf, CastingRecipe recipe) {
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
             Ingredient.PACKET_CODEC.encode(buf, recipe.input);
-            FluidVariant.PACKET_CODEC.encode(buf, recipe.fluid);
+            FluidTester.PACKET_CODEC.encode(buf, recipe.fluidTester);
             buf.writeLong(recipe.fluidAmount);
         }
 

@@ -1,0 +1,6 @@
+{
+  "fluid":{
+    "minecraft:gold": "esromes_armory:molten_gold",
+    "esromes_armory:steel": "esromes_armory:molten_steel"
+  }
+}

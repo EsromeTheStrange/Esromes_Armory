@@ -3,8 +3,10 @@
   "ingredient": {
     "item": "minecraft:apple"
   },
-  "fluid": {
-    "fluid": "esromes_armory:molten_gold"
+  "fluid_tester": {
+    "fluid_variant":{
+      "fluid": "esromes_armory:molten_gold"
+    }
   },
   "fluid_amount": 72000,
   "result": {

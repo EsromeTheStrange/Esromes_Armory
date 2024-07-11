@@ -2,7 +2,6 @@ package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
 import net.esromethestrange.esromes_armory.data.heat.*;
-import net.esromethestrange.esromes_armory.recipe.AnvilRecipe;
 import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
 import net.esromethestrange.esromes_armory.recipe.CastingRecipe;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
@@ -94,7 +93,7 @@ public class SmelteryBlockEntity extends BlockEntity implements ImplementedInven
 
         ItemStack recipeOutput = recipe.craft(CastingRecipe.inputFrom(stack, fluidStorage.variant, fluidStorage.amount), world.getRegistryManager());
         try(Transaction transaction = Transaction.openOuter()){
-            fluidStorage.extract(recipe.getFluid(), recipe.getFluidAmount(), transaction);
+            fluidStorage.extract(fluidStorage.variant, recipe.getFluidAmount(), transaction);
             stack.setCount(stack.getCount() - 1);
 
             Vec3d vec3d = Vec3d.add(pos, 0.5, 1.01, 0.5).addRandom(world.random, 0.7f);

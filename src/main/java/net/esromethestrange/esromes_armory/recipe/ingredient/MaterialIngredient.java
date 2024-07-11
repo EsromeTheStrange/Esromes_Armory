@@ -6,6 +6,7 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -26,16 +27,16 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public List<Material> getMaterials(){
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).getMaterials();
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getItemMaterials();
+    }
+
+    public List<FluidVariant> getFluids(){
+        return ArmoryIngredients.getMaterialIngredient(ingredientType).getFluids();
     }
 
     @Override
     public List<ItemStack> getMatchingStacks() {
         return ArmoryIngredients.getMaterialIngredient(ingredientType).matchingStacks;
-    }
-
-    public List<ItemStack> getMatchingStacksForMaterial(Material material){
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).getMatchingStacksForMaterial(material);
     }
 
     @Override

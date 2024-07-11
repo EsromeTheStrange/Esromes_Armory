@@ -1,0 +1,15 @@
+{
+  "type": "esromes_armory:casting",
+  "ingredient": {
+    "fabric:type": "esromes_armory:material",
+    "ingredient": "esromes_armory:block"
+  },
+  "fluid_tester": {
+    "material_ingredient": "esromes_armory:fluids"
+  },
+  "fluid_amount": 81000,
+  "result": {
+    "id": "esromes_armory:axe_head",
+    "count": 3
+  }
+}

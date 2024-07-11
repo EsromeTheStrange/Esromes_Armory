@@ -80,9 +80,18 @@ public class ResourceHelper {
     private static MaterialIngredientData parseMaterialIngredient(JsonObject json, String modId, String materialTypeName){
         MaterialIngredientData newIngredient = new MaterialIngredientData(Identifier.of(modId, materialTypeName));
 
-        JsonObject ingredients = json.get(JSON_ENTRIES).getAsJsonObject();
-        for (String key : ingredients.keySet()){
-            newIngredient.addEntry(Identifier.tryParse(key), Registries.ITEM.get(Identifier.tryParse(ingredients.get(key).getAsString())));
+        if(json.has(JSON_ENTRIES)){
+            JsonObject ingredients = json.get(JSON_ENTRIES).getAsJsonObject();
+            for (String key : ingredients.keySet()){
+                newIngredient.addEntry(Identifier.tryParse(key), Registries.ITEM.get(Identifier.tryParse(ingredients.get(key).getAsString())));
+            }
+        }
+
+        if(json.has(JSON_FLUID)){
+            JsonObject fluids = json.get(JSON_FLUID).getAsJsonObject();
+            for (String key : fluids.keySet()){
+                newIngredient.addEntry(Identifier.tryParse(key), Registries.FLUID.get(Identifier.tryParse(fluids.get(key).getAsString())));
+            }
         }
 
         return newIngredient;

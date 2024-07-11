@@ -8,6 +8,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.TankWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.esromethestrange.esromes_armory.recipe.CastingRecipe;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -22,7 +23,13 @@ public class EmiCastingRecipe implements EmiRecipe {
         this.id = id;
         this.input = new ArrayList<>();
         input.add(EmiIngredient.of(recipe.getInput()));
-        input.add(EmiStack.of(recipe.getFluid().getFluid(), recipe.getFluidAmount()));
+
+        List<EmiStack> fluidInput = new ArrayList<>();
+        for(FluidVariant fluidVariant : recipe.getFluidTester().getFluids()){
+            fluidInput.add(EmiStack.of(fluidVariant.getFluid(), recipe.getFluidAmount()));
+        }
+        input.add(EmiIngredient.of(fluidInput));
+
         this.output = List.of(EmiStack.of(recipe.getOutput()));
     }
 
