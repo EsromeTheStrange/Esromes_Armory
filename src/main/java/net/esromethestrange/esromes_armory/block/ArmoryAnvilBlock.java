@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.block;
 
 import com.mojang.serialization.MapCodec;
+import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryAnvilBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -100,14 +101,28 @@ public class ArmoryAnvilBlock extends BlockWithEntity implements BlockEntityProv
             return ItemActionResult.success(world.isClient);
         if(armoryAnvilBlockEntity == null)
             return ItemActionResult.FAIL;
-        if(armoryAnvilBlockEntity.outputFilled() || armoryAnvilBlockEntity.full() || stack.isEmpty()){
+
+        //Calculate which slot the player is interacting with (left or right).
+        Vec3d hitPos = hit.getPos().subtract(pos.toCenterPos());
+        float leftOffset = -0.05f;
+        float horizontalOffset = (float)switch(state.get(FACING)){
+            case NORTH -> -hitPos.getX();
+            case EAST -> -hitPos.getZ();
+            case SOUTH -> hitPos.getX();
+            default -> hitPos.getZ();
+        };
+        int i = (horizontalOffset < leftOffset) ? 0 : 1;
+        EsromesArmory.LOGGER.info(": " + horizontalOffset);
+
+        //Interact with the anvil block entity.
+        if(armoryAnvilBlockEntity.outputFilled() || !armoryAnvilBlockEntity.getStack(i).isEmpty() || stack.isEmpty()){
             Vec3d vec3d = Vec3d.add(pos, 0.5, 1.01, 0.5).addRandom(world.random, 0.7f);
-            ItemEntity itemEntity = new ItemEntity(world, vec3d.getX(), vec3d.getY(), vec3d.getZ(), armoryAnvilBlockEntity.removeTopStack());
+            ItemEntity itemEntity = new ItemEntity(world, vec3d.getX(), vec3d.getY(), vec3d.getZ(), armoryAnvilBlockEntity.removeOutputOrStack(i));
             itemEntity.setToDefaultPickupDelay();
             world.spawnEntity(itemEntity);
             return ItemActionResult.success(world.isClient);
         }
-        return armoryAnvilBlockEntity.receiveStack(stack) ? ItemActionResult.success(world.isClient) : ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return armoryAnvilBlockEntity.receiveStack(stack, i) ? ItemActionResult.success(world.isClient) : ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Nullable

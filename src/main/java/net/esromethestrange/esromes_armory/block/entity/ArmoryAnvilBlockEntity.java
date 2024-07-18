@@ -39,26 +39,22 @@ public class ArmoryAnvilBlockEntity extends BlockEntity implements ImplementedIn
     public boolean full(){ return !this.getStack(0).isEmpty() && !this.getStack(1).isEmpty(); }
     public boolean outputFilled(){ return !this.getStack(OUTPUT_SLOT).isEmpty(); }
 
-    public boolean receiveStack(ItemStack stack){
+    public boolean receiveStack(ItemStack stack, int index){
         if(full())
             return false;
-        if(getStack(0).isEmpty())
-            setStack(0, stack.copyWithCount(1));
-        else
-            setStack(1, stack.copyWithCount(1));
+        if(getStack(index).isEmpty())
+            setStack(index, stack.copyWithCount(1));
         stack.setCount(stack.getCount() - 1);
         tryCraft();
         markDirty();
         return true;
     }
 
-    public ItemStack removeTopStack(){
+    public ItemStack removeOutputOrStack(int index){
         markDirty();
-        for(int i=OUTPUT_SLOT; i>=0; i--){
-            if(!getStack(i).isEmpty())
-                return removeStack(i);
-        }
-        return ItemStack.EMPTY;
+        if(outputFilled())
+            return removeStack(OUTPUT_SLOT);
+        return removeStack(index);
     }
 
     protected void tryCraft(){
