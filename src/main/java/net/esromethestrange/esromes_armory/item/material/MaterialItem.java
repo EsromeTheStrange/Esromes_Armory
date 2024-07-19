@@ -16,15 +16,17 @@ import java.util.List;
 public interface MaterialItem {
     List<MaterialItem> MATERIAL_ITEMS = new ArrayList<>();
 
-    String NBT_MATERIAL = EsromesArmory.MOD_ID + ".material";
-
     ItemStack getStack(Material material);
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean partNameIncluded);
 
-    default List<ItemStack> getDefaultStacks(){ return getDefaultStacks(false); }
     List<ItemStack> getDefaultStacks(boolean includeNone);
     List<Material> getValidMaterials();
     Material getDefaultMaterial();
+    int getBaseFuelTime();
+
+    default int getFuelTime(ItemStack stack){
+        return getBaseFuelTime() * getMaterial(stack).fuelTimeMultiplier;
+    }
 
     default void addMaterialTooltip(ItemStack stack, List<Text> tooltip){
         addMaterialTooltip(stack, tooltip, false);

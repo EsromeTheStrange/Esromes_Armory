@@ -13,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(EnchantmentHelper.class)
 public class EsromesArmoryEnchantabilityMixin {
     @Redirect(method = "calculateRequiredExperienceLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;getEnchantability()I"))
-    private static int esromes_armory$onCalculateRequiredExperienceLevel(Item item, Random random, int slotIndex, int bookshelfCount, ItemStack stack) {
+    private static int calculateRequiredExperienceLevelRedirect(Item item, Random random, int slotIndex, int bookshelfCount, ItemStack stack) {
         return getEnchantabilityOf(item, stack);
     }
     @Redirect(method = "generateEnchantments", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;getEnchantability()I"))
-    private static int esromes_armory$onCalculateRequiredExperienceLevel(Item item, Random random, ItemStack stack) {
+    private static int generateEnchantmentsRedirect(Item item, Random random, ItemStack stack) {
         return getEnchantabilityOf(item, stack);
     }
 

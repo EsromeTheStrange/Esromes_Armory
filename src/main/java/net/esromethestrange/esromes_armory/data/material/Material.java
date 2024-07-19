@@ -17,7 +17,12 @@ public class Material {
     public final float attackSpeed;
     public final int enchantability;
 
-    public Material(String modId, String materialName, int color, float durability, int miningLevel, float miningSpeed, int attackDamage, float attackSpeed, int enchantability) {
+    public final int fuelTimeMultiplier;
+
+    public Material(String modId, String materialName, int color,
+                    float durability, int miningLevel, float miningSpeed,
+                    int attackDamage, float attackSpeed, int enchantability,
+                    int fuelTimeMultiplier) {
         this.translatable_name = modId + ".material." + materialName;
         this.modId = modId;
         this.materialName = materialName;
@@ -31,6 +36,8 @@ public class Material {
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
         this.enchantability = enchantability;
+
+        this.fuelTimeMultiplier = fuelTimeMultiplier;
 
         Materials.addMaterial(this);
     }

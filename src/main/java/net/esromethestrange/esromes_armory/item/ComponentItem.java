@@ -16,6 +16,7 @@ import java.util.List;
 
 public class ComponentItem extends Item implements MaterialItem {
     public List<Material> defaultMaterials;
+    protected int baseFuelTime = 200;
 
     public ComponentItem(Settings settings, List<Material> defaultMaterials) {
         super(settings);
@@ -58,6 +59,15 @@ public class ComponentItem extends Item implements MaterialItem {
         return defaultMaterials;
     }
 
+    @Override
+    public int getBaseFuelTime() {
+        return baseFuelTime;
+    }
+
+    public ComponentItem setBaseFuelTime(int baseFuelTime){
+        this.baseFuelTime = baseFuelTime;
+        return this;
+    }
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {

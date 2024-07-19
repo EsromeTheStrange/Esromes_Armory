@@ -3,6 +3,8 @@
   "package": "net.esromethestrange.esromes_armory.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EsromesArmoryAbstractFurnaceBlockEntityMixin",
+    "EsromesArmoryAbstractFurnaceScreenHandlerMixin",
     "EsromesArmoryEnchantabilityMixin",
     "EsromesArmoryItemStackMixin"
   ],

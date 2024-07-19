@@ -16,7 +16,6 @@ public interface PartBasedItem {
     List<PartBasedItem> PART_BASED_ITEMS = new ArrayList<>();
 
     List<MaterialItem> getParts();
-    default List<ItemStack> getDefaultStacks() { return getDefaultStacks(false); }
     List<ItemStack> getDefaultStacks(boolean includeNone);
     Material getPrimaryMaterial(ItemStack stack);
 
@@ -28,6 +27,17 @@ public interface PartBasedItem {
             partsComponent = new ItemPartsComponent();
 
         stack.set(ArmoryComponents.ITEM_PARTS, partsComponent.withPart(part, material));
+    }
+
+    default int getFuelTime(ItemStack stack){
+        if(getPrimaryMaterial(stack).fuelTimeMultiplier == 0)
+            return 0;
+        int fuelTime = 0;
+        for(MaterialItem part : getParts()){
+            ItemStack partStack = part.getStack(getMaterial(stack, part));
+            fuelTime += ((MaterialItem)partStack.getItem()).getFuelTime(partStack);
+        }
+        return fuelTime;
     }
 
     default Material getMaterial(ItemStack stack, MaterialItem part){
