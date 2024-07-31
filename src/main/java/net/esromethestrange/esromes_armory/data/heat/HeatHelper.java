@@ -10,14 +10,14 @@ import net.minecraft.util.Identifier;
 import java.util.HashMap;
 
 public class HeatHelper implements SimpleSynchronousResourceReloadListener {
-    private static HashMap<Identifier, HeatData> heatDataMap = new HashMap<>();
+    private static final HashMap<Identifier, HeatData> heatDataMap = new HashMap<>();
 
     @Override public Identifier getFabricId() { return Identifier.of(EsromesArmory.MOD_ID, "heat"); }
 
     @Override
     public void reload(ResourceManager manager) {
         heatDataMap.clear();
-        for(Identifier id : manager.findResources("esrome/heat_states", i -> i.toString().endsWith(".json")).keySet()){
+        for(Identifier id : manager.findResources(HeatData.HEAT_STATE_PATH, i -> i.toString().endsWith(".json")).keySet()){
             HeatData heatData = ResourceHelper.readHeatData(id, manager);
             heatDataMap.put(heatData.id, heatData);
         }

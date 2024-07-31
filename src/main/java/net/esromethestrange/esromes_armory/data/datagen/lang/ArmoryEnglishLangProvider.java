@@ -1,17 +1,18 @@
 package net.esromethestrange.esromes_armory.data.datagen.lang;
 
-import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.compat.emi.EmiAnvilRecipe;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
-import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
-import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
+import net.esromethestrange.esromes_armory.item.ArmoryItems;
+import net.esromethestrange.esromes_armory.util.ArmoryTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.TagKey;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -118,6 +119,9 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(HeatLevel.YELLOW, "Yellow", translationBuilder);
         addTranslation(HeatLevel.WHITE, "White", translationBuilder);
 
+        //Tags
+        addTranslation(ArmoryTags.Fluids.MOLTEN_METALS, "Molten Metals", translationBuilder);
+
         //Other
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory", "Esrome's Armory");
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.default", "Esrome's Armory");
@@ -128,6 +132,9 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
 
     public void addTranslation(Material material, String materialName, TranslationBuilder translationBuilder){
         translationBuilder.add(material.translatable_name, materialName);
+    }
+    public void addTranslation(TagKey<?> tag, String translation, TranslationBuilder translationBuilder){
+        translationBuilder.add(tag.getTranslationKey(), translation);
     }
     public void addConfigTranslation(String configKey, String translation, TranslationBuilder translationBuilder){
         translationBuilder.add("text.config." + EsromesArmory.MOD_ID + "." + configKey, translation);

@@ -1,11 +1,14 @@
 package net.esromethestrange.esromes_armory.util;
 
 import com.google.common.base.Charsets;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.mojang.serialization.JsonOps;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.heat.*;
+import net.esromethestrange.esromes_armory.data.heat.HeatData;
 import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredientData;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -20,6 +23,7 @@ public class ResourceHelper {
     public static final ModelTransformation HANDHELD_TRANSFORMATION = loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
 
     public static final String JSON_ENTRIES = "entries";
+    public static final String JSON_TEMPERATURE = "temperature";
     public static final String JSON_ITEM = "item";
     public static final String JSON_FLUID = "fluid";
     public static final String JSON_AMOUNT = "amount";
@@ -42,21 +46,9 @@ public class ResourceHelper {
     private static HeatData parseHeatData(JsonObject json, String modId, String materialTypeName){
         HeatData newHeatData = new HeatData(Identifier.of(modId, materialTypeName));
 
-        JsonObject results = json.get(JSON_ENTRIES).getAsJsonObject();
-        for (String key : results.keySet()){
-            JsonObject resultJson = results.getAsJsonObject(key);
-            if(resultJson.has(JSON_ITEM)){
-                Identifier itemId = Identifier.tryParse(resultJson.get(JSON_ITEM).getAsString());
-                newHeatData.addEntry(HeatLevel.tryParse(key), new ItemHeatingResult(Registries.ITEM.get(itemId)));
-            }
-            if(resultJson.has(JSON_FLUID)){
-                Identifier fluidId = Identifier.tryParse(resultJson.get(JSON_FLUID).getAsString());
-                long fluidAmount = FluidConstants.BUCKET;
-                if(resultJson.has(JSON_AMOUNT)){
-                    fluidAmount = resultJson.get(JSON_AMOUNT).getAsLong();
-                }
-                newHeatData.addEntry(HeatLevel.tryParse(key), new FluidHeatingResult(Registries.FLUID.get(fluidId), fluidAmount));
-            }
+        JsonArray results = json.get(JSON_ENTRIES).getAsJsonArray();
+        for (JsonElement jsonElement : results){
+            newHeatData.addEntry(HeatData.ENTRY_CODEC.parse(JsonOps.INSTANCE, jsonElement).getOrThrow());
         }
 
         return newHeatData;

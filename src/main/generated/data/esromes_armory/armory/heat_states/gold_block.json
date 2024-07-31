@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "result": {
+        "type": "esromes_armory:fluid",
+        "amount": 81000,
+        "fluid": "esromes_armory:molten_gold"
+      },
+      "temperature": "orange"
+    },
+    {
+      "result": {
+        "type": "esromes_armory:item",
+        "item": "minecraft:gold_block"
+      },
+      "temperature": "room_temperature"
+    }
+  ]
+}

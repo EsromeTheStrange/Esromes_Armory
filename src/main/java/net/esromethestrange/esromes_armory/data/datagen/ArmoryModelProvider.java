@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 
 public class ArmoryModelProvider extends FabricModelProvider {
     public ArmoryModelProvider(FabricDataOutput output) {
@@ -19,6 +20,13 @@ public class ArmoryModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        Identifier WATER_PARTICLE = Identifier.ofVanilla("block/water_still");
+        blockStateModelGenerator.registerBuiltinWithParticle(ArmoryFluids.MOLTEN_COPPER_BLOCK, WATER_PARTICLE);
+        blockStateModelGenerator.registerBuiltinWithParticle(ArmoryFluids.MOLTEN_GOLD_BLOCK, WATER_PARTICLE);
+        blockStateModelGenerator.registerBuiltinWithParticle(ArmoryFluids.MOLTEN_IRON_BLOCK, WATER_PARTICLE);
+        blockStateModelGenerator.registerBuiltinWithParticle(ArmoryFluids.MOLTEN_NETHERITE_BLOCK, WATER_PARTICLE);
+        blockStateModelGenerator.registerBuiltinWithParticle(ArmoryFluids.MOLTEN_STEEL_BLOCK, WATER_PARTICLE);
+
         blockStateModelGenerator.registerNorthDefaultHorizontalRotation(ArmoryBlocks.ANVIL);
 
         blockStateModelGenerator.registerSimpleCubeAll(ArmoryBlocks.STEEL_BLOCK);

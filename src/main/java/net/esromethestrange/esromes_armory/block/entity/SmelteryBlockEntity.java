@@ -2,6 +2,8 @@ package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
 import net.esromethestrange.esromes_armory.data.heat.*;
+import net.esromethestrange.esromes_armory.data.heat.heating_result.FluidHeatingResult;
+import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
 import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
 import net.esromethestrange.esromes_armory.recipe.CastingRecipe;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;

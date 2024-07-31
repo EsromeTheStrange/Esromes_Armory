@@ -1,8 +1,9 @@
-package net.esromethestrange.esromes_armory.data.datagen;
+package net.esromethestrange.esromes_armory.data.datagen.tag;
 
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
@@ -20,7 +21,7 @@ public class ArmoryBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     }
 
     /**
-     * Sets a block to require a pickaxe.json in order to be mined.
+     * Sets a block to require a pickaxe in order to be mined.
      * @param block The block to add the tag to.
      * @param level The pickaxe.json level required (0 - wood, 1 - stone, 2 - iron, 3 - diamond).
      */

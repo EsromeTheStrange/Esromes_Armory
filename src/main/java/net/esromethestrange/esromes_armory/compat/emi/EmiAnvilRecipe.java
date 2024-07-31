@@ -23,6 +23,7 @@ import net.minecraft.util.collection.DefaultedList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class EmiAnvilRecipe implements EmiRecipe {
     public static final String HEATING_TRANSLATION_KEY = "emi.description.esromes_armory.heating";
@@ -30,7 +31,7 @@ public class EmiAnvilRecipe implements EmiRecipe {
     private final Identifier id;
     private final List<EmiIngredient> input;
     private final List<EmiStack> output;
-    private final HeatLevel requiredHeatLevel;
+    private final Optional<HeatLevel> requiredHeatLevel;
 
     public EmiAnvilRecipe(Identifier id, AnvilRecipe recipe) {
         this.id = id;
@@ -58,7 +59,9 @@ public class EmiAnvilRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         widgets.addTexture(EmiTexture.EMPTY_ARROW, 46, 1);
-        widgets.addText(Text.translatable(requiredHeatLevel.translation_key), 0, 18, requiredHeatLevel.color, true);
+
+        requiredHeatLevel.ifPresent(heatLevel -> widgets.addText(Text.translatable(heatLevel.translation_key), 0, 18, heatLevel.color, true));
+
         widgets.addTooltipText(List.of(Text.translatable(HEATING_TRANSLATION_KEY)), 0, 18, 48, 8);
 
         widgets.addSlot(input.get(0), 0, 0);
