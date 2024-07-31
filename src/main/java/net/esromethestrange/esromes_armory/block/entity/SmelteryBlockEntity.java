@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
+import net.esromethestrange.esromes_armory.data.HeatDataLoader;
 import net.esromethestrange.esromes_armory.data.heat.*;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.FluidHeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
@@ -62,7 +63,7 @@ public class SmelteryBlockEntity extends BlockEntity implements ImplementedInven
             markDirty();
             return;
         }
-        HeatData heatData = HeatHelper.getHeatData(inventory.get(0).getItem());
+        HeatData heatData = HeatDataLoader.getHeatData(inventory.get(0).getItem());
         if(heatData != HeatData.EMPTY){
             HeatingResult heatingResult = heatData.getResultFor(HeatLevel.WHITE);
 

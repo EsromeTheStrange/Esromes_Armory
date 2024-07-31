@@ -1,6 +1,7 @@
-package net.esromethestrange.esromes_armory.data.heat;
+package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.heat.HeatData;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.item.Item;
@@ -9,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
 
-public class HeatHelper implements SimpleSynchronousResourceReloadListener {
+public class HeatDataLoader implements SimpleSynchronousResourceReloadListener {
     private static final HashMap<Identifier, HeatData> heatDataMap = new HashMap<>();
 
     @Override public Identifier getFabricId() { return Identifier.of(EsromesArmory.MOD_ID, "heat"); }
@@ -17,7 +18,7 @@ public class HeatHelper implements SimpleSynchronousResourceReloadListener {
     @Override
     public void reload(ResourceManager manager) {
         heatDataMap.clear();
-        for(Identifier id : manager.findResources(HeatData.HEAT_STATE_PATH, i -> i.toString().endsWith(".json")).keySet()){
+        for(Identifier id : manager.findResources(ArmoryData.HEAT_STATE_PATH, i -> i.toString().endsWith(".json")).keySet()){
             HeatData heatData = ResourceHelper.readHeatData(id, manager);
             heatDataMap.put(heatData.id, heatData);
         }

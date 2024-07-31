@@ -21,10 +21,10 @@ public class ArmoryHeatStateProvider extends HeatStateProvider {
 
     @Override
     public void generate() {
-        registerMetal(Identifier.of(EsromesArmory.MOD_ID, "copper"), HeatLevel.ORANGE, Items.COPPER_INGOT, Blocks.COPPER_BLOCK, ArmoryFluids.MOLTEN_COPPER);
-        registerMetal(Identifier.of(EsromesArmory.MOD_ID, "gold"), HeatLevel.ORANGE, Items.GOLD_INGOT, Blocks.GOLD_BLOCK, ArmoryFluids.MOLTEN_GOLD);
-        registerMetal(Identifier.of(EsromesArmory.MOD_ID, "iron"), HeatLevel.WHITE, Items.IRON_INGOT, Blocks.IRON_BLOCK, ArmoryFluids.MOLTEN_IRON);
-        registerMetal(Identifier.of(EsromesArmory.MOD_ID, "netherite"), HeatLevel.WHITE, Items.NETHERITE_INGOT, Blocks.NETHERITE_BLOCK, ArmoryFluids.MOLTEN_NETHERITE);
+        registerMetal(Identifier.ofVanilla("copper"), HeatLevel.ORANGE, Items.COPPER_INGOT, Blocks.COPPER_BLOCK, ArmoryFluids.MOLTEN_COPPER);
+        registerMetal(Identifier.ofVanilla("gold"), HeatLevel.ORANGE, Items.GOLD_INGOT, Blocks.GOLD_BLOCK, ArmoryFluids.MOLTEN_GOLD);
+        registerMetal(Identifier.ofVanilla("iron"), HeatLevel.WHITE, Items.IRON_INGOT, Blocks.IRON_BLOCK, ArmoryFluids.MOLTEN_IRON);
+        registerMetal(Identifier.ofVanilla("netherite"), HeatLevel.WHITE, Items.NETHERITE_INGOT, Blocks.NETHERITE_BLOCK, ArmoryFluids.MOLTEN_NETHERITE);
         registerMetal(Identifier.of(EsromesArmory.MOD_ID, "steel"), HeatLevel.WHITE, ArmoryItems.STEEL_INGOT, ArmoryBlocks.STEEL_BLOCK, ArmoryFluids.MOLTEN_STEEL);
     }
 }

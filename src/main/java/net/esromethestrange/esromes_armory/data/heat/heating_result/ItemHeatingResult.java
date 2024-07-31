@@ -27,11 +27,6 @@ public class ItemHeatingResult extends HeatingResult{
         return false;
     }
 
-    @Override
-    public String toString() {
-        return "item-" + Registries.ITEM.getId(item);
-    }
-
     public Identifier itemId(){ return Registries.ITEM.getId(item); }
 
     @Override

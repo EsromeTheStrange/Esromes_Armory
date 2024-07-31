@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HeatData {
-    public static final String HEAT_STATE_PATH = "armory/heat_states";
-
     public static final Codec<Pair<HeatLevel, HeatingResult>> ENTRY_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             HeatLevel.CODEC.fieldOf("temperature").forGetter(Pair::getLeft),
             HeatingResults.CODEC.fieldOf("result").forGetter(Pair::getRight)

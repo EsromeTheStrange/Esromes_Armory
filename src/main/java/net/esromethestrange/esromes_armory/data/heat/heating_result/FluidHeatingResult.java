@@ -27,11 +27,6 @@ public class FluidHeatingResult extends HeatingResult{
         return false;
     }
 
-    @Override
-    public String toString() {
-        return "fluid-" + Registries.FLUID.getId(fluid);
-    }
-
     public Identifier fluidId(){ return Registries.FLUID.getId(this.fluid); }
     public long amount(){ return this.amount; }
 

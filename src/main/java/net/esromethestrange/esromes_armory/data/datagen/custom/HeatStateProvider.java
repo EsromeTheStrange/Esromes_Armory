@@ -2,6 +2,7 @@ package net.esromethestrange.esromes_armory.data.datagen.custom;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import net.esromethestrange.esromes_armory.data.ArmoryData;
 import net.esromethestrange.esromes_armory.data.heat.HeatData;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -44,7 +45,7 @@ public abstract class HeatStateProvider implements DataProvider {
 
     private Path getFilePath(Identifier path){
         return dataOutput
-                .getResolver(DataOutput.OutputType.DATA_PACK, HeatData.HEAT_STATE_PATH)
+                .getResolver(DataOutput.OutputType.DATA_PACK, ArmoryData.HEAT_STATE_PATH)
                 .resolveJson(Identifier.of(path.getNamespace(), path.getPath()));
     }
 
