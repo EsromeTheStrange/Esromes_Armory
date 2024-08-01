@@ -39,12 +39,9 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
     public boolean matches(CastingRecipeInput inventory, World world) {
         if (world.isClient()) return false;
 
-        if( !input.test(inventory.getStackInSlot(0)) ||
-            !fluidTester.matches(inventory.fluidType) ||
-            !(inventory.fluidAmount >= fluidAmount))
-                return false;
-
-        return true;
+        return input.test(inventory.getStackInSlot(0)) &&
+                fluidTester.matches(inventory.fluidType) &&
+                inventory.fluidAmount >= fluidAmount;
     }
 
     @Override

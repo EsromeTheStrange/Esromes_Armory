@@ -1,12 +1,13 @@
-package net.esromethestrange.esromes_armory.data.datagen;
+package net.esromethestrange.esromes_armory.datagen;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
@@ -43,19 +44,28 @@ public class ArmoryModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ArmoryItems.SWORD_GUARD_MOLD, Models.GENERATED);
         itemModelGenerator.register(ArmoryItems.SWORD_BLADE_MOLD, Models.GENERATED);
 
+        Identifier noneId = ArmoryRegistries.MATERIAL.getId(Materials.NONE);
+        if(noneId == null){
+            EsromesArmory.LOGGER.error("Unable to get NONE material!");
+            return;
+        }
+
         for(MaterialItem item : MaterialItem.MATERIAL_ITEMS){
             Models.GENERATED.upload(ModelIds.getItemModelId((Item)item),
                     TextureMap.layer0(item.getRawIdentifier()
-                            .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ Materials.NONE.materialName)
+                            .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ noneId.getPath())
                             .withPrefixedPath("item/")),
                     itemModelGenerator.writer);
             for(Material material : item.getValidMaterials()){
+                Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
+                if(materialId == null)
+                    continue;
                 itemModelGenerator.register((Item)item,
-                        "_" + material.id.getNamespace() + "_" + material.id.getPath(),
+                        "_" + materialId.getNamespace() + "_" + materialId.getPath(),
                         Models.GENERATED);
             }
             itemModelGenerator.register((Item)item,
-                    "_" + Materials.NONE.modId + "_" + Materials.NONE.materialName,
+                    "_" + noneId.getNamespace() + "_" + noneId.getPath(),
                     Models.GENERATED);
         }
 

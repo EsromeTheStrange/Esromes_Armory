@@ -1,8 +1,8 @@
-package net.esromethestrange.esromes_armory.data.datagen;
+package net.esromethestrange.esromes_armory.datagen;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
-import net.esromethestrange.esromes_armory.data.datagen.custom.HeatStateProvider;
+import net.esromethestrange.esromes_armory.datagen.custom.HeatStateProvider;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;

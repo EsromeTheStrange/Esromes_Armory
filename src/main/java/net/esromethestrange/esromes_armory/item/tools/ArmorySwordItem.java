@@ -49,9 +49,9 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
         Material bindingMaterial = getBindingMaterial(stack);
         Material handleMaterial = getHandleMaterial(stack);
         return (int) (
-                headMaterial.durability * 5 +
-                        bindingMaterial.durability * 5 +
-                        handleMaterial.durability * 5
+                headMaterial.durability() * 5 +
+                        bindingMaterial.durability() * 5 +
+                        handleMaterial.durability() * 5
         ) * 10;
     }
 

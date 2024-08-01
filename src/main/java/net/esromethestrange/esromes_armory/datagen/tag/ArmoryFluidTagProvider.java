@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.datagen.tag;
+package net.esromethestrange.esromes_armory.datagen.tag;
 
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.util.ArmoryTags;

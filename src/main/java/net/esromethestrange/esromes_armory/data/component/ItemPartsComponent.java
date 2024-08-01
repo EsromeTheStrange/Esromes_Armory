@@ -3,9 +3,10 @@ package net.esromethestrange.esromes_armory.data.component;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
-import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
@@ -61,12 +62,12 @@ public class ItemPartsComponent {
 
     public Identifier getPart(MaterialItem materialItem){
         if(!parts.containsKey(materialItem.getRawIdentifier()))
-            return Materials.NONE.id;
+            return ArmoryRegistries.MATERIAL.getId(Materials.NONE);
         return parts.get(materialItem.getRawIdentifier());
     }
 
     public ItemPartsComponent withPart(MaterialItem materialItem, Material material){
-        parts.put(materialItem.getRawIdentifier(), material.id);
+        parts.put(materialItem.getRawIdentifier(), ArmoryRegistries.MATERIAL.getId(material));
         return this;
     }
 }

@@ -23,10 +23,7 @@ public class ResourceHelper {
     public static final ModelTransformation HANDHELD_TRANSFORMATION = loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
 
     public static final String JSON_ENTRIES = "entries";
-    public static final String JSON_TEMPERATURE = "temperature";
-    public static final String JSON_ITEM = "item";
     public static final String JSON_FLUID = "fluid";
-    public static final String JSON_AMOUNT = "amount";
 
     //Heat Data
     public static HeatData readHeatData(Identifier id, ResourceManager manager){

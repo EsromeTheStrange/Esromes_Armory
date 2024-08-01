@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.FluidHeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
-import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResults;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.ItemHeatingResult;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -20,7 +19,7 @@ import java.util.List;
 public class HeatData {
     public static final Codec<Pair<HeatLevel, HeatingResult>> ENTRY_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             HeatLevel.CODEC.fieldOf("temperature").forGetter(Pair::getLeft),
-            HeatingResults.CODEC.fieldOf("result").forGetter(Pair::getRight)
+            HeatingResult.CODEC.fieldOf("result").forGetter(Pair::getRight)
     ).apply(instance, Pair::new));
     public static final Codec<HeatData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ENTRY_CODEC.listOf().fieldOf("entries").forGetter(HeatData::getPairedEntries)

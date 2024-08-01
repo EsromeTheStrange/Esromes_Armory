@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.datagen.lang;
+package net.esromethestrange.esromes_armory.datagen.lang;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
@@ -131,7 +131,7 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
     }
 
     public void addTranslation(Material material, String materialName, TranslationBuilder translationBuilder){
-        translationBuilder.add(material.translatable_name, materialName);
+        translationBuilder.add(material.getTranslatableName(), materialName);
     }
     public void addTranslation(TagKey<?> tag, String translation, TranslationBuilder translationBuilder){
         translationBuilder.add(tag.getTranslationKey(), translation);

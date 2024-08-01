@@ -19,11 +19,11 @@ public class ArmoryFluidRendering {
         //    registry.register(new Identifier("tutorial:block/custom_fluid_flowing"));
         //});
 
-        registerMoltenMetal(ArmoryFluids.MOLTEN_COPPER, ArmoryFluids.MOLTEN_COPPER_FLOWING, Materials.COPPER.color);
-        registerMoltenMetal(ArmoryFluids.MOLTEN_IRON, ArmoryFluids.MOLTEN_IRON_FLOWING, Materials.IRON.color);
-        registerMoltenMetal(ArmoryFluids.MOLTEN_GOLD, ArmoryFluids.MOLTEN_GOLD_FLOWING, Materials.GOLD.color);
-        registerMoltenMetal(ArmoryFluids.MOLTEN_NETHERITE, ArmoryFluids.MOLTEN_NETHERITE_FLOWING, Materials.NETHERITE.color);
-        registerMoltenMetal(ArmoryFluids.MOLTEN_STEEL, ArmoryFluids.MOLTEN_STEEL_FLOWING, Materials.STEEL.color);
+        registerMoltenMetal(ArmoryFluids.MOLTEN_COPPER, ArmoryFluids.MOLTEN_COPPER_FLOWING, Materials.COPPER.color());
+        registerMoltenMetal(ArmoryFluids.MOLTEN_IRON, ArmoryFluids.MOLTEN_IRON_FLOWING, Materials.IRON.color());
+        registerMoltenMetal(ArmoryFluids.MOLTEN_GOLD, ArmoryFluids.MOLTEN_GOLD_FLOWING, Materials.GOLD.color());
+        registerMoltenMetal(ArmoryFluids.MOLTEN_NETHERITE, ArmoryFluids.MOLTEN_NETHERITE_FLOWING, Materials.NETHERITE.color());
+        registerMoltenMetal(ArmoryFluids.MOLTEN_STEEL, ArmoryFluids.MOLTEN_STEEL_FLOWING, Materials.STEEL.color());
     }
 
     private static void registerMoltenMetal(Fluid stillState, Fluid flowingState, int color){

@@ -2,6 +2,7 @@ package net.esromethestrange.esromes_armory.recipe.ingredient;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.esromethestrange.esromes_armory.data.ArmoryIngredientLoader;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -57,19 +58,19 @@ public class FluidTester {
 
     public Material getMaterial(FluidVariant fluid){
         if(!singleTarget)
-            return ArmoryIngredients.getMaterialIngredient(id).getMaterial(fluid);
+            return ArmoryIngredientLoader.getMaterialIngredient(id).getMaterial(fluid);
         return Materials.NONE;
     }
 
     public boolean matches(FluidVariant fluid){
         if(singleTarget)
             return matchingFluid.getFluid().equals(fluid);
-        return ArmoryIngredients.getMaterialIngredient(id).isValid(fluid);
+        return ArmoryIngredientLoader.getMaterialIngredient(id).isValid(fluid);
     }
 
     public List<FluidVariant> getFluids(){
         if(singleTarget)
             return List.of(matchingFluid);
-        return ArmoryIngredients.getMaterialIngredient(id).getFluids();
+        return ArmoryIngredientLoader.getMaterialIngredient(id).getFluids();
     }
 }

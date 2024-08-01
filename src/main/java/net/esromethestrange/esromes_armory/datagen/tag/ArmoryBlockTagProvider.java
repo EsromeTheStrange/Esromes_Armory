@@ -1,9 +1,8 @@
-package net.esromethestrange.esromes_armory.data.datagen.tag;
+package net.esromethestrange.esromes_armory.datagen.tag;
 
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;

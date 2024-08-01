@@ -1,5 +1,6 @@
 package net.esromethestrange.esromes_armory.item.material;
 
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.component.ItemPartsComponent;
 import net.esromethestrange.esromes_armory.data.material.Material;
@@ -30,7 +31,7 @@ public interface PartBasedItem {
     }
 
     default int getFuelTime(ItemStack stack){
-        if(getPrimaryMaterial(stack).fuelTimeMultiplier == 0)
+        if(getPrimaryMaterial(stack).fuelTimeMultiplier() == 0)
             return 0;
         int fuelTime = 0;
         for(MaterialItem part : getParts()){
@@ -46,7 +47,7 @@ public interface PartBasedItem {
             return Materials.NONE;
 
         Identifier materialId = partsComponent.getPart(part);
-        return materialId == null ? Materials.NONE : Materials.getMaterial(materialId);
+        return materialId == null ? Materials.NONE : ArmoryRegistries.MATERIAL.get(materialId);
     }
 
     default boolean containsPart(MaterialItem component){

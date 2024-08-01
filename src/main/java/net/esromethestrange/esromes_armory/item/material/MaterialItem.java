@@ -1,6 +1,6 @@
 package net.esromethestrange.esromes_armory.item.material;
 
-import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
@@ -25,7 +25,7 @@ public interface MaterialItem {
     int getBaseFuelTime();
 
     default int getFuelTime(ItemStack stack){
-        return getBaseFuelTime() * getMaterial(stack).fuelTimeMultiplier;
+        return getBaseFuelTime() * getMaterial(stack).fuelTimeMultiplier();
     }
 
     default void addMaterialTooltip(ItemStack stack, List<Text> tooltip){
@@ -33,14 +33,17 @@ public interface MaterialItem {
     }
 
     default void setMaterial(ItemStack stack, Material material){
-        stack.set(ArmoryComponents.MATERIALS, material.id.toString());
+        Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
+        if(materialId == null)
+            return;
+        stack.set(ArmoryComponents.MATERIALS, materialId.toString());
     }
 
     default Material getMaterial(ItemStack stack){
         if(stack.getItem() instanceof MaterialItem){
             String material = stack.get(ArmoryComponents.MATERIALS);
             if(material != null)
-                return Materials.getMaterial(Identifier.tryParse(material));
+                return ArmoryRegistries.MATERIAL.get(Identifier.tryParse(material));
         }
         else if(stack.getItem() instanceof PartBasedItem partBasedItem){
             return partBasedItem.getMaterial(stack, this);

@@ -4,11 +4,11 @@ import io.wispforest.owo.itemgroup.Icon;
 import io.wispforest.owo.itemgroup.OwoItemGroup;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
-import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
-import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -48,12 +48,12 @@ public class ArmoryItemGroups {
             for(PartBasedItem partBasedItem : PartBasedItem.PART_BASED_ITEMS){
                 mapItems(partBasedItem.getDefaultStacks(true));
             }
-            for(Material material : Materials.getMaterials()){
+            ArmoryRegistries.MATERIAL.stream().forEach(material -> {
                 if(!itemMap.containsKey(material))
-                    continue;
+                    return;
                 List<ItemStack> stacks = itemMap.get(material);
                 entries.addAll(stacks);
-            }
+            });
         }, false);
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryItems.PICKAXE_HEAD), "tool_components", (context, entries) ->{

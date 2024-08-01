@@ -45,7 +45,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 
     @Override
     public Text getName(ItemStack stack) {
-        MutableText materialText = Text.translatable(getMaterial(stack, getHeadComponent()).translatable_name);
+        MutableText materialText = Text.translatable(getMaterial(stack, getHeadComponent()).getTranslatableName());
         Text toolText = super.getName(stack);
         return materialText.append(toolText);
     }
@@ -109,34 +109,34 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 
     protected int calculateMiningLevel(ItemStack stack) {
         Material headMaterial = getPrimaryMaterial(stack);
-        return headMaterial.miningLevel;
+        return headMaterial.miningLevel();
     }
     protected float calculateMiningSpeed(ItemStack stack) {
         Material headMaterial = getPrimaryMaterial(stack);
-        return headMaterial.miningSpeed;
+        return headMaterial.miningSpeed();
     }
     protected int calculateDurability(ItemStack stack) {
         Material headMaterial = getPrimaryMaterial(stack);
         Material bindingMaterial = getBindingMaterial(stack);
         Material handleMaterial = getHandleMaterial(stack);
         return (int) (
-                headMaterial.durability * 25 +
-                bindingMaterial.durability * 50 +
-                handleMaterial.durability * 15
+                headMaterial.durability() * 25 +
+                bindingMaterial.durability() * 50 +
+                handleMaterial.durability() * 15
         );
     }
     protected double calculateAttackDamage(ItemStack stack) {
         Material headMaterial = getPrimaryMaterial(stack);
-        return (double)headMaterial.attackDamage * toolType.getAttackDamageMultiplier();
+        return (double)headMaterial.attackDamage() * toolType.getAttackDamageMultiplier();
     }
     protected double calculateAttackSpeed(ItemStack stack) {
         Material bindingMaterial = getBindingMaterial(stack);
         return toolType.getAttackSpeed() +
-                (double)bindingMaterial.attackSpeed * toolType.getAttackSpeedMultiplier();
+                (double)bindingMaterial.attackSpeed() * toolType.getAttackSpeedMultiplier();
     }
     protected int calculateEnchantability(ItemStack stack) {
         Material headMaterial = getMaterial(stack, getHeadComponent());
-        return headMaterial.enchantability;
+        return headMaterial.enchantability();
     }
 
     @Override

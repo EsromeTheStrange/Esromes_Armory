@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data.datagen.custom;
+package net.esromethestrange.esromes_armory.datagen.custom;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;

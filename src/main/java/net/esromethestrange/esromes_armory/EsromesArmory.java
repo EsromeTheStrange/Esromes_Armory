@@ -2,17 +2,19 @@ package net.esromethestrange.esromes_armory;
 
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
+import net.esromethestrange.esromes_armory.client.screen.ArmoryScreenHandlers;
 import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
+import net.esromethestrange.esromes_armory.data.ArmoryIngredientLoader;
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.HeatDataLoader;
+import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResults;
-import net.esromethestrange.esromes_armory.recipe.ingredient.ArmoryIngredients;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
-import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
-import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
-import net.esromethestrange.esromes_armory.client.screen.ArmoryScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -29,8 +31,10 @@ public class EsromesArmory implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Loading Esrome's Armory...");
 
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryIngredients());
+		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryIngredientLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new HeatDataLoader());
+
+		ArmoryRegistries.registerRegistries();
 
 		ArmoryComponents.registerComponents();
 
@@ -41,12 +45,13 @@ public class EsromesArmory implements ModInitializer {
 		ArmoryBlockEntities.registerBlockEntities();
 		ArmoryFluids.registerFluids();
 
-		ArmoryIngredients.registerIngredients();
+		ArmoryIngredientLoader.registerIngredients();
 		ArmoryRecipes.registerRecipes();
 
 		ArmoryItemGroups.registerItemGroups();
 		ArmoryScreenHandlers.registerScreenHandlers();
 
 		HeatingResults.registerHeatingResultSerializers();
+		Materials.registerMaterials();
 	}
 }

@@ -1,10 +1,10 @@
 package net.esromethestrange.esromes_armory;
 
-import net.esromethestrange.esromes_armory.data.datagen.*;
-import net.esromethestrange.esromes_armory.data.datagen.lang.ArmoryEnglishLangProvider;
-import net.esromethestrange.esromes_armory.data.datagen.tag.ArmoryBlockTagProvider;
-import net.esromethestrange.esromes_armory.data.datagen.tag.ArmoryFluidTagProvider;
-import net.esromethestrange.esromes_armory.data.datagen.tag.ArmoryItemTagProvider;
+import net.esromethestrange.esromes_armory.datagen.*;
+import net.esromethestrange.esromes_armory.datagen.lang.ArmoryEnglishLangProvider;
+import net.esromethestrange.esromes_armory.datagen.tag.ArmoryBlockTagProvider;
+import net.esromethestrange.esromes_armory.datagen.tag.ArmoryFluidTagProvider;
+import net.esromethestrange.esromes_armory.datagen.tag.ArmoryItemTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 

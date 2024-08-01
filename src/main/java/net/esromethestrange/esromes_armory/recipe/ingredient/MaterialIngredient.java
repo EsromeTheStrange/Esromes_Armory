@@ -3,6 +3,7 @@ package net.esromethestrange.esromes_armory.recipe.ingredient;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.ArmoryIngredientLoader;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredient;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
@@ -23,20 +24,20 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public boolean test(ItemStack stack){
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).isValid(stack);
+        return ArmoryIngredientLoader.getMaterialIngredient(ingredientType).isValid(stack);
     }
 
     public List<Material> getMaterials(){
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).getItemMaterials();
+        return ArmoryIngredientLoader.getMaterialIngredient(ingredientType).getItemMaterials();
     }
 
     public List<FluidVariant> getFluids(){
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).getFluids();
+        return ArmoryIngredientLoader.getMaterialIngredient(ingredientType).getFluids();
     }
 
     @Override
     public List<ItemStack> getMatchingStacks() {
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).matchingStacks;
+        return ArmoryIngredientLoader.getMaterialIngredient(ingredientType).matchingStacks;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class MaterialIngredient implements CustomIngredient {
     }
 
     public Material getMaterial(ItemStack stack){
-        return ArmoryIngredients.getMaterialIngredient(ingredientType).getMaterial(stack);
+        return ArmoryIngredientLoader.getMaterialIngredient(ingredientType).getMaterial(stack);
     }
 
     public static class Serializer implements CustomIngredientSerializer<MaterialIngredient> {

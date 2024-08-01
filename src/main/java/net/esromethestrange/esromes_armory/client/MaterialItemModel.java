@@ -1,7 +1,8 @@
 package net.esromethestrange.esromes_armory.client;
 
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
@@ -28,7 +29,7 @@ import java.util.function.Supplier;
 
 public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedModel {
     MaterialItem materialItem;
-    HashMap<Identifier, BakedModel> variants = new HashMap<>();
+    HashMap<Material, BakedModel> variants = new HashMap<>();
 
     public MaterialItemModel(MaterialItem materialItem){
         this.materialItem = materialItem;
@@ -37,11 +38,14 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Nullable
     @Override
     public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
-        for(Identifier materialId : Materials.getMaterialIds()){
+        ArmoryRegistries.MATERIAL.stream().forEach(material -> {
+            Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
+            if(materialId == null)
+                return;
             Identifier materialItemId = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
             BakedModel materialModel = baker.bake(materialItemId, ModelRotation.X0_Y0);
-            variants.put(materialId, materialModel);
-        }
+            variants.put(material, materialModel);
+        });
         return this;
     }
     @Override public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random random) { return List.of(); }
@@ -68,7 +72,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
 
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-        Identifier materialId = ((MaterialItem)stack.getItem()).getMaterial(stack).id;
-        variants.get(materialId).emitItemQuads(stack, randomSupplier, context);
+        Material material = ((MaterialItem)stack.getItem()).getMaterial(stack);
+        variants.get(material).emitItemQuads(stack, randomSupplier, context);
     }
 }

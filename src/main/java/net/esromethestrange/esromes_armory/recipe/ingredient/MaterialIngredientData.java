@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.recipe.ingredient;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -60,7 +61,7 @@ public class MaterialIngredientData {
         Item item = stack.getItem();
         for(Identifier material : validItems.keySet())
             if(validItems.get(material).contains(item))
-                return Materials.getMaterial(material);
+                return ArmoryRegistries.MATERIAL.get(material);
 
         return Materials.NONE;
     }
@@ -72,7 +73,7 @@ public class MaterialIngredientData {
         for(Identifier material : validFluids.keySet())
             for(Fluid validFluid : validFluids.get(material))
                 if(validFluid.matchesType(fluid.getFluid()))
-                    return Materials.getMaterial(material);
+                    return ArmoryRegistries.MATERIAL.get(material);
 
         return Materials.NONE;
     }
@@ -80,7 +81,7 @@ public class MaterialIngredientData {
     public List<Material> getItemMaterials(){
         List<Material> materials = new ArrayList<>();
         for(Identifier material : validItems.keySet())
-            materials.add(Materials.getMaterial(material));
+            materials.add(ArmoryRegistries.MATERIAL.get(material));
         return materials;
     }
 

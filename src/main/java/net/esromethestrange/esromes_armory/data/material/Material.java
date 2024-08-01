@@ -1,44 +1,18 @@
 package net.esromethestrange.esromes_armory.data.material;
 
+import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
 import net.minecraft.util.Identifier;
 
-public class Material {
-    public final String translatable_name;
-    public final Identifier id;
-    public final String modId;
-    public final String materialName;
-    public final int color;
+public record Material(int color,
+                       float durability,
+                       int miningLevel, float miningSpeed,
+                       int attackDamage,float attackSpeed,
+                       int enchantability, int fuelTimeMultiplier) {
 
-    public final float durability;
-    public final int miningLevel;
-    public final float miningSpeed;
-
-    public final int attackDamage;
-    public final float attackSpeed;
-    public final int enchantability;
-
-    public final int fuelTimeMultiplier;
-
-    public Material(String modId, String materialName, int color,
-                    float durability, int miningLevel, float miningSpeed,
-                    int attackDamage, float attackSpeed, int enchantability,
-                    int fuelTimeMultiplier) {
-        this.translatable_name = modId + ".material." + materialName;
-        this.modId = modId;
-        this.materialName = materialName;
-        this.id = Identifier.of(modId, materialName);
-        this.color = color;
-
-        this.durability = durability;
-        this.miningLevel = miningLevel;
-        this.miningSpeed = miningSpeed;
-
-        this.attackDamage = attackDamage;
-        this.attackSpeed = attackSpeed;
-        this.enchantability = enchantability;
-
-        this.fuelTimeMultiplier = fuelTimeMultiplier;
-
-        Materials.addMaterial(this);
+    public String getTranslatableName() {
+        Identifier id = ArmoryRegistries.MATERIAL.getId(this);
+        if (id == null)
+            return "material.invalid";
+        return id.getNamespace() + ".material." + id.getPath();
     }
 }

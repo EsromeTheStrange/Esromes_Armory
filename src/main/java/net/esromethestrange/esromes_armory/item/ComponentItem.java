@@ -1,9 +1,9 @@
 package net.esromethestrange.esromes_armory.item;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -33,7 +33,7 @@ public class ComponentItem extends Item implements MaterialItem {
 
     @Override
     public Text getName(ItemStack stack) {
-        MutableText materialText = Text.translatable(getMaterial(stack).translatable_name);
+        MutableText materialText = Text.translatable(getMaterial(stack).getTranslatableName());
         Text toolText = super.getName(stack);
         return materialText.append(toolText);
     }
@@ -79,8 +79,8 @@ public class ComponentItem extends Item implements MaterialItem {
 
     @Override
     public void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean partNameIncluded) {
-        String materialId = getMaterial(stack).translatable_name;
-        MutableText materialText = Text.translatable(materialId).setStyle(Style.EMPTY.withColor(getMaterial(stack).color));
+        String materialId = getMaterial(stack).getTranslatableName();
+        MutableText materialText = Text.translatable(materialId).setStyle(Style.EMPTY.withColor(getMaterial(stack).color()));
 
         if(partNameIncluded){
             MutableText componentName = Text.translatable(getTranslationKey());
