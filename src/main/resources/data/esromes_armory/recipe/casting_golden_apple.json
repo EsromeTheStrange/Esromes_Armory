@@ -1,14 +1,18 @@
 {
   "type": "esromes_armory:casting",
-  "ingredient": {
-    "item": "esromes_armory:axe_mold"
+  "cast": {
+    "item": "minecraft:apple"
   },
-  "fluid_tester": {
-    "fluid_variant":{
+  "fluid": {
+    "fabric:type": "esromes_armory:fluid",
+    "material": {
+      "id": "minecraft:gold"
+    },
+    "fluid": {
       "fluid": "esromes_armory:molten_gold"
-    }
+    },
+    "amount": 72000
   },
-  "fluid_amount": 72000,
   "result": {
     "id": "minecraft:golden_apple"
   }

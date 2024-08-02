@@ -1,9 +1,0 @@
-{
-  "entries":{
-    "minecraft:copper": "minecraft:copper_block",
-    "minecraft:iron": "minecraft:iron_block",
-    "minecraft:gold": "minecraft:gold_block",
-    "minecraft:netherite": "minecraft:netherite_block",
-    "esromes_armory:steel": "esromes_armory:steel_block"
-  }
-}

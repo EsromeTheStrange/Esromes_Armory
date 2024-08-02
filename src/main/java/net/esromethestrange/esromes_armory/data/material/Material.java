@@ -1,6 +1,10 @@
 package net.esromethestrange.esromes_armory.data.material;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
 
 public record Material(int color,
@@ -9,10 +13,51 @@ public record Material(int color,
                        int attackDamage,float attackSpeed,
                        int enchantability, int fuelTimeMultiplier) {
 
+    public static Codec<Material> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Identifier.CODEC.fieldOf("id").forGetter(ArmoryRegistries.MATERIAL::getId)
+    ).apply(instance, ArmoryRegistries.MATERIAL::get));
+    public static PacketCodec<RegistryByteBuf, Material> PACKET_CODEC = PacketCodec.ofStatic(Material::writePacket, Material::readPacket);
+
     public String getTranslatableName() {
         Identifier id = ArmoryRegistries.MATERIAL.getId(this);
         if (id == null)
             return "material.invalid";
         return id.getNamespace() + ".material." + id.getPath();
+    }
+
+    public static void writePacket(RegistryByteBuf buf, Material material){
+        buf.writeInt(material.color);
+
+        buf.writeFloat(material.durability);
+
+        buf.writeInt(material.miningLevel);
+        buf.writeFloat(material.miningSpeed);
+
+        buf.writeInt(material.attackDamage);
+        buf.writeFloat(material.attackSpeed);
+
+        buf.writeInt(material.enchantability);
+        buf.writeInt(material.fuelTimeMultiplier);
+    }
+
+    public static Material readPacket(RegistryByteBuf buf){
+        int color = buf.readInt();
+
+        float durability = buf.readFloat();
+
+        int miningLevel = buf.readInt();
+        float miningSpeed = buf.readFloat();
+
+        int attackDamage = buf.readInt();
+        float attackSpeed = buf.readFloat();
+
+        int enchantability = buf.readInt();
+        int fuelTimeMultiplier = buf.readInt();
+
+        return new Material(color,
+                durability,
+                miningLevel, miningSpeed,
+                attackDamage, attackSpeed,
+                enchantability, fuelTimeMultiplier);
     }
 }

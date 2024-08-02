@@ -1,9 +1,0 @@
-{
-  "entries":{
-    "minecraft:copper": "minecraft:copper_ingot",
-    "minecraft:iron": "minecraft:iron_ingot",
-    "minecraft:gold": "minecraft:gold_ingot",
-    "minecraft:netherite": "minecraft:netherite_ingot",
-    "esromes_armory:steel": "esromes_armory:steel_ingot"
-  }
-}

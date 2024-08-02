@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
-import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredientData;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientData;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
@@ -34,9 +34,5 @@ public class ArmoryIngredientLoader implements SimpleSynchronousResourceReloadLi
         if(materialIngredients.containsKey(id))
             return materialIngredients.get(id);
         return MaterialIngredientData.EMPTY;
-    }
-
-    public static void registerIngredients(){
-        CustomIngredientSerializer.register(MaterialIngredient.Serializer.INSTANCE);
     }
 }

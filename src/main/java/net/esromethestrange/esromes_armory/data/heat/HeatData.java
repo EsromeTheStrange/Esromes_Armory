@@ -34,7 +34,7 @@ public class HeatData {
         this.id = id;
     }
     public HeatData(List<Pair<HeatLevel, HeatingResult>> entries){
-        this(Identifier.of("esromes_armory:this"));
+        this(Identifier.of(EsromesArmory.MOD_ID, "temp_id"));
         for(Pair<HeatLevel, HeatingResult> entry : entries)
             addEntry(entry);
     }

@@ -1,9 +1,0 @@
-{
-  "fluid":{
-    "minecraft:copper": "esromes_armory:molten_copper",
-    "minecraft:iron": "esromes_armory:molten_iron",
-    "minecraft:gold": "esromes_armory:molten_gold",
-    "minecraft:netherite": "esromes_armory:molten_netherite",
-    "esromes_armory:steel": "esromes_armory:molten_steel"
-  }
-}

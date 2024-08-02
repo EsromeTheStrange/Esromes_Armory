@@ -11,10 +11,12 @@ import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResults;
 import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntrySerializers;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItemGroups;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
+import net.esromethestrange.esromes_armory.recipe.ingredient.ArmoryIngredients;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -45,13 +47,14 @@ public class EsromesArmory implements ModInitializer {
 		ArmoryBlockEntities.registerBlockEntities();
 		ArmoryFluids.registerFluids();
 
-		ArmoryIngredientLoader.registerIngredients();
 		ArmoryRecipes.registerRecipes();
+		ArmoryIngredients.registerIngredients();
 
 		ArmoryItemGroups.registerItemGroups();
 		ArmoryScreenHandlers.registerScreenHandlers();
 
 		HeatingResults.registerHeatingResultSerializers();
+		MaterialIngredientEntrySerializers.registerMaterialIngredientEntrySerializers();
 		Materials.registerMaterials();
 	}
 }

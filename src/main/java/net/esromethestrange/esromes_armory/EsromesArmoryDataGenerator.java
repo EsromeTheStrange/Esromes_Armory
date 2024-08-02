@@ -25,5 +25,6 @@ public class EsromesArmoryDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ArmoryEnglishLangProvider::new);
 
 		pack.addProvider(ArmoryHeatStateProvider::new);
+		pack.addProvider(ArmoryMaterialIngredientProvider::new);
 	}
 }

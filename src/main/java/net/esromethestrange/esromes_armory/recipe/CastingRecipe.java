@@ -1,11 +1,12 @@
 package net.esromethestrange.esromes_armory.recipe;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientFluidEntry;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.recipe.ingredient.FluidTester;
+import net.esromethestrange.esromes_armory.recipe.ingredient.FluidIngredient;
+import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredient;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
@@ -24,24 +25,28 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
     public static final Identifier ID = Identifier.of(EsromesArmory.MOD_ID, "casting");
 
     final ItemStack result;
-    final Ingredient input;
-    final FluidTester fluidTester;
-    final long fluidAmount;
+    final Ingredient castIngredient;
+    final Ingredient castingMetalIngredient;
 
-    public CastingRecipe(ItemStack result, Ingredient input, FluidTester fluidTester, long fluidAmount) {
+    public CastingRecipe(ItemStack result, Ingredient castIngredient, Ingredient castingMetalIngredient) {
         this.result = result;
-        this.input = input;
-        this.fluidTester = fluidTester;
-        this.fluidAmount = fluidAmount;
+        this.castIngredient = castIngredient;
+        this.castingMetalIngredient = castingMetalIngredient;
     }
 
     @Override
     public boolean matches(CastingRecipeInput inventory, World world) {
         if (world.isClient()) return false;
 
-        return input.test(inventory.getStackInSlot(0)) &&
-                fluidTester.matches(inventory.fluidType) &&
-                inventory.fluidAmount >= fluidAmount;
+        if(!castIngredient.test(inventory.getStackInSlot(0)))
+            return false;
+
+        if(castingMetalIngredient.getCustomIngredient() instanceof MaterialIngredient materialIngredient)
+            return materialIngredient.testObject(MaterialIngredientFluidEntry.FluidTarget.of(inventory.fluidType, inventory.fluidAmount));
+        if(castingMetalIngredient.getCustomIngredient() instanceof FluidIngredient fluidIngredient)
+            return fluidIngredient.test(inventory.fluidType, inventory.fluidAmount);
+
+        return false;
     }
 
     @Override
@@ -50,7 +55,8 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
             return craftOutput;
 
-        materialItem.setMaterial(craftOutput, fluidTester.getMaterial(inventory.fluidType));
+        if(castingMetalIngredient.getCustomIngredient() instanceof MaterialIngredient materialIngredient)
+            materialItem.setMaterial(craftOutput, materialIngredient.getMaterial(inventory.fluidType));
         return craftOutput;
     }
 
@@ -61,7 +67,7 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
 
     @Override
     public DefaultedList<Ingredient> getIngredients() {
-        return DefaultedList.ofSize(1, input);
+        return DefaultedList.ofSize(1, castIngredient);
     }
 
     @Override
@@ -74,10 +80,16 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         return result;
     }
 
-    public Ingredient getInput(){ return input; }
+    public Ingredient getCastIngredient(){ return castIngredient; }
     public ItemStack getOutput(){ return result; }
-    public FluidTester getFluidTester(){ return fluidTester; }
-    public long getFluidAmount(){ return fluidAmount; }
+    //public FluidTester getFluidTester(){ return fluidTester; }
+    public long getFluidAmount(){
+        if(castingMetalIngredient.getCustomIngredient() instanceof MaterialIngredient materialIngredient)
+            return materialIngredient.getAmount();
+        if(castingMetalIngredient.getCustomIngredient() instanceof FluidIngredient fluidIngredient)
+            return fluidIngredient.amount();
+        return 0L;
+    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
@@ -93,9 +105,8 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
 
         MapCodec<CastingRecipe> CASTING_RECIPE_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ItemStack.VALIDATED_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-                Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.input),
-                FluidTester.CODEC.fieldOf("fluid_tester").forGetter(recipe -> recipe.fluidTester),
-                Codec.LONG.fieldOf("fluid_amount").forGetter(recipe -> recipe.fluidAmount)
+                Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("cast").forGetter(recipe -> recipe.castIngredient),
+                Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("fluid").forGetter(recipe -> recipe.castingMetalIngredient)
         ).apply(instance, CastingRecipe::new));
         public static final PacketCodec<RegistryByteBuf, CastingRecipe> PACKET_CODEC = PacketCodec.ofStatic(Serializer::write, Serializer::read);
 
@@ -111,17 +122,15 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
 
         private static CastingRecipe read(RegistryByteBuf buf) {
             ItemStack result = ItemStack.PACKET_CODEC.decode(buf);
-            Ingredient ingredient = Ingredient.PACKET_CODEC.decode(buf);
-            FluidTester fluidTester = FluidTester.PACKET_CODEC.decode(buf);
-            long fluidAmount = buf.readLong();
-            return new CastingRecipe(result, ingredient, fluidTester, fluidAmount);
+            Ingredient cast = Ingredient.PACKET_CODEC.decode(buf);
+            Ingredient fluid = Ingredient.PACKET_CODEC.decode(buf);
+            return new CastingRecipe(result, cast, fluid);
         }
 
         private static void write(RegistryByteBuf buf, CastingRecipe recipe) {
             ItemStack.PACKET_CODEC.encode(buf, recipe.result);
-            Ingredient.PACKET_CODEC.encode(buf, recipe.input);
-            FluidTester.PACKET_CODEC.encode(buf, recipe.fluidTester);
-            buf.writeLong(recipe.fluidAmount);
+            Ingredient.PACKET_CODEC.encode(buf, recipe.castIngredient);
+            Ingredient.PACKET_CODEC.encode(buf, recipe.castingMetalIngredient);
         }
 
         @Override

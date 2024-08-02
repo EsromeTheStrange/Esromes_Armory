@@ -1,0 +1,103 @@
+{
+  "entries": [
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:acacia_planks"
+      },
+      "material": {
+        "id": "minecraft:acacia"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:bamboo_planks"
+      },
+      "material": {
+        "id": "minecraft:bamboo"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:birch_planks"
+      },
+      "material": {
+        "id": "minecraft:birch"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:cherry_planks"
+      },
+      "material": {
+        "id": "minecraft:cherry"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:crimson_planks"
+      },
+      "material": {
+        "id": "minecraft:crimson"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:dark_oak_planks"
+      },
+      "material": {
+        "id": "minecraft:dark_oak"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:jungle_planks"
+      },
+      "material": {
+        "id": "minecraft:jungle"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:mangrove_planks"
+      },
+      "material": {
+        "id": "minecraft:mangrove"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:oak_planks"
+      },
+      "material": {
+        "id": "minecraft:oak"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:spruce_planks"
+      },
+      "material": {
+        "id": "minecraft:spruce"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:warped_planks"
+      },
+      "material": {
+        "id": "minecraft:warped"
+      }
+    }
+  ]
+}

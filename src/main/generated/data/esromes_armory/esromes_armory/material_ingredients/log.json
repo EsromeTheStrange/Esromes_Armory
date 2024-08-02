@@ -1,0 +1,103 @@
+{
+  "entries": [
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:acacia_log"
+      },
+      "material": {
+        "id": "minecraft:acacia"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:bamboo_block"
+      },
+      "material": {
+        "id": "minecraft:bamboo"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:birch_log"
+      },
+      "material": {
+        "id": "minecraft:birch"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:cherry_log"
+      },
+      "material": {
+        "id": "minecraft:cherry"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:crimson_stem"
+      },
+      "material": {
+        "id": "minecraft:crimson"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:dark_oak_log"
+      },
+      "material": {
+        "id": "minecraft:dark_oak"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:jungle_log"
+      },
+      "material": {
+        "id": "minecraft:jungle"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:mangrove_log"
+      },
+      "material": {
+        "id": "minecraft:mangrove"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:oak_log"
+      },
+      "material": {
+        "id": "minecraft:oak"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:spruce_log"
+      },
+      "material": {
+        "id": "minecraft:spruce"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:warped_stem"
+      },
+      "material": {
+        "id": "minecraft:warped"
+      }
+    }
+  ]
+}

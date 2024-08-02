@@ -1,0 +1,22 @@
+{
+  "entries": [
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:string"
+      },
+      "material": {
+        "id": "minecraft:string"
+      }
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:slime_ball"
+      },
+      "material": {
+        "id": "minecraft:slime"
+      }
+    }
+  ]
+}

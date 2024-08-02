@@ -8,11 +8,11 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.heat.HeatData;
-import net.esromethestrange.esromes_armory.recipe.ingredient.MaterialIngredientData;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientData;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.registry.Registries;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -67,23 +67,14 @@ public class ResourceHelper {
 
 
     private static MaterialIngredientData parseMaterialIngredient(JsonObject json, String modId, String materialTypeName){
-        MaterialIngredientData newIngredient = new MaterialIngredientData(Identifier.of(modId, materialTypeName));
+        MaterialIngredientData newMaterialIngredientData = new MaterialIngredientData(Identifier.of(modId, materialTypeName));
 
-        if(json.has(JSON_ENTRIES)){
-            JsonObject ingredients = json.get(JSON_ENTRIES).getAsJsonObject();
-            for (String key : ingredients.keySet()){
-                newIngredient.addEntry(Identifier.tryParse(key), Registries.ITEM.get(Identifier.tryParse(ingredients.get(key).getAsString())));
-            }
+        JsonArray results = json.get(JSON_ENTRIES).getAsJsonArray();
+        for (JsonElement jsonElement : results){
+            newMaterialIngredientData.addEntry(MaterialIngredientEntry.CODEC.parse(JsonOps.INSTANCE, jsonElement).getOrThrow());
         }
 
-        if(json.has(JSON_FLUID)){
-            JsonObject fluids = json.get(JSON_FLUID).getAsJsonObject();
-            for (String key : fluids.keySet()){
-                newIngredient.addEntry(Identifier.tryParse(key), Registries.FLUID.get(Identifier.tryParse(fluids.get(key).getAsString())));
-            }
-        }
-
-        return newIngredient;
+        return newMaterialIngredientData;
     }
 
     //Model Stuff
