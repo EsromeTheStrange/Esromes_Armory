@@ -126,6 +126,7 @@ public class WorkbenchBlockEntity extends BlockEntity implements ExtendedScreenH
             this.setStack(OUTPUT_SLOT, recipeOutput);
         else
             this.getStack(OUTPUT_SLOT).increment(recipeOutput.getCount());
+        recipeOutput.getItem().onCraft(recipeOutput, world);
     }
 
     @Nullable
