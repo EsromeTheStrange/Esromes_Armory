@@ -2,6 +2,7 @@ package net.esromethestrange.esromes_armory.datagen.tag;
 
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
+import net.esromethestrange.esromes_armory.util.ArmoryGenericTags;
 import net.esromethestrange.esromes_armory.util.ArmoryTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -17,6 +18,18 @@ public class ArmoryItemTagProvider extends FabricTagProvider.ItemTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
+        //Armory Tags
+        getOrCreateTagBuilder(ArmoryTags.Items.BUCKETS).add(
+                ArmoryFluids.MOLTEN_COPPER_BUCKET,
+                ArmoryFluids.MOLTEN_GOLD_BUCKET,
+                ArmoryFluids.MOLTEN_IRON_BUCKET,
+                ArmoryFluids.MOLTEN_NETHERITE_BUCKET,
+                ArmoryFluids.MOLTEN_STEEL_BUCKET
+        );
+
+        //Generic Tags
+        getOrCreateTagBuilder(ArmoryGenericTags.Items.STEEL_INGOTS).add(ArmoryItems.STEEL_INGOT);
+
         getOrCreateTagBuilder(ConventionalItemTags.INGOTS).add(ArmoryItems.STEEL_INGOT);
         getOrCreateTagBuilder(ConventionalItemTags.TOOLS).add(
                 ArmoryItems.HOE,
@@ -35,13 +48,6 @@ public class ArmoryItemTagProvider extends FabricTagProvider.ItemTagProvider {
                 ArmoryItems.SHOVEL
         );
 
-        getOrCreateTagBuilder(ArmoryTags.Items.BUCKETS).add(
-                ArmoryFluids.MOLTEN_COPPER_BUCKET,
-                ArmoryFluids.MOLTEN_GOLD_BUCKET,
-                ArmoryFluids.MOLTEN_IRON_BUCKET,
-                ArmoryFluids.MOLTEN_NETHERITE_BUCKET,
-                ArmoryFluids.MOLTEN_STEEL_BUCKET
-        );
         getOrCreateTagBuilder(ConventionalItemTags.BUCKETS).addTag(ArmoryTags.Items.BUCKETS);
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS)
                 .addTag(ArmoryTags.Items.BUCKETS);

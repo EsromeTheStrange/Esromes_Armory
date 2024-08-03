@@ -1,8 +1,10 @@
 package net.esromethestrange.esromes_armory.datagen.tag;
 
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
+import net.esromethestrange.esromes_armory.util.ArmoryGenericTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
@@ -17,6 +19,9 @@ public class ArmoryBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         addPickaxeTag(ArmoryBlocks.STEEL_BLOCK, 1);
+
+        //Generic Tags
+        getOrCreateTagBuilder(ArmoryGenericTags.Blocks.STEEL_BLOCKS).add(ArmoryBlocks.STEEL_BLOCK);
     }
 
     /**

@@ -8,6 +8,7 @@ import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
+import net.esromethestrange.esromes_armory.util.ArmoryGenericTags;
 import net.esromethestrange.esromes_armory.util.ArmoryTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -119,10 +120,15 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(HeatLevel.YELLOW, "Yellow", translationBuilder);
         addTranslation(HeatLevel.WHITE, "White", translationBuilder);
 
-        //Tags
+        //Armory Tags
         addTranslation(ArmoryTags.Items.BUCKETS, "Molten Metal Buckets", translationBuilder);
 
         addTranslation(ArmoryTags.Fluids.MOLTEN_METALS, "Molten Metals", translationBuilder);
+
+        //Generic Tags
+        addTranslation(ArmoryGenericTags.Items.STEEL_INGOTS, "Steel Ingots", translationBuilder);
+
+        addTranslation(ArmoryGenericTags.Blocks.STEEL_BLOCKS, "Steel Blocks", translationBuilder);
 
         //Other
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory", "Esrome's Armory");

@@ -1,6 +1,7 @@
-// 1.21	2024-08-01T22:06:50.2350985	Esrome's Armory/Tags for minecraft:item
+// 1.21	2024-08-02T19:27:45.2866454	Esrome's Armory/Tags for minecraft:item
 e5a788952a7a3807c7ec23870048e12ace40c34f data\c\tags\item\ingots.json
 1ec1867899de49332f63bd92a83263167cff75a2 data\c\tags\item\tools\mining_tool.json
+e5a788952a7a3807c7ec23870048e12ace40c34f data\c\tags\item\steel_ingots.json
 58d76e4ce082c2f83fafeb06ca00c8ec934c0455 data\c\tags\item\hidden_from_recipe_viewers.json
 a7dfb91ecead926668dad39e2f4cd3d42c76307f data\c\tags\item\tools.json
 046f5db7d549112a0abb6acc17d61139c5000d19 data\esromes_armory\tags\item\buckets.json
