@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.util;
+package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.minecraft.block.Block;

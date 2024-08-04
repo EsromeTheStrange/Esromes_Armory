@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.data.material_ingredient;
 
 import com.mojang.serialization.Codec;
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
 
 public abstract class MaterialIngredientEntry<T> {

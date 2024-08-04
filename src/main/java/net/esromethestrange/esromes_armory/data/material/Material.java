@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.data.material;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;

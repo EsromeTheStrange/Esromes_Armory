@@ -2,7 +2,7 @@ package net.esromethestrange.esromes_armory.data.heat.heating_result;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 
 public abstract class HeatingResult{
     public static Codec<HeatingResult> CODEC;

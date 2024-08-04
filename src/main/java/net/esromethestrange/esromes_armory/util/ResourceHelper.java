@@ -8,8 +8,11 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.heat.HeatData;
+import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientData;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntry;
+import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -103,5 +106,20 @@ public class ResourceHelper {
         Identifier file = Identifier.of(location.getNamespace(), location.getPath() + ".json");
         Resource resource = MinecraftClient.getInstance().getResourceManager().getResource(file).get();
         return new BufferedReader(new InputStreamReader(resource.getInputStream(), Charsets.UTF_8));
+    }
+
+    public static boolean isMaterialModelPresent(Identifier id){
+        return MinecraftClient.getInstance().getResourceManager().getResource(id.withPrefixedPath("models/").withSuffixedPath(".json")).isPresent();
+    }
+
+    public static boolean isMaterialModelPresent(MaterialItem materialItem, Material material){
+        Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
+        if(materialId == null){
+            EsromesArmory.LOGGER.error("Material \"{}\" not registered!", material.toString());
+            return false;
+        }
+        return isMaterialModelPresent(materialItem.getRawIdentifier()
+                .withPrefixedPath("item/")
+                .withSuffixedPath("_" + materialId.getNamespace() + "_" + materialId.getPath()));
     }
 }

@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.data.heat.heating_result;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 

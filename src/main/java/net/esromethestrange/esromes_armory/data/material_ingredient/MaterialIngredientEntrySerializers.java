@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.data.material_ingredient;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 

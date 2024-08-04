@@ -1,6 +1,6 @@
 package net.esromethestrange.esromes_armory.item.material;
 
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.component.ItemPartsComponent;
 import net.esromethestrange.esromes_armory.data.material.Material;

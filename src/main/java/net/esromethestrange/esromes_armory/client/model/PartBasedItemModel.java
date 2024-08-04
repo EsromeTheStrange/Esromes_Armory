@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.client;
+package net.esromethestrange.esromes_armory.client.model;
 
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;

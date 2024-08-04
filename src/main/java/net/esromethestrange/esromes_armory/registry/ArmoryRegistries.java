@@ -1,4 +1,4 @@
-package net.esromethestrange.esromes_armory.data;
+package net.esromethestrange.esromes_armory.registry;
 
 import com.mojang.serialization.Lifecycle;
 import net.esromethestrange.esromes_armory.EsromesArmory;

@@ -1,9 +1,10 @@
-package net.esromethestrange.esromes_armory.client;
+package net.esromethestrange.esromes_armory.client.model;
 
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
+import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
@@ -27,7 +28,8 @@ public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
                 if(materialId == null)
                     continue;
                 Identifier id = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
-                pluginContext.addModels(id);
+                if(ResourceHelper.isMaterialModelPresent(id))
+                    pluginContext.addModels(id);
             }
         });
 

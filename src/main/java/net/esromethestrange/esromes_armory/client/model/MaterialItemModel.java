@@ -1,6 +1,7 @@
-package net.esromethestrange.esromes_armory.client;
+package net.esromethestrange.esromes_armory.client.model;
 
-import net.esromethestrange.esromes_armory.data.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
@@ -42,12 +43,17 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
             Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
             if(materialId == null)
                 return;
-            Identifier materialItemId = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
-            BakedModel materialModel = baker.bake(materialItemId, ModelRotation.X0_Y0);
+            Identifier itemModelId = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
+            if(!ResourceHelper.isMaterialModelPresent(itemModelId))
+                return;
+            BakedModel materialModel = baker.bake(itemModelId, ModelRotation.X0_Y0);
             variants.put(material, materialModel);
         });
         return this;
     }
+
+
+
     @Override public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random random) { return List.of(); }
     @Override public Collection<Identifier> getModelDependencies() { return List.of(); }
     @Override public void setParents(Function<Identifier, UnbakedModel> modelLoader) { }
@@ -73,6 +79,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         Material material = ((MaterialItem)stack.getItem()).getMaterial(stack);
-        variants.get(material).emitItemQuads(stack, randomSupplier, context);
+        BakedModel variant = variants.containsKey(material) ? variants.get(material) : variants.get(Materials.NONE);
+        variant.emitItemQuads(stack, randomSupplier, context);
     }
 }
