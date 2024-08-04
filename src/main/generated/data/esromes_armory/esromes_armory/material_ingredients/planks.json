@@ -1,0 +1,81 @@
+{
+  "entries": [
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:acacia_planks"
+      },
+      "material": "esromes_armory:acacia"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:bamboo_planks"
+      },
+      "material": "esromes_armory:bamboo"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:birch_planks"
+      },
+      "material": "esromes_armory:birch"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:cherry_planks"
+      },
+      "material": "esromes_armory:cherry"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:crimson_planks"
+      },
+      "material": "esromes_armory:crimson"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:dark_oak_planks"
+      },
+      "material": "esromes_armory:dark_oak"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:jungle_planks"
+      },
+      "material": "esromes_armory:jungle"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:mangrove_planks"
+      },
+      "material": "esromes_armory:mangrove"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:oak_planks"
+      },
+      "material": "esromes_armory:oak"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:spruce_planks"
+      },
+      "material": "esromes_armory:spruce"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:warped_planks"
+      },
+      "material": "esromes_armory:warped"
+    }
+  ]
+}

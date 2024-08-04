@@ -6,6 +6,7 @@ import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryFixedCodec;
 import net.minecraft.util.Identifier;
@@ -26,8 +27,9 @@ public record Material(int color,
             Codec.INT.fieldOf("enchantability").forGetter(mat -> mat.enchantability),
             Codec.INT.fieldOf("fuelTimeMultiplier").forGetter(mat -> mat.fuelTimeMultiplier)
     ).apply(instance, Material::new));
-    public static final Codec<RegistryEntry<Material>> ENTRY_CODEC = RegistryFixedCodec.of(ArmoryRegistryKeys.MATERIAL);
     public static PacketCodec<RegistryByteBuf, Material> PACKET_CODEC = PacketCodec.ofStatic(Material::writePacket, Material::readPacket);
+    public static final Codec<RegistryEntry<Material>> ENTRY_CODEC = RegistryFixedCodec.of(ArmoryRegistryKeys.MATERIAL);
+    public static final PacketCodec<RegistryByteBuf, RegistryEntry<Material>> ENTRY_PACKET_CODEC = PacketCodecs.registryEntry(ArmoryRegistryKeys.MATERIAL);
 
     public String getTranslatableName() {
         Identifier id = ArmoryRegistries.MATERIAL.getId(this);

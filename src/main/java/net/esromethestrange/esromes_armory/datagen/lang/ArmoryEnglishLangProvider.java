@@ -10,8 +10,10 @@ import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.util.ArmoryGenericTags;
 import net.esromethestrange.esromes_armory.data.ArmoryTags;
+import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 
@@ -25,7 +27,7 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         //Materials
-        addTranslation(Materials.NONEOLD, "Blank", translationBuilder);
+        addTranslation(Materials.NONE, "Blank", translationBuilder);
 
         addTranslation(Materials.OAK, "Oak", translationBuilder);
         addTranslation(Materials.ACACIA, "Acacia", translationBuilder);
@@ -140,6 +142,9 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
 
     public void addTranslation(Material material, String materialName, TranslationBuilder translationBuilder){
         translationBuilder.add(material.getTranslatableName(), materialName);
+    }
+    public void addTranslation(RegistryKey<Material> material, String materialName, TranslationBuilder translationBuilder){
+        translationBuilder.add(MaterialHelper.getTranslatableName(material), materialName);
     }
     public void addTranslation(TagKey<?> tag, String translation, TranslationBuilder translationBuilder){
         translationBuilder.add(tag.getTranslationKey(), translation);

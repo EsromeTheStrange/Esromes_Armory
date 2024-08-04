@@ -4,12 +4,13 @@ import io.wispforest.owo.itemgroup.Icon;
 import io.wispforest.owo.itemgroup.OwoItemGroup;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ArmoryItemGroups {
-    static HashMap<Material, List<ItemStack>> itemMap = new HashMap<>();
+    static HashMap<RegistryEntry<Material>, List<ItemStack>> itemMap = new HashMap<>();
 
     public static final OwoItemGroup ESROMES_ARMORY = OwoItemGroup
             .builder(Identifier.of(EsromesArmory.MOD_ID, "esromes_armory"), () -> Icon.of(ArmoryItems.STEEL_INGOT))
@@ -77,7 +78,7 @@ public class ArmoryItemGroups {
         for(ItemStack stack : stacks){
             if(!(stack.getItem() instanceof PartBasedItem partBasedItem))
                 return;
-            Material material = partBasedItem.getPrimaryMaterial(stack);
+            RegistryEntry<Material> material = partBasedItem.getPrimaryMaterial(stack);
             if(!itemMap.containsKey(material))
                 itemMap.put(material, new ArrayList<>());
             itemMap.get(material).add(stack);

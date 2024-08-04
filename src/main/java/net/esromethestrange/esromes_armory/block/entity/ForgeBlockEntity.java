@@ -1,14 +1,13 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
-import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
-import net.esromethestrange.esromes_armory.data.component.HeatComponent;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.item.component.HeatComponent;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;

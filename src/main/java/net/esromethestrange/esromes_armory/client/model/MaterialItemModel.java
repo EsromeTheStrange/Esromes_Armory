@@ -3,7 +3,6 @@ package net.esromethestrange.esromes_armory.client.model;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
@@ -15,6 +14,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -75,14 +75,19 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
 
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-        Material material = ((MaterialItem)stack.getItem()).getMaterial(stack);
+        RegistryEntry<Material> material = ((MaterialItem)stack.getItem()).getMaterial(stack);
         String materialKey = keyOf(material);
-        BakedModel variant = variants.containsKey(materialKey) ? variants.get(materialKey) : variants.get(keyOf(Materials.NONEOLD));
+        BakedModel variant = variants.containsKey(materialKey) ? variants.get(materialKey) : variants.get(noneKey(material));
         variant.emitItemQuads(stack, randomSupplier, context);
     }
 
-    private String keyOf(Material material){
-        Identifier id = ArmoryRegistries.MATERIAL.getId(material);
+    private String keyOf(RegistryEntry<Material> material){
+        return keyOf(material.getKey().get().getValue());
+    }
+    private String keyOf(Identifier id){
         return id.getPath() + ":" + id.getNamespace() + "_" + id.getPath();
+    }
+    private String noneKey(RegistryEntry<Material> material){
+        return keyOf(Materials.NONE.getValue());
     }
 }

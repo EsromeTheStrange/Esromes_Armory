@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

@@ -1,0 +1,39 @@
+{
+  "entries": [
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:copper_ingot"
+      },
+      "material": "esromes_armory:copper"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      },
+      "material": "esromes_armory:gold"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      },
+      "material": "esromes_armory:iron"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:netherite_ingot"
+      },
+      "material": "esromes_armory:netherite"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "esromes_armory:steel_ingot"
+      },
+      "material": "esromes_armory:steel"
+    }
+  ]
+}

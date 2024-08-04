@@ -1,20 +1,81 @@
 package net.esromethestrange.esromes_armory.data.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.registry.Registerable;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 public class Materials {
     public static final RegistryKey<Material> NONE = of("none");
 
+    public static final RegistryKey<Material> COPPER = of("copper");
+    public static final RegistryKey<Material> GOLD = of("gold");
+    public static final RegistryKey<Material> IRON = of("iron");
+    public static final RegistryKey<Material> NETHERITE = of("netherite");
+    public static final RegistryKey<Material> STEEL = of("steel");
+
+    public static final RegistryKey<Material> ACACIA = of("acacia");
+    public static final RegistryKey<Material> BAMBOO = of("bamboo");
+    public static final RegistryKey<Material> BIRCH = of("birch");
+    public static final RegistryKey<Material> CHERRY = of("cherry");
+    public static final RegistryKey<Material> CRIMSON = of("crimson");
+    public static final RegistryKey<Material> DARK_OAK = of("dark_oak");
+    public static final RegistryKey<Material> JUNGLE = of("jungle");
+    public static final RegistryKey<Material> MANGROVE = of("mangrove");
+    public static final RegistryKey<Material> OAK = of("oak");
+    public static final RegistryKey<Material> SPRUCE = of("spruce");
+    public static final RegistryKey<Material> WARPED = of("warped");
+
+    public static final RegistryKey<Material> STRING = of("string");
+    public static final RegistryKey<Material> SLIME = of("slime");
+
     public static void bootstrap(Registerable<Material> context){
         context.register(NONE, new Material(
                 0xffffff, 1, 0, 1,
                 0, 0, 1, 0
+        ));
+
+        context.register(COPPER, new Material(
+                0xE77C56, 6, 1, 1,
+                4, 0, 5, 0
+        ));
+        context.register(GOLD, new Material(
+                0xE9B115, 4, 1, 1.2f,
+                4, 0, 20, 0
+        ));
+        context.register(IRON, new Material(
+                0xb3b3b3, 8, 2, 1,
+                5, 0, 5, 0
+        ));
+        context.register(NETHERITE, new Material(
+                0x4A2940, 12, 4, 1,
+                7, 0, 5, 0
+        ));
+        context.register(STEEL, new Material(
+                0x787878, 10, 2, 1,
+                6, 0, 5, 0
+        ));
+
+        context.register(ACACIA, createVanillaWoodMaterial(0xBA6337));
+        context.register(BAMBOO, createVanillaWoodMaterial(0xD3BB50));
+        context.register(BIRCH, createVanillaWoodMaterial(0xD7C185));
+        context.register(CHERRY, createVanillaWoodMaterial(0xE7C2BB));
+        context.register(CRIMSON, createVanillaWoodMaterial(0x7E3A56));
+        context.register(DARK_OAK, createVanillaWoodMaterial(0x4F3218));
+        context.register(JUNGLE, createVanillaWoodMaterial(0xB88764));
+        context.register(MANGROVE, createVanillaWoodMaterial(0x7F4234));
+        context.register(OAK, createVanillaWoodMaterial(0xC29D62));
+        context.register(SPRUCE, createVanillaWoodMaterial(0x82613A));
+        context.register(WARPED, createVanillaWoodMaterial(0x398382));
+
+        context.register(STRING, new Material(
+                0xF0F0F0, 4, 0, 0,
+                0, 0, 5, 0
+        ));
+        context.register(SLIME, new Material(
+                0x8CD782, 5, 0, 0,
+                0, 0, 5, 0
         ));
     }
 
@@ -22,88 +83,9 @@ public class Materials {
         return RegistryKey.of(ArmoryRegistryKeys.MATERIAL, Identifier.of(EsromesArmory.MOD_ID, id));
     }
 
-    public static final Material NONEOLD = register("none",
-            new Material(0xffffff, 1,
-                    0, 1,
-                    0, 0,
-                    1, 0)
-    );
-
-    //METALS
-    public static final Material COPPER = registerVanilla("copper",
-            new Material(0xE77C56, 6,
-                    1, 1,
-                    4, 0,
-                    5, 0)
-    );
-    public static final Material IRON = registerVanilla("iron",
-            new Material(0xb3b3b3, 8,
-                    2, 1,
-                    5, 0,
-                    5, 0)
-    );
-    public static final Material GOLD = registerVanilla("gold",
-            new Material(0xE9B115, 4,
-                    1, 1.2f,
-                    4, 0,
-                    20, 0)
-    );
-    public static final Material NETHERITE = registerVanilla("netherite",
-            new Material(0x4A2940, 12,
-                    4,1,
-                    7, 0,
-                    5, 0)
-    );
-    public static final Material STEEL = register("steel",
-            new Material(0x787878, 10,
-                    2,1,
-                    6, 0,
-                    5, 0)
-    );
-
-
-    //WOODS
-    public static final Material OAK = createVanillaWoodMaterial("oak", 0xC29D62);
-    public static final Material ACACIA = createVanillaWoodMaterial("acacia", 0xBA6337);
-    public static final Material BAMBOO = createVanillaWoodMaterial("bamboo", 0xD3BB50);
-    public static final Material BIRCH = createVanillaWoodMaterial("birch", 0xD7C185);
-    public static final Material CHERRY = createVanillaWoodMaterial("cherry", 0xE7C2BB);
-    public static final Material CRIMSON = createVanillaWoodMaterial("crimson", 0x7E3A56);
-    public static final Material DARK_OAK = createVanillaWoodMaterial("dark_oak", 0x4F3218);
-    public static final Material JUNGLE = createVanillaWoodMaterial("jungle", 0xB88764);
-    public static final Material MANGROVE = createVanillaWoodMaterial("mangrove", 0x7F4234);
-    public static final Material SPRUCE = createVanillaWoodMaterial("spruce", 0x82613A);
-    public static final Material WARPED = createVanillaWoodMaterial("warped", 0x398382);
-
-    //BINDINGS
-    public static final Material STRING = registerVanilla("string",
-            new Material(0xF0F0F0, 4,
-                    2, 1,
-                    6, 0,
-                    20, 0)
-    );
-    public static final Material SLIME = registerVanilla("slime",
-            new Material(0x8CD782, 5,
-                    0, 0,
-                    0, 0,
-                    0, 0)
-    );
-
-    private static Material createVanillaWoodMaterial(String materialName, int color){
-        return registerVanilla(materialName, new Material(
+    private static Material createVanillaWoodMaterial(int color){
+        return new Material(
                 color, 2, 0, 0.1f,
-                0, 0, 0, 1));
+                0, 0, 0, 1);
     }
-
-    public static Material registerVanilla(String name, Material material){
-        return register("minecraft", name, material);
-    }
-    public static Material register(String name, Material material){
-        return register(EsromesArmory.MOD_ID, name, material);
-    }
-    public static Material register(String modId, String name, Material material){
-        return Registry.register(ArmoryRegistries.MATERIAL, Identifier.of(modId, name), material);
-    }
-
-    public static void registerMaterials(){}
 }

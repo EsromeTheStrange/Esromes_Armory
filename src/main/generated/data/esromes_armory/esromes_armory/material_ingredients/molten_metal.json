@@ -1,0 +1,39 @@
+{
+  "entries": [
+    {
+      "type": "esromes_armory:fluid",
+      "fluid": {
+        "fluid": "esromes_armory:molten_copper"
+      },
+      "material": "esromes_armory:copper"
+    },
+    {
+      "type": "esromes_armory:fluid",
+      "fluid": {
+        "fluid": "esromes_armory:molten_gold"
+      },
+      "material": "esromes_armory:gold"
+    },
+    {
+      "type": "esromes_armory:fluid",
+      "fluid": {
+        "fluid": "esromes_armory:molten_iron"
+      },
+      "material": "esromes_armory:iron"
+    },
+    {
+      "type": "esromes_armory:fluid",
+      "fluid": {
+        "fluid": "esromes_armory:molten_netherite"
+      },
+      "material": "esromes_armory:netherite"
+    },
+    {
+      "type": "esromes_armory:fluid",
+      "fluid": {
+        "fluid": "esromes_armory:molten_steel"
+      },
+      "material": "esromes_armory:steel"
+    }
+  ]
+}

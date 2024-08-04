@@ -7,7 +7,9 @@ import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.block.Block;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -18,6 +20,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
@@ -45,7 +49,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 
     @Override
     public Text getName(ItemStack stack) {
-        MutableText materialText = Text.translatable(getMaterial(stack, getHeadComponent()).getTranslatableName());
+        MutableText materialText = Text.translatable(getMaterial(stack, getHeadComponent()).value().getTranslatableName());
         Text toolText = super.getName(stack);
         return materialText.append(toolText);
     }
@@ -108,45 +112,45 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
     }
 
     protected int calculateMiningLevel(ItemStack stack) {
-        Material headMaterial = getPrimaryMaterial(stack);
-        return headMaterial.miningLevel();
+        RegistryEntry<Material> headMaterial = getPrimaryMaterial(stack);
+        return headMaterial.value().miningLevel();
     }
     protected float calculateMiningSpeed(ItemStack stack) {
-        Material headMaterial = getPrimaryMaterial(stack);
-        return headMaterial.miningSpeed();
+        RegistryEntry<Material> headMaterial = getPrimaryMaterial(stack);
+        return headMaterial.value().miningSpeed();
     }
     protected int calculateDurability(ItemStack stack) {
-        Material headMaterial = getPrimaryMaterial(stack);
-        Material bindingMaterial = getBindingMaterial(stack);
-        Material handleMaterial = getHandleMaterial(stack);
+        RegistryEntry<Material> headMaterial = getPrimaryMaterial(stack);
+        RegistryEntry<Material> bindingMaterial = getBindingMaterial(stack);
+        RegistryEntry<Material> handleMaterial = getHandleMaterial(stack);
         return (int) (
-                headMaterial.durability() * 25 +
-                bindingMaterial.durability() * 50 +
-                handleMaterial.durability() * 15
+                headMaterial.value().durability() * 25 +
+                bindingMaterial.value().durability() * 50 +
+                handleMaterial.value().durability() * 15
         );
     }
     protected double calculateAttackDamage(ItemStack stack) {
-        Material headMaterial = getPrimaryMaterial(stack);
-        return (double)headMaterial.attackDamage() * toolType.getAttackDamageMultiplier();
+        RegistryEntry<Material> headMaterial = getPrimaryMaterial(stack);
+        return (double)headMaterial.value().attackDamage() * toolType.getAttackDamageMultiplier();
     }
     protected double calculateAttackSpeed(ItemStack stack) {
-        Material bindingMaterial = getBindingMaterial(stack);
+        RegistryEntry<Material> bindingMaterial = getBindingMaterial(stack);
         return toolType.getAttackSpeed() +
-                (double)bindingMaterial.attackSpeed() * toolType.getAttackSpeedMultiplier();
+                (double)bindingMaterial.value().attackSpeed() * toolType.getAttackSpeedMultiplier();
     }
     protected int calculateEnchantability(ItemStack stack) {
-        Material headMaterial = getMaterial(stack, getHeadComponent());
-        return headMaterial.enchantability();
+        RegistryEntry<Material> headMaterial = getMaterial(stack, getHeadComponent());
+        return headMaterial.value().enchantability();
     }
 
     @Override
-    public Material getPrimaryMaterial(ItemStack stack) {
+    public RegistryEntry<Material> getPrimaryMaterial(ItemStack stack) {
         return getMaterial(stack, getHeadComponent());
     }
-    public Material getBindingMaterial(ItemStack stack){
+    public RegistryEntry<Material> getBindingMaterial(ItemStack stack){
         return getMaterial(stack, getBindingComponent());
     }
-    public Material getHandleMaterial(ItemStack stack){
+    public RegistryEntry<Material> getHandleMaterial(ItemStack stack){
         return getMaterial(stack, getHandleComponent());
     }
 
@@ -159,16 +163,16 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), Materials.NONEOLD);
+            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get()); //TODO fix this
             setupComponents(stack);
             defaultStacks.add(stack);
         }
-        for(Material material : MaterialTypes.METAL){
+        for(RegistryKey<Material> material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
             for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
             }
-            setMaterial(stack, getHeadComponent(), material);
+            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(material).get()); //TODO fix this
             setupComponents(stack);
             defaultStacks.add(stack);
         }

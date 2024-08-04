@@ -5,7 +5,14 @@
       "ingredient": {
         "item": "minecraft:string"
       },
-      "material": "esromes_armory:none"
+      "material": "esromes_armory:string"
+    },
+    {
+      "type": "esromes_armory:item",
+      "ingredient": {
+        "item": "minecraft:slime_ball"
+      },
+      "material": "esromes_armory:slime"
     }
   ]
 }

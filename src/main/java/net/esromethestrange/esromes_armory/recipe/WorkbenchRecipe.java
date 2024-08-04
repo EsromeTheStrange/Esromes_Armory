@@ -17,6 +17,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -67,7 +68,7 @@ public class WorkbenchRecipe implements Recipe<WorkbenchRecipe.WorkbenchRecipeIn
                 if(stack.isEmpty() || !(stack.getItem() instanceof MaterialItem materialItem))
                     continue;
 
-                Material material = materialItem.getMaterial(stack);
+                RegistryEntry<Material> material = materialItem.getMaterial(stack);
                 partBasedItem.setMaterial(craftOutput, materialItem, material);
             }
         }

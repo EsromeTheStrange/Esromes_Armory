@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class MaterialIngredient implements CustomIngredient {
         return Serializer.INSTANCE;
     }
 
-    public Material getMaterial(Object o){
+    public RegistryEntry<Material> getMaterial(Object o){
         return ArmoryIngredientLoader.getMaterialIngredient(ingredientData).getMaterial(o);
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -71,7 +72,7 @@ public class PartBasedItemModel implements UnbakedModel, BakedModel, FabricBaked
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         for (MaterialItem materialItem : ((PartBasedItem)stack.getItem()).getParts()){
-            Material material = materialItem.getMaterial(stack);
+            RegistryEntry<Material> material = materialItem.getMaterial(stack);
             ItemStack materialStack = materialItem.getStack(material);
             components.get(materialItem).emitItemQuads(materialStack, randomSupplier, context);
         }

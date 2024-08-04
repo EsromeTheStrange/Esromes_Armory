@@ -1,13 +1,12 @@
 package net.esromethestrange.esromes_armory.item.material;
 
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
-import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
-import net.esromethestrange.esromes_armory.data.component.ItemPartsComponent;
 import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.item.component.ItemPartsComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -18,9 +17,9 @@ public interface PartBasedItem {
 
     List<MaterialItem> getParts();
     List<ItemStack> getDefaultStacks(boolean includeNone);
-    Material getPrimaryMaterial(ItemStack stack);
+    RegistryEntry<Material> getPrimaryMaterial(ItemStack stack);
 
-    default void setMaterial(ItemStack stack, MaterialItem part, Material material){
+    default void setMaterial(ItemStack stack, MaterialItem part, RegistryEntry<Material> material){
         if(!containsPart(part)) return;
 
         ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
@@ -31,7 +30,7 @@ public interface PartBasedItem {
     }
 
     default int getFuelTime(ItemStack stack){
-        if(getPrimaryMaterial(stack).fuelTimeMultiplier() == 0)
+        if(getPrimaryMaterial(stack).value().fuelTimeMultiplier() == 0)
             return 0;
         int fuelTime = 0;
         for(MaterialItem part : getParts()){
@@ -41,13 +40,11 @@ public interface PartBasedItem {
         return fuelTime;
     }
 
-    default Material getMaterial(ItemStack stack, MaterialItem part){
+    default RegistryEntry<Material> getMaterial(ItemStack stack, MaterialItem part){
         ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
         if(partsComponent == null)
-            return Materials.NONEOLD;
-
-        Identifier materialId = partsComponent.getPart(part);
-        return materialId == null ? Materials.NONEOLD : ArmoryRegistries.MATERIAL.get(materialId);
+            return null;
+        return partsComponent.getPart(part);
     }
 
     default boolean containsPart(MaterialItem component){

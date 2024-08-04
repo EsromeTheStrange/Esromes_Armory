@@ -1,12 +1,16 @@
 package net.esromethestrange.esromes_armory.item.tools;
 
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.Materials;
-import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +29,18 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, SWORD_GUARD, Materials.NONEOLD);
-            setMaterial(stack, getHeadComponent(), Materials.NONEOLD);
+            setMaterial(stack, SWORD_GUARD, MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get()); //TODO fix this
+            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get()); //TODO fix this
             setupComponents(stack);
             defaultStacks.add(stack);
         }
-        for(Material material : MaterialTypes.METAL){
+        for(RegistryKey<Material> material : MaterialTypes.METAL){
             ItemStack stack = getDefaultStack();
             for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
             }
-            setMaterial(stack, SWORD_GUARD, material);
-            setMaterial(stack, getHeadComponent(), material);
+            setMaterial(stack, SWORD_GUARD, MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(material).get()); //TODO fix this
+            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(material).get()); //TODO fix this
             setupComponents(stack);
             defaultStacks.add(stack);
         }

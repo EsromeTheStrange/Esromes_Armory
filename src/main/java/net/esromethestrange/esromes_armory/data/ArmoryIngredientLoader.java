@@ -6,6 +6,7 @@ import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngr
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 

@@ -1,12 +1,14 @@
 package net.esromethestrange.esromes_armory.data.material;
 
+import net.minecraft.registry.RegistryKey;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialTypes {
-    public static List<Material> WOOD = new ArrayList<>();
-    public static List<Material> METAL = new ArrayList<>();
-    public static List<Material> BINDING = new ArrayList<>();
+    public static List<RegistryKey<Material>> WOOD = new ArrayList<>();
+    public static List<RegistryKey<Material>> METAL = new ArrayList<>();
+    public static List<RegistryKey<Material>> BINDING = new ArrayList<>();
 
     public static void registerMaterialTypes(){
         WOOD.add(Materials.OAK);

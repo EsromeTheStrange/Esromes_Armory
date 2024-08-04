@@ -2,7 +2,6 @@ package net.esromethestrange.esromes_armory.datagen;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
@@ -12,6 +11,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class ArmoryModelProvider extends FabricModelProvider {
@@ -44,7 +44,7 @@ public class ArmoryModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ArmoryItems.SWORD_GUARD_MOLD, Models.GENERATED);
         itemModelGenerator.register(ArmoryItems.SWORD_BLADE_MOLD, Models.GENERATED);
 
-        Identifier noneId = ArmoryRegistries.MATERIAL.getId(Materials.NONEOLD);
+        Identifier noneId = Materials.NONE.getValue();
         if(noneId == null){
             EsromesArmory.LOGGER.error("Unable to get NONE material!");
             return;
@@ -56,8 +56,8 @@ public class ArmoryModelProvider extends FabricModelProvider {
                             .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ noneId.getPath())
                             .withPrefixedPath("item/")),
                     itemModelGenerator.writer);
-            for(Material material : item.getValidMaterials()){
-                Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
+            for(RegistryEntry<Material> material : item.getValidMaterials()){
+                Identifier materialId = material.getKey().get().getValue();
                 if(materialId == null)
                     continue;
                 itemModelGenerator.register((Item)item,

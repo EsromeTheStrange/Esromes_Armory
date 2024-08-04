@@ -3,8 +3,8 @@ package net.esromethestrange.esromes_armory.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.component.ArmoryComponents;
-import net.esromethestrange.esromes_armory.data.component.HeatComponent;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.item.component.HeatComponent;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
@@ -19,6 +19,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -52,7 +53,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
     public boolean matches(AnvilRecipe.AnvilRecipeInput inventory, World world) {
         if (world.isClient()) return false;
 
-        Material currentMaterial = null;
+        RegistryEntry<Material> currentMaterial = null;
         for (int i = 0; i < inputs.size(); i++){
             if(inputs.get(i) == Ingredient.EMPTY)
                 continue;
@@ -63,7 +64,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
             if (!inputs.get(i).test(inventory.getStackInSlot(i)))
                 return false;
 
-            Material inputMaterial = getMaterialForInput(inventory, i);
+            RegistryEntry<Material> inputMaterial = getMaterialForInput(inventory, i);
             if(inputMaterial == null)
                 continue;
             if(currentMaterial == null)
@@ -81,9 +82,9 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
         if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
             return craftOutput;
 
-        Material outputMaterial = Materials.NONEOLD;
+        RegistryEntry<Material> outputMaterial = null;
         for(int i=0; i<inputs.size(); i++){
-            Material inputMaterial = getMaterialForInput(inventory, i);
+            RegistryEntry<Material> inputMaterial = getMaterialForInput(inventory, i);
             if(inputMaterial == null)
                 continue;
             outputMaterial = inputMaterial;
@@ -94,7 +95,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
         return craftOutput;
     }
 
-    private Material getMaterialForInput(AnvilRecipe.AnvilRecipeInput inventory, int index){
+    private RegistryEntry<Material> getMaterialForInput(AnvilRecipe.AnvilRecipeInput inventory, int index){
         if(inputs.get(index).getCustomIngredient() instanceof MaterialIngredient materialIngredient)
             return materialIngredient.getMaterial(inventory.getStackInSlot(index));
         ItemStack inputStack = inventory.getStackInSlot(index);

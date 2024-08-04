@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "esromes_armory:item/tool_binding_minecraft_slime"
-  }
-}
