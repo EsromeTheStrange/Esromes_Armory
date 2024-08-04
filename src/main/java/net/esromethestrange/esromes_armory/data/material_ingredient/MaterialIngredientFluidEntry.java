@@ -5,15 +5,16 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class MaterialIngredientFluidEntry extends MaterialIngredientEntry<Fluid>{
     public final FluidVariant fluid;
 
-    public MaterialIngredientFluidEntry(Material material, FluidVariant fluid){
+    public MaterialIngredientFluidEntry(RegistryEntry<Material> material, FluidVariant fluid){
         this.material = material;
         this.fluid = fluid;
     }
-    public MaterialIngredientFluidEntry(Material material, Fluid fluid){
+    public MaterialIngredientFluidEntry(RegistryEntry<Material> material, Fluid fluid){
         this(material, FluidVariant.of(fluid));
     }
 
@@ -40,7 +41,7 @@ public class MaterialIngredientFluidEntry extends MaterialIngredientEntry<Fluid>
         public static Serializer INSTANCE = new Serializer();
 
         public static final MapCodec<MaterialIngredientFluidEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Material.CODEC.fieldOf("material").forGetter(entry -> entry.material), //TODO fix this
+                Material.ENTRY_CODEC.fieldOf("material").forGetter(entry -> entry.material),
                 FluidVariant.CODEC.fieldOf("fluid").forGetter(entry -> entry.fluid)
         ).apply(instance, MaterialIngredientFluidEntry::new));
 
@@ -50,16 +51,8 @@ public class MaterialIngredientFluidEntry extends MaterialIngredientEntry<Fluid>
         }
     }
 
-    public static class FluidTarget{
-        public final FluidVariant variant;
-        public final long amount;
-
-        public FluidTarget(FluidVariant variant, long amount){
-            this.variant = variant;
-            this.amount = amount;
-        }
-
-        public static FluidTarget of(FluidVariant variant, long amount){
+    public record FluidTarget(FluidVariant variant, long amount) {
+        public static FluidTarget of(FluidVariant variant, long amount) {
             return new FluidTarget(variant, amount);
         }
     }

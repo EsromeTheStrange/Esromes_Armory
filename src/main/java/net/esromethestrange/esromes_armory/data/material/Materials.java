@@ -11,15 +11,15 @@ import net.minecraft.util.Identifier;
 public class Materials {
     public static final RegistryKey<Material> NONE = of("none");
 
-    private static RegistryKey<Material> of(String id) {
-        return RegistryKey.of(ArmoryRegistryKeys.MATERIAL, Identifier.of(EsromesArmory.MOD_ID, id));
-    }
-
     public static void bootstrap(Registerable<Material> context){
         context.register(NONE, new Material(
                 0xffffff, 1, 0, 1,
                 0, 0, 1, 0
         ));
+    }
+
+    private static RegistryKey<Material> of(String id) {
+        return RegistryKey.of(ArmoryRegistryKeys.MATERIAL, Identifier.of(EsromesArmory.MOD_ID, id));
     }
 
     public static final Material NONEOLD = register("none",

@@ -10,20 +10,23 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
     private final HashMap<Identifier, PartBasedItemModel> componentBasedItemModels = new HashMap<>();
     private final HashMap<Identifier, MaterialItemModel> materialItemModels = new HashMap<>();
 
+    private final HashMap<MaterialItem, List<Identifier>> materialModelVariants = new HashMap<>();
+
     @Override
     public void onInitializeModelLoader(Context pluginContext) {
-        MaterialItem.MATERIAL_ITEMS.forEach(this::addMaterialItemModel);
-        PartBasedItem.PART_BASED_ITEMS.forEach(this::addComponentBasedModel);
-
         for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
+            materialModelVariants.put(materialItem, List.of());
+
             ResourceManager manager = MinecraftClient.getInstance().getResourceManager();
             Identifier itemId = materialItem.getRawIdentifier();
+
             for(Identifier materialVariant : manager.findResources("models/item", i -> {
                 String[] pathParts = i.getPath().split("/");
                 return i.toString().endsWith(".json") &&
@@ -36,8 +39,13 @@ public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
                         path.substring("models/".length(), path.length() - ".json".length())
                 );
                 pluginContext.addModels(materialVariantId);
+
+                materialModelVariants.get(materialItem).add(materialVariantId);
             }
         }
+
+        MaterialItem.MATERIAL_ITEMS.forEach(this::addMaterialItemModel);
+        PartBasedItem.PART_BASED_ITEMS.forEach(this::addComponentBasedModel);
 
         pluginContext.modifyModelOnLoad().register((original, context) -> {
             if(context.resourceId()==null)
@@ -63,6 +71,6 @@ public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
 
     private void addMaterialItemModel(MaterialItem item){
         Identifier modelIdentifier = item.getRawIdentifier().withPrefixedPath("item/");
-        materialItemModels.put(modelIdentifier, new MaterialItemModel(item));
+        materialItemModels.put(modelIdentifier, new MaterialItemModel(item, materialModelVariants.get(item)));
     }
 }

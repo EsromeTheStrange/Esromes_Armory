@@ -48,7 +48,7 @@ public class MaterialIngredientData {
     public Material getMaterial(Object o){
         for(MaterialIngredientEntry<?> materialIngredientEntry : entries)
             if(materialIngredientEntry.hasObject(o))
-                return materialIngredientEntry.getMaterial();
+                return materialIngredientEntry.getMaterial().value();
 
         return Materials.NONEOLD;
     }

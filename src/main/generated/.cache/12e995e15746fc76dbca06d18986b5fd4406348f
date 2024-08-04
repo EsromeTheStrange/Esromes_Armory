@@ -1,4 +1,4 @@
-// 1.21	2024-08-05T00:23:40.6107424	Esrome's Armory/Model Definitions
+// 1.21	2024-08-05T03:30:41.3425393	Esrome's Armory/Model Definitions
 96d7f5ac7a2212e8f67ae9c4cf6ed0bf3b790980 assets\esromes_armory\models\item\sword_grip_minecraft_crimson.json
 d6134357e09c36cdcab26749478a27d5b863f1d6 assets\esromes_armory\blockstates\charcoal_block.json
 b5958912f37d8452100c81fdaa938b70bdde905e assets\esromes_armory\models\item\sword_guard_minecraft_copper.json
@@ -91,8 +91,8 @@ caaae8e1ca948323e71869939f059895c56f48d3 assets\esromes_armory\models\item\hoe_h
 6c0fea6650daff83b8117715f42369c9d3e2418b assets\esromes_armory\blockstates\molten_netherite.json
 b10e16753de351f4c6453d5677db1d52cf7c625c assets\esromes_armory\models\item\sword_blade_mold.json
 81beba48a28d5b39f192b2647fb65a7e7bef0c27 assets\esromes_armory\models\item\shovel_head_minecraft_iron.json
-50812bd51e14ec5ea223afe239c89730a63e43b1 assets\esromes_armory\models\block\molten_copper.json
 3cc61b956bcc8b54925fc8ec0ea6e82e4a7e4a5b assets\esromes_armory\models\item\sword_grip_minecraft_spruce.json
+50812bd51e14ec5ea223afe239c89730a63e43b1 assets\esromes_armory\models\block\molten_copper.json
 eb472d290366b98df988e3da807b04971906b324 assets\esromes_armory\models\item\hoe_head_minecraft_netherite.json
 efab0789fd32c42682e7af73616f820e08c9d5e3 assets\esromes_armory\models\item\sword_grip_minecraft_mangrove.json
 e31341071b09c9588fce36aa0ffa24880adf3f10 assets\esromes_armory\models\item\sword_grip_minecraft_jungle.json

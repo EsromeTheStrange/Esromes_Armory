@@ -1,10 +1,9 @@
 package net.esromethestrange.esromes_armory.client.model;
 
-import net.esromethestrange.esromes_armory.data.material.Materials;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.util.MaterialHelper;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
@@ -30,25 +29,23 @@ import java.util.function.Supplier;
 
 public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedModel {
     MaterialItem materialItem;
-    HashMap<Material, BakedModel> variants = new HashMap<>();
+    List<Identifier> modelIds;
+    HashMap<String, BakedModel> variants = new HashMap<>();
 
-    public MaterialItemModel(MaterialItem materialItem){
+    public MaterialItemModel(MaterialItem materialItem, List<Identifier> materialModelVariants){
         this.materialItem = materialItem;
+        this.modelIds = materialModelVariants;
     }
 
     @Nullable
     @Override
     public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer) {
-        ArmoryRegistries.MATERIAL.stream().forEach(material -> {
-            Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
-            if(materialId == null)
-                return;
-            Identifier itemModelId = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
-            if(!ResourceHelper.isMaterialModelPresent(itemModelId))
-                return;
+        for(Identifier itemModelId : modelIds){
             BakedModel materialModel = baker.bake(itemModelId, ModelRotation.X0_Y0);
-            variants.put(material, materialModel);
-        });
+            String[] idParts = itemModelId.getPath().split("/");
+            String key = (itemModelId.getNamespace() + ":" + idParts[idParts.length - 1]).substring(materialItem.getRawIdentifier().getPath().length() + 1);
+            variants.put(key, materialModel);
+        }
         return this;
     }
 
@@ -79,7 +76,13 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         Material material = ((MaterialItem)stack.getItem()).getMaterial(stack);
-        BakedModel variant = variants.containsKey(material) ? variants.get(material) : variants.get(Materials.NONEOLD);
+        String materialKey = keyOf(material);
+        BakedModel variant = variants.containsKey(materialKey) ? variants.get(materialKey) : variants.get(keyOf(Materials.NONEOLD));
         variant.emitItemQuads(stack, randomSupplier, context);
+    }
+
+    private String keyOf(Material material){
+        Identifier id = ArmoryRegistries.MATERIAL.getId(material);
+        return id.getPath() + ":" + id.getNamespace() + "_" + id.getPath();
     }
 }

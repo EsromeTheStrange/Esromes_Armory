@@ -2,18 +2,18 @@
   "entries": [
     {
       "result": {
+        "type": "esromes_armory:item",
+        "item": "esromes_armory:steel_ingot"
+      },
+      "temperature": "room_temperature"
+    },
+    {
+      "result": {
         "type": "esromes_armory:fluid",
         "amount": 9000,
         "fluid": "esromes_armory:molten_steel"
       },
       "temperature": "white"
-    },
-    {
-      "result": {
-        "type": "esromes_armory:item",
-        "item": "esromes_armory:steel_ingot"
-      },
-      "temperature": "room_temperature"
     }
   ]
 }

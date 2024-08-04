@@ -3,8 +3,11 @@ package net.esromethestrange.esromes_armory.data.material;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryFixedCodec;
 import net.minecraft.util.Identifier;
 
 public record Material(int color,
@@ -23,6 +26,7 @@ public record Material(int color,
             Codec.INT.fieldOf("enchantability").forGetter(mat -> mat.enchantability),
             Codec.INT.fieldOf("fuelTimeMultiplier").forGetter(mat -> mat.fuelTimeMultiplier)
     ).apply(instance, Material::new));
+    public static final Codec<RegistryEntry<Material>> ENTRY_CODEC = RegistryFixedCodec.of(ArmoryRegistryKeys.MATERIAL);
     public static PacketCodec<RegistryByteBuf, Material> PACKET_CODEC = PacketCodec.ofStatic(Material::writePacket, Material::readPacket);
 
     public String getTranslatableName() {
