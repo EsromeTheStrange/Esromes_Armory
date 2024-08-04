@@ -2,11 +2,27 @@ package net.esromethestrange.esromes_armory.data.material;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
+import net.minecraft.registry.Registerable;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 public class Materials {
-    public static final Material NONE = register("none",
+    public static final RegistryKey<Material> NONE = of("none");
+
+    private static RegistryKey<Material> of(String id) {
+        return RegistryKey.of(ArmoryRegistryKeys.MATERIAL, Identifier.of(EsromesArmory.MOD_ID, id));
+    }
+
+    public static void bootstrap(Registerable<Material> context){
+        context.register(NONE, new Material(
+                0xffffff, 1, 0, 1,
+                0, 0, 1, 0
+        ));
+    }
+
+    public static final Material NONEOLD = register("none",
             new Material(0xffffff, 1,
                     0, 1,
                     0, 0,

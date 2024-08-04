@@ -42,7 +42,7 @@ public class ComponentItem extends Item implements MaterialItem {
     public List<ItemStack> getDefaultStacks(boolean includeNone) {
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone)
-            defaultStacks.add(getStack(Materials.NONE));
+            defaultStacks.add(getStack(Materials.NONEOLD));
         for(Material material : defaultMaterials){
             defaultStacks.add(getStack(material));
         }

@@ -1,0 +1,10 @@
+{
+  "attackDamage": 0,
+  "attackSpeed": 0.0,
+  "color": 16777215,
+  "durability": 1.0,
+  "enchantability": 1,
+  "fuelTimeMultiplier": 0,
+  "miningLevel": 0,
+  "miningSpeed": 1.0
+}

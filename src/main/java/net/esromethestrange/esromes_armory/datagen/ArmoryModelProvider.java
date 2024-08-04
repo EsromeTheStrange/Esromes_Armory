@@ -44,7 +44,7 @@ public class ArmoryModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ArmoryItems.SWORD_GUARD_MOLD, Models.GENERATED);
         itemModelGenerator.register(ArmoryItems.SWORD_BLADE_MOLD, Models.GENERATED);
 
-        Identifier noneId = ArmoryRegistries.MATERIAL.getId(Materials.NONE);
+        Identifier noneId = ArmoryRegistries.MATERIAL.getId(Materials.NONEOLD);
         if(noneId == null){
             EsromesArmory.LOGGER.error("Unable to get NONE material!");
             return;

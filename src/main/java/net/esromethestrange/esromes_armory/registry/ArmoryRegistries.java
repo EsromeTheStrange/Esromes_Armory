@@ -5,6 +5,7 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntrySerializer;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SimpleRegistry;
@@ -18,5 +19,7 @@ public class ArmoryRegistries {
     public static final Registry<MaterialIngredientEntrySerializer<?>> MATERIAL_INGREDIENT_ENTRY_SERIALIZERS = new SimpleRegistry<>(
             RegistryKey.ofRegistry(Identifier.of(EsromesArmory.MOD_ID, "material_ingredient_entry_serializer")), Lifecycle.stable());
 
-    public static void registerRegistries() {}
+    public static void registerRegistries() {
+        DynamicRegistries.registerSynced(ArmoryRegistryKeys.MATERIAL, Material.CODEC);
+    }
 }

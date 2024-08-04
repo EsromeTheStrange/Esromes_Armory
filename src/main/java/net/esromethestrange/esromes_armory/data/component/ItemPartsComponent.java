@@ -62,7 +62,7 @@ public class ItemPartsComponent {
 
     public Identifier getPart(MaterialItem materialItem){
         if(!parts.containsKey(materialItem.getRawIdentifier()))
-            return ArmoryRegistries.MATERIAL.getId(Materials.NONE);
+            return ArmoryRegistries.MATERIAL.getId(Materials.NONEOLD);
         return parts.get(materialItem.getRawIdentifier());
     }
 

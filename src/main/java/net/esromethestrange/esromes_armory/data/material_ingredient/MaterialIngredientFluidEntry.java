@@ -40,7 +40,7 @@ public class MaterialIngredientFluidEntry extends MaterialIngredientEntry<Fluid>
         public static Serializer INSTANCE = new Serializer();
 
         public static final MapCodec<MaterialIngredientFluidEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Material.CODEC.fieldOf("material").forGetter(entry -> entry.material),
+                Material.CODEC.fieldOf("material").forGetter(entry -> entry.material), //TODO fix this
                 FluidVariant.CODEC.fieldOf("fluid").forGetter(entry -> entry.fluid)
         ).apply(instance, MaterialIngredientFluidEntry::new));
 

@@ -48,7 +48,7 @@ public interface MaterialItem {
         else if(stack.getItem() instanceof PartBasedItem partBasedItem){
             return partBasedItem.getMaterial(stack, this);
         }
-        return Materials.NONE;
+        return Materials.NONEOLD;
     }
 
     default Identifier getRawIdentifier() {

@@ -6,7 +6,14 @@
         "item": "minecraft:acacia_log"
       },
       "material": {
-        "id": "minecraft:acacia"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 12215095,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -15,7 +22,14 @@
         "item": "minecraft:bamboo_block"
       },
       "material": {
-        "id": "minecraft:bamboo"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 13876048,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -24,7 +38,14 @@
         "item": "minecraft:birch_log"
       },
       "material": {
-        "id": "minecraft:birch"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 14139781,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -33,7 +54,14 @@
         "item": "minecraft:cherry_log"
       },
       "material": {
-        "id": "minecraft:cherry"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 15188667,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -42,7 +70,14 @@
         "item": "minecraft:crimson_stem"
       },
       "material": {
-        "id": "minecraft:crimson"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 8272470,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -51,7 +86,14 @@
         "item": "minecraft:dark_oak_log"
       },
       "material": {
-        "id": "minecraft:dark_oak"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 5190168,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -60,7 +102,14 @@
         "item": "minecraft:jungle_log"
       },
       "material": {
-        "id": "minecraft:jungle"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 12093284,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -69,7 +118,14 @@
         "item": "minecraft:mangrove_log"
       },
       "material": {
-        "id": "minecraft:mangrove"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 8340020,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -78,7 +134,14 @@
         "item": "minecraft:oak_log"
       },
       "material": {
-        "id": "minecraft:oak"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 12754274,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -87,7 +150,14 @@
         "item": "minecraft:spruce_log"
       },
       "material": {
-        "id": "minecraft:spruce"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 8544570,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     },
     {
@@ -96,7 +166,14 @@
         "item": "minecraft:warped_stem"
       },
       "material": {
-        "id": "minecraft:warped"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 3769218,
+        "durability": 2.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 1,
+        "miningLevel": 0,
+        "miningSpeed": 0.1
       }
     }
   ]

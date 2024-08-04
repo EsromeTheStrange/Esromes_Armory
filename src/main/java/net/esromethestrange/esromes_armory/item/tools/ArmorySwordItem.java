@@ -25,8 +25,8 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, SWORD_GUARD, Materials.NONE);
-            setMaterial(stack, getHeadComponent(), Materials.NONE);
+            setMaterial(stack, SWORD_GUARD, Materials.NONEOLD);
+            setMaterial(stack, getHeadComponent(), Materials.NONEOLD);
             setupComponents(stack);
             defaultStacks.add(stack);
         }

@@ -81,7 +81,7 @@ public class AnvilRecipe implements Recipe<AnvilRecipe.AnvilRecipeInput> {
         if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
             return craftOutput;
 
-        Material outputMaterial = Materials.NONE;
+        Material outputMaterial = Materials.NONEOLD;
         for(int i=0; i<inputs.size(); i++){
             Material inputMaterial = getMaterialForInput(inventory, i);
             if(inputMaterial == null)

@@ -39,7 +39,7 @@ public class MaterialIngredientIngredientEntry extends MaterialIngredientEntry<I
         public static Serializer INSTANCE = new Serializer();
 
         public static final MapCodec<MaterialIngredientIngredientEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Material.CODEC.fieldOf("material").forGetter(entry -> entry.material),
+                Material.CODEC.fieldOf("material").forGetter(entry -> entry.material), //TODO fix this
                 Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(entry -> entry.ingredient)
         ).apply(instance, MaterialIngredientIngredientEntry::new));
 

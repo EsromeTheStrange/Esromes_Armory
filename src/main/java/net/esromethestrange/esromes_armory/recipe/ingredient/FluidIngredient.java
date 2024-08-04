@@ -47,7 +47,7 @@ public record FluidIngredient(Optional<Material> material, FluidVariant fluidVar
         public static Serializer INSTANCE = new Serializer();
 
         public static final MapCodec<FluidIngredient> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Material.CODEC.optionalFieldOf("material").forGetter(ing -> ing.material),
+                Material.CODEC.optionalFieldOf("material").forGetter(ing -> ing.material), //TODO fix this
                 FluidVariant.CODEC.fieldOf("fluid").forGetter(ing -> ing.fluidVariant),
                 Codec.LONG.fieldOf("amount").forGetter(ing -> ing.amount)
         ).apply(instance, FluidIngredient::new));

@@ -25,7 +25,7 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         //Materials
-        addTranslation(Materials.NONE, "Blank", translationBuilder);
+        addTranslation(Materials.NONEOLD, "Blank", translationBuilder);
 
         addTranslation(Materials.OAK, "Oak", translationBuilder);
         addTranslation(Materials.ACACIA, "Acacia", translationBuilder);

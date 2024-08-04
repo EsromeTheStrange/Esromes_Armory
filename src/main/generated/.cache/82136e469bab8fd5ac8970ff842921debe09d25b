@@ -1,10 +1,10 @@
-// 1.21	2024-08-04T21:45:44.8007887	Esrome's Armory/Heat States
+// 1.21	2024-08-05T00:23:40.6137392	Esrome's Armory/Heat States
 412c55bc861f12e54997100d22d29ce72c68c442 data\minecraft\esromes_armory\heat_states\iron_ingot.json
 925a621993af6000b0c67c44551080c6fb35d5c6 data\minecraft\esromes_armory\heat_states\iron_block.json
-34740847dbd43a460a186c59cfdbeef81750300d data\minecraft\esromes_armory\heat_states\gold_block.json
-daacb1cba7f8f51509dd37fb1785a2ff2788e357 data\minecraft\esromes_armory\heat_states\copper_block.json
-eb2a0e146f920ac015d28e522ceee33635da4a33 data\minecraft\esromes_armory\heat_states\gold_ingot.json
-f176a75e5235b499dd1984ac3615204a966eed09 data\minecraft\esromes_armory\heat_states\copper_ingot.json
+30e314f4c290493e4e916865ef963a02e18c0235 data\minecraft\esromes_armory\heat_states\copper_block.json
+39ff6757ec22b2d5e62565aa506bead30e6cbdb4 data\minecraft\esromes_armory\heat_states\gold_block.json
+1988e10e36d6ed189f727c0094de7c86a233c721 data\minecraft\esromes_armory\heat_states\copper_ingot.json
+4d20fa40ddaf3de1a5ad2e9a1fa7e90c99698fc3 data\minecraft\esromes_armory\heat_states\gold_ingot.json
 31af07550aa291fbc9584458954d19850425ed01 data\minecraft\esromes_armory\heat_states\netherite_ingot.json
 acd0eb2e5f36c5cfd5fccbc64193e431c82eb6de data\esromes_armory\esromes_armory\heat_states\steel_block.json
 cf464b68541ad33e10e1ff59aec2e92f61899cef data\minecraft\esromes_armory\heat_states\netherite_block.json

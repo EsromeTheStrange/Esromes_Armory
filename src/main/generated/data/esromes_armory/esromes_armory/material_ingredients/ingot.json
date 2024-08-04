@@ -6,7 +6,14 @@
         "item": "minecraft:copper_ingot"
       },
       "material": {
-        "id": "minecraft:copper"
+        "attackDamage": 4,
+        "attackSpeed": 0.0,
+        "color": 15170646,
+        "durability": 6.0,
+        "enchantability": 5,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 1,
+        "miningSpeed": 1.0
       }
     },
     {
@@ -15,7 +22,14 @@
         "item": "minecraft:gold_ingot"
       },
       "material": {
-        "id": "minecraft:gold"
+        "attackDamage": 4,
+        "attackSpeed": 0.0,
+        "color": 15315221,
+        "durability": 4.0,
+        "enchantability": 20,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 1,
+        "miningSpeed": 1.2
       }
     },
     {
@@ -24,7 +38,14 @@
         "item": "minecraft:iron_ingot"
       },
       "material": {
-        "id": "minecraft:iron"
+        "attackDamage": 5,
+        "attackSpeed": 0.0,
+        "color": 11776947,
+        "durability": 8.0,
+        "enchantability": 5,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 2,
+        "miningSpeed": 1.0
       }
     },
     {
@@ -33,7 +54,14 @@
         "item": "minecraft:netherite_ingot"
       },
       "material": {
-        "id": "minecraft:netherite"
+        "attackDamage": 7,
+        "attackSpeed": 0.0,
+        "color": 4860224,
+        "durability": 12.0,
+        "enchantability": 5,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 4,
+        "miningSpeed": 1.0
       }
     },
     {
@@ -42,7 +70,14 @@
         "item": "esromes_armory:steel_ingot"
       },
       "material": {
-        "id": "esromes_armory:steel"
+        "attackDamage": 6,
+        "attackSpeed": 0.0,
+        "color": 7895160,
+        "durability": 10.0,
+        "enchantability": 5,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 2,
+        "miningSpeed": 1.0
       }
     }
   ]

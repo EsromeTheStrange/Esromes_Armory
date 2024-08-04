@@ -159,7 +159,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), Materials.NONE);
+            setMaterial(stack, getHeadComponent(), Materials.NONEOLD);
             setupComponents(stack);
             defaultStacks.add(stack);
         }

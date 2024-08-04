@@ -79,7 +79,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         Material material = ((MaterialItem)stack.getItem()).getMaterial(stack);
-        BakedModel variant = variants.containsKey(material) ? variants.get(material) : variants.get(Materials.NONE);
+        BakedModel variant = variants.containsKey(material) ? variants.get(material) : variants.get(Materials.NONEOLD);
         variant.emitItemQuads(stack, randomSupplier, context);
     }
 }

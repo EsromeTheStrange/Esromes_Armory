@@ -44,10 +44,10 @@ public interface PartBasedItem {
     default Material getMaterial(ItemStack stack, MaterialItem part){
         ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
         if(partsComponent == null)
-            return Materials.NONE;
+            return Materials.NONEOLD;
 
         Identifier materialId = partsComponent.getPart(part);
-        return materialId == null ? Materials.NONE : ArmoryRegistries.MATERIAL.get(materialId);
+        return materialId == null ? Materials.NONEOLD : ArmoryRegistries.MATERIAL.get(materialId);
     }
 
     default boolean containsPart(MaterialItem component){

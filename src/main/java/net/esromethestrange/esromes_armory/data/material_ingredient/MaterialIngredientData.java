@@ -50,6 +50,6 @@ public class MaterialIngredientData {
             if(materialIngredientEntry.hasObject(o))
                 return materialIngredientEntry.getMaterial();
 
-        return Materials.NONE;
+        return Materials.NONEOLD;
     }
 }

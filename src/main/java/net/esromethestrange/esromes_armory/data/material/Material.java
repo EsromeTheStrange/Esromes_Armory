@@ -14,8 +14,15 @@ public record Material(int color,
                        int enchantability, int fuelTimeMultiplier) {
 
     public static Codec<Material> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Identifier.CODEC.fieldOf("id").forGetter(ArmoryRegistries.MATERIAL::getId)
-    ).apply(instance, ArmoryRegistries.MATERIAL::get));
+            Codec.INT.fieldOf("color").forGetter(mat -> mat.color),
+            Codec.FLOAT.fieldOf("durability").forGetter(mat -> mat.durability),
+            Codec.INT.fieldOf("miningLevel").forGetter(mat -> mat.miningLevel),
+            Codec.FLOAT.fieldOf("miningSpeed").forGetter(mat -> mat.miningSpeed),
+            Codec.INT.fieldOf("attackDamage").forGetter(mat -> mat.attackDamage),
+            Codec.FLOAT.fieldOf("attackSpeed").forGetter(mat -> mat.attackSpeed),
+            Codec.INT.fieldOf("enchantability").forGetter(mat -> mat.enchantability),
+            Codec.INT.fieldOf("fuelTimeMultiplier").forGetter(mat -> mat.fuelTimeMultiplier)
+    ).apply(instance, Material::new));
     public static PacketCodec<RegistryByteBuf, Material> PACKET_CODEC = PacketCodec.ofStatic(Material::writePacket, Material::readPacket);
 
     public String getTranslatableName() {

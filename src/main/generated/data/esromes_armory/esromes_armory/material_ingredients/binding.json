@@ -6,7 +6,14 @@
         "item": "minecraft:string"
       },
       "material": {
-        "id": "minecraft:string"
+        "attackDamage": 6,
+        "attackSpeed": 0.0,
+        "color": 15790320,
+        "durability": 4.0,
+        "enchantability": 20,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 2,
+        "miningSpeed": 1.0
       }
     },
     {
@@ -15,7 +22,14 @@
         "item": "minecraft:slime_ball"
       },
       "material": {
-        "id": "minecraft:slime"
+        "attackDamage": 0,
+        "attackSpeed": 0.0,
+        "color": 9230210,
+        "durability": 5.0,
+        "enchantability": 0,
+        "fuelTimeMultiplier": 0,
+        "miningLevel": 0,
+        "miningSpeed": 0.0
       }
     }
   ]
