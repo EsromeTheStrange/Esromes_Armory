@@ -1,13 +1,12 @@
 package net.esromethestrange.esromes_armory.client.model;
 
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.util.MaterialHelper;
-import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
@@ -22,16 +21,23 @@ public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
         MaterialItem.MATERIAL_ITEMS.forEach(this::addMaterialItemModel);
         PartBasedItem.PART_BASED_ITEMS.forEach(this::addComponentBasedModel);
 
-        ArmoryRegistries.MATERIAL.stream().forEach(material -> {
-            for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
-                Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
-                if(materialId == null)
-                    continue;
-                Identifier id = MaterialHelper.getItemModelIdentifier(materialId, materialItem.getRawIdentifier());
-                if(ResourceHelper.isMaterialModelPresent(id))
-                    pluginContext.addModels(id);
+        for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
+            ResourceManager manager = MinecraftClient.getInstance().getResourceManager();
+            Identifier itemId = materialItem.getRawIdentifier();
+            for(Identifier materialVariant : manager.findResources("models/item", i -> {
+                String[] pathParts = i.getPath().split("/");
+                return i.toString().endsWith(".json") &&
+                        pathParts[pathParts.length - 1].startsWith(itemId.getPath()) &&
+                        i.getNamespace().equals(itemId.getNamespace());
+            }).keySet()){
+                String path = materialVariant.getPath();
+                Identifier materialVariantId = Identifier.of(
+                        materialVariant.getNamespace(),
+                        path.substring("models/".length(), path.length() - ".json".length())
+                );
+                pluginContext.addModels(materialVariantId);
             }
-        });
+        }
 
         pluginContext.modifyModelOnLoad().register((original, context) -> {
             if(context.resourceId()==null)
