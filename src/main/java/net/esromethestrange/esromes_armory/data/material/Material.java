@@ -2,14 +2,12 @@ package net.esromethestrange.esromes_armory.data.material;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryFixedCodec;
-import net.minecraft.util.Identifier;
 
 public record Material(int color,
                        float durability,
@@ -30,13 +28,6 @@ public record Material(int color,
     public static PacketCodec<RegistryByteBuf, Material> PACKET_CODEC = PacketCodec.ofStatic(Material::writePacket, Material::readPacket);
     public static final Codec<RegistryEntry<Material>> ENTRY_CODEC = RegistryFixedCodec.of(ArmoryRegistryKeys.MATERIAL);
     public static final PacketCodec<RegistryByteBuf, RegistryEntry<Material>> ENTRY_PACKET_CODEC = PacketCodecs.registryEntry(ArmoryRegistryKeys.MATERIAL);
-
-    public String getTranslatableName() {
-        Identifier id = ArmoryRegistries.MATERIAL.getId(this);
-        if (id == null)
-            return "material.invalid";
-        return id.getNamespace() + ".material." + id.getPath();
-    }
 
     public static void writePacket(RegistryByteBuf buf, Material material){
         buf.writeInt(material.color);

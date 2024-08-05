@@ -5,6 +5,7 @@ import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class MaterialHelper {
@@ -24,5 +25,8 @@ public class MaterialHelper {
     public static String getTranslatableName(RegistryKey<Material> material){
         Identifier id = material.getValue();
         return id.getNamespace() + ".material." + id.getPath();
+    }
+    public static String getTranslatableName(RegistryEntry<Material> material){
+        return getTranslatableName(material.getKey().get());
     }
 }

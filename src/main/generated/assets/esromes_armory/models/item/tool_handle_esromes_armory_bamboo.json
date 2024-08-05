@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "esromes_armory:item/tool_handle_esromes_armory_bamboo"
+  }
+}

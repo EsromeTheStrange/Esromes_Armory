@@ -6,7 +6,8 @@
     "EsromesArmoryAbstractFurnaceBlockEntityMixin",
     "EsromesArmoryAbstractFurnaceScreenHandlerMixin",
     "EsromesArmoryEnchantabilityMixin",
-    "EsromesArmoryItemStackMixin"
+    "EsromesArmoryItemStackMixin",
+    "EsromesArmoryWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

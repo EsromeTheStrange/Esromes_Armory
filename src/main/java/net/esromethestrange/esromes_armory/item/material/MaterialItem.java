@@ -1,10 +1,12 @@
 package net.esromethestrange.esromes_armory.item.material;
 
-import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -19,7 +21,7 @@ public interface MaterialItem {
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean partNameIncluded);
 
     List<ItemStack> getDefaultStacks(boolean includeNone);
-    List<RegistryEntry<Material>> getValidMaterials();
+    List<RegistryKey<Material>> getValidMaterials();
     RegistryEntry<Material> getDefaultMaterial();
     int getBaseFuelTime();
 
@@ -36,7 +38,8 @@ public interface MaterialItem {
     }
 
     default RegistryEntry<Material> getMaterial(ItemStack stack){
-        return stack.get(ArmoryComponents.MATERIAL);
+        RegistryEntry<Material> material = stack.get(ArmoryComponents.MATERIAL);
+        return material == null ? Materials.get(Materials.NONE) : material;
     }
 
     default Identifier getRawIdentifier() {

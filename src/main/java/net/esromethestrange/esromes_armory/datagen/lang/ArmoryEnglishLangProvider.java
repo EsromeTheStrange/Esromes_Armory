@@ -3,13 +3,13 @@ package net.esromethestrange.esromes_armory.datagen.lang;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.compat.emi.EmiAnvilRecipe;
+import net.esromethestrange.esromes_armory.data.ArmoryTags;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.util.ArmoryGenericTags;
-import net.esromethestrange.esromes_armory.data.ArmoryTags;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -140,9 +140,6 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("itemGroup.esromes_armory.esromes_armory.tab.fluids", "Fluids");
     }
 
-    public void addTranslation(Material material, String materialName, TranslationBuilder translationBuilder){
-        translationBuilder.add(material.getTranslatableName(), materialName);
-    }
     public void addTranslation(RegistryKey<Material> material, String materialName, TranslationBuilder translationBuilder){
         translationBuilder.add(MaterialHelper.getTranslatableName(material), materialName);
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "esromes_armory:item/sword_guard_esromes_armory_iron"
+  }
+}

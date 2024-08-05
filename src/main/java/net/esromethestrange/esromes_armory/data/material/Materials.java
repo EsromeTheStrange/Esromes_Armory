@@ -3,10 +3,15 @@ package net.esromethestrange.esromes_armory.data.material;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.registry.Registerable;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class Materials {
+    public static Materials INSTANCE = null;
+    public final Registry<Material> registry;
+
     public static final RegistryKey<Material> NONE = of("none");
 
     public static final RegistryKey<Material> COPPER = of("copper");
@@ -29,6 +34,10 @@ public class Materials {
 
     public static final RegistryKey<Material> STRING = of("string");
     public static final RegistryKey<Material> SLIME = of("slime");
+
+    public Materials(Registry<Material> registry) {
+        this.registry = registry;
+    }
 
     public static void bootstrap(Registerable<Material> context){
         context.register(NONE, new Material(
@@ -87,5 +96,23 @@ public class Materials {
         return new Material(
                 color, 2, 0, 0.1f,
                 0, 0, 0, 1);
+    }
+
+    public static RegistryEntry<Material> get(RegistryKey<Material> key){
+        if(INSTANCE == null) return null;
+        return INSTANCE.getMaterial(key);
+    }
+
+    public RegistryEntry<Material> getMaterial(RegistryKey<Material> key){
+        return this.registry.entryOf(key);
+    }
+
+    public static Identifier getId(Material material){
+        if(INSTANCE == null) return Identifier.of(EsromesArmory.MOD_ID, "invalid");
+        return INSTANCE.getMaterialId(material);
+    }
+
+    public Identifier getMaterialId(Material material){
+        return registry.getId(material);
     }
 }

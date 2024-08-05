@@ -14,7 +14,7 @@ public class ArmoryColorProvider {
             ColorProviderRegistry.ITEM.register((itemStack, tintIndex) -> {
                 RegistryEntry<Material> material = materialItem.getMaterial(itemStack);
 
-                if(ResourceHelper.isMaterialModelPresent(materialItem, material.value()))
+                if(ResourceHelper.isMaterialModelPresent(materialItem, material))
                     return ColorHelper.Argb.fullAlpha(0xffffff);
 
                 return ColorHelper.Argb.fullAlpha(material.value().color());

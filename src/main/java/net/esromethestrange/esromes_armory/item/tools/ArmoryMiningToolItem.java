@@ -1,15 +1,14 @@
 package net.esromethestrange.esromes_armory.item.tools;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.Materials;
-import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
+import net.esromethestrange.esromes_armory.util.MaterialHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -49,7 +48,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
 
     @Override
     public Text getName(ItemStack stack) {
-        MutableText materialText = Text.translatable(getMaterial(stack, getHeadComponent()).value().getTranslatableName());
+        MutableText materialText = Text.translatable(MaterialHelper.getTranslatableName(getMaterial(stack, getHeadComponent())));
         Text toolText = super.getName(stack);
         return materialText.append(toolText);
     }
@@ -163,7 +162,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
         List<ItemStack> defaultStacks = new ArrayList<>();
         if(includeNone){
             ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get()); //TODO fix this
+            setMaterial(stack, getHeadComponent(), Materials.get(Materials.NONE));
             setupComponents(stack);
             defaultStacks.add(stack);
         }
@@ -172,7 +171,7 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
             for(MaterialItem materialItem : getParts()){
                 setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
             }
-            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(material).get()); //TODO fix this
+            setMaterial(stack, getHeadComponent(), Materials.get(material));
             setupComponents(stack);
             defaultStacks.add(stack);
         }

@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory.item.material;
 
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.item.component.ItemPartsComponent;
 import net.minecraft.item.Item;
@@ -43,7 +44,7 @@ public interface PartBasedItem {
     default RegistryEntry<Material> getMaterial(ItemStack stack, MaterialItem part){
         ItemPartsComponent partsComponent = stack.get(ArmoryComponents.ITEM_PARTS);
         if(partsComponent == null)
-            return null;
+            return Materials.get(Materials.NONE);
         return partsComponent.getPart(part);
     }
 

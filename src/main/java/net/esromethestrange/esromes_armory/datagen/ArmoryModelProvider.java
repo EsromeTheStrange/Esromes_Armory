@@ -11,7 +11,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 
 public class ArmoryModelProvider extends FabricModelProvider {
@@ -56,10 +56,8 @@ public class ArmoryModelProvider extends FabricModelProvider {
                             .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ noneId.getPath())
                             .withPrefixedPath("item/")),
                     itemModelGenerator.writer);
-            for(RegistryEntry<Material> material : item.getValidMaterials()){
-                Identifier materialId = material.getKey().get().getValue();
-                if(materialId == null)
-                    continue;
+            for(RegistryKey<Material> material : item.getValidMaterials()){
+                Identifier materialId = material.getValue();
                 itemModelGenerator.register((Item)item,
                         "_" + materialId.getNamespace() + "_" + materialId.getPath(),
                         Models.GENERATED);

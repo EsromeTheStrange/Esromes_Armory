@@ -3,6 +3,7 @@ package net.esromethestrange.esromes_armory.item.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -48,6 +49,9 @@ public class ItemPartsComponent {
     );
 
     public ItemPartsComponent(){}
+    public ItemPartsComponent(HashMap<Identifier, RegistryEntry<Material>> parts){
+        this.parts = parts;
+    }
     public ItemPartsComponent(List<Pair<Identifier, RegistryEntry<Material>>> pairedParts){
         for(Pair<Identifier, RegistryEntry<Material>> pair : pairedParts)
             parts.put(pair.getLeft(), pair.getRight());
@@ -55,13 +59,14 @@ public class ItemPartsComponent {
 
     public RegistryEntry<Material> getPart(MaterialItem materialItem){
         if(!parts.containsKey(materialItem.getRawIdentifier()))
-            return null;
+            return Materials.get(Materials.NONE);
         return parts.get(materialItem.getRawIdentifier());
     }
 
     public ItemPartsComponent withPart(MaterialItem materialItem, RegistryEntry<Material> material){
-        parts.put(materialItem.getRawIdentifier(), material);
-        return this;
+        ItemPartsComponent copy = new ItemPartsComponent(parts);
+        copy.parts.put(materialItem.getRawIdentifier(), material);
+        return copy;
     }
 
     private List<Pair<Identifier, RegistryEntry<Material>>> pairedParts(){

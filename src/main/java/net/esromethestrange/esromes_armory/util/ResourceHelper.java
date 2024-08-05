@@ -9,13 +9,14 @@ import com.mojang.serialization.JsonOps;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.heat.HeatData;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientData;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntry;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -26,7 +27,6 @@ public class ResourceHelper {
     public static final ModelTransformation HANDHELD_TRANSFORMATION = loadTransformFromJson(Identifier.of("minecraft:models/item/handheld"));
 
     public static final String JSON_ENTRIES = "entries";
-    public static final String JSON_FLUID = "fluid";
 
     //Heat Data
     public static HeatData readHeatData(Identifier id, ResourceManager manager){
@@ -37,7 +37,7 @@ public class ResourceHelper {
             JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new InputStreamReader(stream));
             return parseHeatData(jsonObject, id.getNamespace(), materialTypeName);
         } catch(Exception e) {
-            EsromesArmory.LOGGER.error("Error occurred while loading Heat Data resource json" + id.toString(), e);
+            EsromesArmory.LOGGER.error("Error occurred while loading Heat Data resource json " + id.toString(), e);
         }
         return HeatData.EMPTY;
     }
@@ -63,7 +63,7 @@ public class ResourceHelper {
             JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new InputStreamReader(stream));
             return parseMaterialIngredient(jsonObject, id.getNamespace(), materialTypeName);
         } catch(Exception e) {
-            EsromesArmory.LOGGER.error("Error occurred while loading Material Ingredient resource json" + id.toString(), e);
+            EsromesArmory.LOGGER.error("Error occurred while loading Material Ingredient resource json " + id.toString(), e);
         }
         return MaterialIngredientData.EMPTY;
     }
@@ -74,7 +74,7 @@ public class ResourceHelper {
 
         JsonArray results = json.get(JSON_ENTRIES).getAsJsonArray();
         for (JsonElement jsonElement : results){
-            newMaterialIngredientData.addEntry(MaterialIngredientEntry.CODEC.parse(JsonOps.INSTANCE, jsonElement).getOrThrow());
+            newMaterialIngredientData.addEntry(MaterialIngredientEntry.CODEC.parse(JsonOps.INSTANCE, jsonElement).getOrThrow(IllegalStateException::new));
         }
 
         return newMaterialIngredientData;
@@ -112,10 +112,10 @@ public class ResourceHelper {
         return MinecraftClient.getInstance().getResourceManager().getResource(id.withPrefixedPath("models/").withSuffixedPath(".json")).isPresent();
     }
 
-    public static boolean isMaterialModelPresent(MaterialItem materialItem, Material material){
-        Identifier materialId = ArmoryRegistries.MATERIAL.getId(material);
+    public static boolean isMaterialModelPresent(MaterialItem materialItem, RegistryEntry<Material> material){
+        Identifier materialId = material.getKey().get().getValue();
         if(materialId == null){
-            EsromesArmory.LOGGER.error("Material \"{}\" not registered!", material.toString());
+            EsromesArmory.LOGGER.error("Material \"{}\" not registered!", material);
             return false;
         }
         return isMaterialModelPresent(materialItem.getRawIdentifier()

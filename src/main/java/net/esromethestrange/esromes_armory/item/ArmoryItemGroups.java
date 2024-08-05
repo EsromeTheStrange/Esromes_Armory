@@ -8,7 +8,6 @@ import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
@@ -49,9 +48,7 @@ public class ArmoryItemGroups {
             for(PartBasedItem partBasedItem : PartBasedItem.PART_BASED_ITEMS){
                 mapItems(partBasedItem.getDefaultStacks(true));
             }
-            ArmoryRegistries.MATERIAL.stream().forEach(material -> {
-                if(!itemMap.containsKey(material))
-                    return;
+            itemMap.keySet().forEach(material -> {
                 List<ItemStack> stacks = itemMap.get(material);
                 entries.addAll(stacks);
             });

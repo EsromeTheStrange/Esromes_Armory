@@ -12,8 +12,6 @@ import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
 
 public class ArmoryRegistries {
-    public static final Registry<Material> MATERIAL = new SimpleRegistry<>(
-            RegistryKey.ofRegistry(Identifier.of(EsromesArmory.MOD_ID, "material")), Lifecycle.stable());
     public static final Registry<HeatingResult.HeatingResultSerializer<? extends HeatingResult>> HEATING_RESULT_SERIALIZERS = new SimpleRegistry<>(
             RegistryKey.ofRegistry(Identifier.of(EsromesArmory.MOD_ID, "heating_result_serializer")), Lifecycle.stable());
     public static final Registry<MaterialIngredientEntrySerializer<?>> MATERIAL_INGREDIENT_ENTRY_SERIALIZERS = new SimpleRegistry<>(
