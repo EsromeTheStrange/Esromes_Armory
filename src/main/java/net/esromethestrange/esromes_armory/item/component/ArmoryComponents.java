@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import java.util.function.UnaryOperator;
 
 public class ArmoryComponents {
-    public static final ComponentType<RegistryEntry<Material>> MATERIAL = register("materials", (builder) ->
+    public static final ComponentType<RegistryEntry<Material>> MATERIAL = register("material", (builder) ->
             builder.codec(Material.ENTRY_CODEC).packetCodec(Material.ENTRY_PACKET_CODEC));
     public static final ComponentType<ItemPartsComponent> ITEM_PARTS = register("item_parts", (builder) ->
             builder.codec(ItemPartsComponent.CODEC).packetCodec(ItemPartsComponent.PACKET_CODEC));

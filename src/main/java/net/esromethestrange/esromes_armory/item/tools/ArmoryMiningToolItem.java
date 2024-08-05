@@ -160,22 +160,26 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
     @Override
     public List<ItemStack> getDefaultStacks(boolean includeNone) {
         List<ItemStack> defaultStacks = new ArrayList<>();
-        if(includeNone){
-            ItemStack stack = getDefaultStack();
-            setMaterial(stack, getHeadComponent(), Materials.get(Materials.NONE));
-            setupComponents(stack);
-            defaultStacks.add(stack);
-        }
-        for(RegistryKey<Material> material : MaterialTypes.METAL){
-            ItemStack stack = getDefaultStack();
-            for(MaterialItem materialItem : getParts()){
-                setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
-            }
-            setMaterial(stack, getHeadComponent(), Materials.get(material));
-            setupComponents(stack);
-            defaultStacks.add(stack);
-        }
+        if(includeNone)
+            defaultStacks.add(setupDefaultStack(Materials.get(Materials.NONE)));
+        for(RegistryKey<Material> material : MaterialTypes.METAL)
+            defaultStacks.add(setupDefaultStack(Materials.get(material)));
         return defaultStacks;
+    }
+
+    protected ItemStack createDefaultStack(RegistryEntry<Material> material){
+        ItemStack stack = getDefaultStack();
+        for(MaterialItem materialItem : getParts()){
+            setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
+        }
+        setMaterial(stack, getHeadComponent(), material);
+        return stack;
+    }
+
+    protected ItemStack setupDefaultStack(RegistryEntry<Material> material){
+        ItemStack stack = createDefaultStack(material);
+        setupComponents(stack);
+        return stack;
     }
 
     @Override

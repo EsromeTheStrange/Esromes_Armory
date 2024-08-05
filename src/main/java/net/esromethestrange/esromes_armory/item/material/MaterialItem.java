@@ -38,8 +38,12 @@ public interface MaterialItem {
     }
 
     default RegistryEntry<Material> getMaterial(ItemStack stack){
-        RegistryEntry<Material> material = stack.get(ArmoryComponents.MATERIAL);
-        return material == null ? Materials.get(Materials.NONE) : material;
+        RegistryEntry<Material> material = Materials.get(Materials.NONE);
+        if(stack.getComponents().contains(ArmoryComponents.MATERIAL))
+            material = stack.get(ArmoryComponents.MATERIAL);
+        if(stack.getComponents().contains(ArmoryComponents.ITEM_PARTS))
+            material = stack.get(ArmoryComponents.ITEM_PARTS).getPart(this);
+        return material;
     }
 
     default Identifier getRawIdentifier() {

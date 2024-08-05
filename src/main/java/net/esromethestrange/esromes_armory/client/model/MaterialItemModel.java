@@ -43,7 +43,8 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
         for(Identifier itemModelId : modelIds){
             BakedModel materialModel = baker.bake(itemModelId, ModelRotation.X0_Y0);
             String[] idParts = itemModelId.getPath().split("/");
-            String key = (itemModelId.getNamespace() + ":" + idParts[idParts.length - 1]).substring(materialItem.getRawIdentifier().getPath().length() + 1);
+            String key = itemModelId.getNamespace() + ":" +
+                    (idParts[idParts.length - 1].substring(materialItem.getRawIdentifier().getPath().length() + 1));
             variants.put(key, materialModel);
         }
         return this;
@@ -77,7 +78,7 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         RegistryEntry<Material> material = ((MaterialItem)stack.getItem()).getMaterial(stack);
         String materialKey = keyOf(material);
-        BakedModel variant = variants.containsKey(materialKey) ? variants.get(materialKey) : variants.get(noneKey(material));
+        BakedModel variant = variants.containsKey(materialKey) ? variants.get(materialKey) : variants.get(noneKey());
         variant.emitItemQuads(stack, randomSupplier, context);
     }
 
@@ -85,9 +86,9 @@ public class MaterialItemModel implements UnbakedModel, BakedModel, FabricBakedM
         return keyOf(material.getKey().get().getValue());
     }
     private String keyOf(Identifier id){
-        return id.getPath() + ":" + id.getNamespace() + "_" + id.getPath();
+        return id.getNamespace() + ":" + id.getNamespace() + "_" + id.getPath();
     }
-    private String noneKey(RegistryEntry<Material> material){
+    private String noneKey(){
         return keyOf(Materials.NONE.getValue());
     }
 }

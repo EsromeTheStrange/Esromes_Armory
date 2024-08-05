@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
     @Override
     public void onInitializeModelLoader(Context pluginContext) {
         for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
-            materialModelVariants.put(materialItem, List.of());
+            materialModelVariants.put(materialItem, new ArrayList<>());
 
             ResourceManager manager = MinecraftClient.getInstance().getResourceManager();
             Identifier itemId = materialItem.getRawIdentifier();
@@ -39,6 +40,9 @@ public class ArmoryModelLoadingPlugin implements ModelLoadingPlugin {
                         path.substring("models/".length(), path.length() - ".json".length())
                 );
                 pluginContext.addModels(materialVariantId);
+
+                if(materialVariantId.equals(itemId.withPrefixedPath("item/")))
+                    continue;
 
                 materialModelVariants.get(materialItem).add(materialVariantId);
             }

@@ -6,6 +6,7 @@ import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.util.ResourceHelper;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import net.fabricmc.fabric.impl.client.indigo.renderer.render.ItemRenderContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.*;
@@ -28,6 +29,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class PartBasedItemModel implements UnbakedModel, BakedModel, FabricBakedModel {
+    public static ItemStack cacheStack = ItemStack.EMPTY;
     PartBasedItem partBasedItem;
     HashMap<MaterialItem, BakedModel> components = new HashMap<>();
 
@@ -74,6 +76,7 @@ public class PartBasedItemModel implements UnbakedModel, BakedModel, FabricBaked
         for (MaterialItem materialItem : ((PartBasedItem)stack.getItem()).getParts()){
             RegistryEntry<Material> material = materialItem.getMaterial(stack);
             ItemStack materialStack = materialItem.getStack(material);
+            cacheStack = materialStack;
             components.get(materialItem).emitItemQuads(materialStack, randomSupplier, context);
         }
     }

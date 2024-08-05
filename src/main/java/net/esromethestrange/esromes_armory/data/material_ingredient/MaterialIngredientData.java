@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
@@ -50,6 +51,6 @@ public class MaterialIngredientData {
             if(materialIngredientEntry.hasObject(o))
                 return materialIngredientEntry.getMaterial();
 
-        return null; //TODO fix this with none
+        return Materials.get(Materials.NONE);
     }
 }

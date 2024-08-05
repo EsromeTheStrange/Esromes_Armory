@@ -5,8 +5,6 @@ import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
@@ -25,26 +23,10 @@ public class ArmorySwordItem extends ArmoryMiningToolItem {
     }
 
     @Override
-    public List<ItemStack> getDefaultStacks(boolean includeNone) {
-        List<ItemStack> defaultStacks = new ArrayList<>();
-        if(includeNone){
-            ItemStack stack = getDefaultStack();
-            setMaterial(stack, SWORD_GUARD, MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get()); //TODO fix this
-            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get()); //TODO fix this
-            setupComponents(stack);
-            defaultStacks.add(stack);
-        }
-        for(RegistryKey<Material> material : MaterialTypes.METAL){
-            ItemStack stack = getDefaultStack();
-            for(MaterialItem materialItem : getParts()){
-                setMaterial(stack, materialItem, materialItem.getDefaultMaterial());
-            }
-            setMaterial(stack, SWORD_GUARD, MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(material).get()); //TODO fix this
-            setMaterial(stack, getHeadComponent(), MinecraftClient.getInstance().world.getRegistryManager().get(ArmoryRegistryKeys.MATERIAL).getEntry(material).get()); //TODO fix this
-            setupComponents(stack);
-            defaultStacks.add(stack);
-        }
-        return defaultStacks;
+    protected ItemStack createDefaultStack(RegistryEntry<Material> material){
+        ItemStack stack = super.createDefaultStack(material);
+        setMaterial(stack, SWORD_GUARD, material);
+        return stack;
     }
 
     @Override protected MaterialItem getHeadComponent() {
