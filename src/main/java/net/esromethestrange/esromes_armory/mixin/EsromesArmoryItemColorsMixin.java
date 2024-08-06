@@ -15,12 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class EsromesArmoryItemColorsMixin {
     @Inject(method = "getColor", at = @At("RETURN"), cancellable = true)
     private void getColor(ItemStack stack, int tintIndex, CallbackInfoReturnable<Integer> cir){
-        if(
-                !(stack.getItem() instanceof PartBasedItem) ||
-                !(PartBasedItemModel.cacheStack.getItem() instanceof MaterialItem materialItem)
-        )
-            return;
-
-        cir.setReturnValue(ArmoryColorProvider.getColor(materialItem, PartBasedItemModel.cacheStack, tintIndex));
+        if(stack.getItem() instanceof PartBasedItem &&
+                PartBasedItemModel.cacheStack.getItem() instanceof MaterialItem materialItem)
+            cir.setReturnValue(ArmoryColorProvider.getColor(materialItem, PartBasedItemModel.cacheStack, tintIndex));
     }
 }

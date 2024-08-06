@@ -1,4 +1,4 @@
-// 1.21	2024-08-06T03:42:10.8695473	Esrome's Armory/Model Definitions
+// 1.21	2024-08-06T08:21:46.4904879	Esrome's Armory/Model Definitions
 59d1b1d537ead25faf49ab21eb7c28cfee52ca08 assets\esromes_armory\models\item\sword_grip_esromes_armory_cherry.json
 7a0f24d2f977583d7a78982b86dd1a8a040c4c49 assets\esromes_armory\models\item\sword_guard_esromes_armory_copper.json
 d6134357e09c36cdcab26749478a27d5b863f1d6 assets\esromes_armory\blockstates\charcoal_block.json
@@ -76,8 +76,8 @@ df5365d169364b838891e323ce9b369e9b8f5714 assets\esromes_armory\models\block\stee
 50812bd51e14ec5ea223afe239c89730a63e43b1 assets\esromes_armory\models\block\molten_netherite.json
 1499124690b8c79db36b33109d2ec5ef938d1146 assets\esromes_armory\models\item\sword_guard_mold.json
 c6dddd4f538ebeba06af766dca57baea7aec4755 assets\esromes_armory\blockstates\molten_copper.json
-ca300c11cde2c344b92895e20d5e99d3d84d81c9 assets\esromes_armory\models\item\sword_blade_esromes_armory_none.json
 255ef1f2f76213fd7d6ab294251e0628c5752463 assets\esromes_armory\models\item\axe_head_esromes_armory_steel.json
+ca300c11cde2c344b92895e20d5e99d3d84d81c9 assets\esromes_armory\models\item\sword_blade_esromes_armory_none.json
 50812bd51e14ec5ea223afe239c89730a63e43b1 assets\esromes_armory\models\block\molten_steel.json
 4b1a5a8ee0fee687467bf84b5266e6065a62000f assets\esromes_armory\models\item\pickaxe_head_esromes_armory_netherite.json
 10e6e728996109ee6bf1e7eddd6528235785db05 assets\esromes_armory\models\item\sword_grip_esromes_armory_none.json

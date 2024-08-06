@@ -3,21 +3,22 @@ package net.esromethestrange.esromes_armory.data.material_ingredient;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.RegistryKey;
 
 public class MaterialIngredientIngredientEntry extends MaterialIngredientEntry<ItemStack> {
     public final Ingredient ingredient;
 
-    public MaterialIngredientIngredientEntry(RegistryEntry<Material> material, Ingredient ingredient) {
+    public MaterialIngredientIngredientEntry(RegistryKey<Material> material, Ingredient ingredient) {
         this.material = material;
         this.ingredient = ingredient;
     }
 
-    public MaterialIngredientIngredientEntry(RegistryEntry<Material> material, ItemConvertible item){
-        this(material, Ingredient.ofItems(item));
+    public MaterialIngredientIngredientEntry(RegistryKey<Material> material, ItemConvertible... items){
+        this(material, Ingredient.ofItems(items));
     }
 
     @Override
@@ -40,7 +41,7 @@ public class MaterialIngredientIngredientEntry extends MaterialIngredientEntry<I
         public static Serializer INSTANCE = new Serializer();
 
         public static final MapCodec<MaterialIngredientIngredientEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Material.ENTRY_CODEC.fieldOf("material").forGetter(entry -> entry.material),
+                RegistryKey.createCodec(ArmoryRegistryKeys.MATERIAL).fieldOf("material").forGetter(entry -> entry.material),
                 Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(entry -> entry.ingredient)
         ).apply(instance, MaterialIngredientIngredientEntry::new));
 

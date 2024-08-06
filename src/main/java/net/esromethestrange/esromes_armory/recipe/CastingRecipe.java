@@ -3,6 +3,8 @@ package net.esromethestrange.esromes_armory.recipe;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientFluidEntry;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.recipe.ingredient.FluidIngredient;
@@ -17,6 +19,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.input.RecipeInput;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -55,8 +58,10 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
         if (!(craftOutput.getItem() instanceof MaterialItem materialItem))
             return craftOutput;
 
-        if(castingMetalIngredient.getCustomIngredient() instanceof MaterialIngredient materialIngredient)
-            materialItem.setMaterial(craftOutput, materialIngredient.getMaterial(inventory.fluidType));
+        if(castingMetalIngredient.getCustomIngredient() instanceof MaterialIngredient materialIngredient){
+            RegistryEntry<Material> material = materialIngredient.getMaterial(inventory.fluidType);
+            materialItem.setMaterial(craftOutput, material);
+        }
         return craftOutput;
     }
 
@@ -82,7 +87,6 @@ public class CastingRecipe implements Recipe<CastingRecipe.CastingRecipeInput> {
 
     public Ingredient getCastIngredient(){ return castIngredient; }
     public ItemStack getOutput(){ return result; }
-    //public FluidTester getFluidTester(){ return fluidTester; }
     public long getFluidAmount(){
         if(castingMetalIngredient.getCustomIngredient() instanceof MaterialIngredient materialIngredient)
             return materialIngredient.getAmount();

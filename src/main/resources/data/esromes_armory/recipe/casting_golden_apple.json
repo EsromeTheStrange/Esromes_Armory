@@ -5,9 +5,7 @@
   },
   "fluid": {
     "fabric:type": "esromes_armory:fluid",
-    "material": {
-      "id": "minecraft:gold"
-    },
+    "material": "esromes_armory:gold",
     "fluid": {
       "fluid": "esromes_armory:molten_gold"
     },

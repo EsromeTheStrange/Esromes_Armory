@@ -3,18 +3,20 @@ package net.esromethestrange.esromes_armory.data.material_ingredient;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.Identifier;
 
 public class MaterialIngredientFluidEntry extends MaterialIngredientEntry<Fluid>{
     public final FluidVariant fluid;
 
-    public MaterialIngredientFluidEntry(RegistryEntry<Material> material, FluidVariant fluid){
+    public MaterialIngredientFluidEntry(RegistryKey<Material> material, FluidVariant fluid){
         this.material = material;
         this.fluid = fluid;
     }
-    public MaterialIngredientFluidEntry(RegistryEntry<Material> material, Fluid fluid){
+    public MaterialIngredientFluidEntry(RegistryKey<Material> material, Fluid fluid){
         this(material, FluidVariant.of(fluid));
     }
 
@@ -41,7 +43,7 @@ public class MaterialIngredientFluidEntry extends MaterialIngredientEntry<Fluid>
         public static Serializer INSTANCE = new Serializer();
 
         public static final MapCodec<MaterialIngredientFluidEntry> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Material.ENTRY_CODEC.fieldOf("material").forGetter(entry -> entry.material),
+                RegistryKey.createCodec(ArmoryRegistryKeys.MATERIAL).fieldOf("material").forGetter(entry -> entry.material),
                 FluidVariant.CODEC.fieldOf("fluid").forGetter(entry -> entry.fluid)
         ).apply(instance, MaterialIngredientFluidEntry::new));
 

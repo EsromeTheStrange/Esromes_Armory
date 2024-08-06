@@ -17,11 +17,11 @@ import net.minecraft.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentItem extends Item implements MaterialItem {
+public class PartItem extends Item implements MaterialItem {
     public List<RegistryKey<Material>> defaultMaterials;
     protected int baseFuelTime = 200;
 
-    public ComponentItem(Settings settings, List<RegistryKey<Material>> defaultMaterials) {
+    public PartItem(Settings settings, List<RegistryKey<Material>> defaultMaterials) {
         super(settings);
         this.defaultMaterials = defaultMaterials;
         MATERIAL_ITEMS.add(this);
@@ -67,7 +67,7 @@ public class ComponentItem extends Item implements MaterialItem {
         return baseFuelTime;
     }
 
-    public ComponentItem setBaseFuelTime(int baseFuelTime){
+    public PartItem setBaseFuelTime(int baseFuelTime){
         this.baseFuelTime = baseFuelTime;
         return this;
     }

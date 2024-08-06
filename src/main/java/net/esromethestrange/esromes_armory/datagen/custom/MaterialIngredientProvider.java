@@ -9,7 +9,6 @@ import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngr
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntry;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientFluidEntry;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientIngredientEntry;
-import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.DataProvider;
@@ -17,9 +16,7 @@ import net.minecraft.data.DataWriter;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryOps;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 
@@ -73,11 +70,10 @@ public abstract class MaterialIngredientProvider implements DataProvider {
     protected final void register(Identifier id, Pair<RegistryKey<Material>, Object>... pairs){
         List<MaterialIngredientEntry<?>> ingredientEntries = new ArrayList<>();
         for(Pair<RegistryKey<Material>, Object> pair : pairs){
-            RegistryEntry<Material> materialEntry = registryLookup.getWrapperOrThrow(ArmoryRegistryKeys.MATERIAL).getOrThrow(pair.getLeft());
             if(pair.getRight() instanceof ItemConvertible item)
-                ingredientEntries.add(new MaterialIngredientIngredientEntry(materialEntry, item));
+                ingredientEntries.add(new MaterialIngredientIngredientEntry(pair.getLeft(), item));
             if(pair.getRight() instanceof Fluid fluid)
-                ingredientEntries.add(new MaterialIngredientFluidEntry(materialEntry, fluid));
+                ingredientEntries.add(new MaterialIngredientFluidEntry(pair.getLeft(), fluid));
         }
         materialIngredientDataList.add(new MaterialIngredientData(id, ingredientEntries));
     }
