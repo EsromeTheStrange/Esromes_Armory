@@ -55,32 +55,6 @@ public class ResourceHelper {
         return newHeatData;
     }
 
-    //Material Ingredients
-    public static MaterialIngredientData readMaterialIngredient(Identifier id, ResourceManager manager){
-        String[] idParts = id.getPath().split("/");
-        String materialTypeName = idParts[idParts.length-1].split(".json")[0];
-
-        try(InputStream stream = manager.getResource(id).get().getInputStream()) {
-            JsonObject jsonObject = (JsonObject) JsonParser.parseReader(new InputStreamReader(stream));
-            return parseMaterialIngredient(jsonObject, id.getNamespace(), materialTypeName);
-        } catch(Exception e) {
-            EsromesArmory.LOGGER.error("Error occurred while loading Material Ingredient resource json " + id.toString(), e);
-        }
-        return MaterialIngredientData.EMPTY;
-    }
-
-
-    private static MaterialIngredientData parseMaterialIngredient(JsonObject json, String modId, String materialTypeName){
-        MaterialIngredientData newMaterialIngredientData = new MaterialIngredientData(Identifier.of(modId, materialTypeName));
-
-        JsonArray results = json.get(JSON_ENTRIES).getAsJsonArray();
-        for (JsonElement jsonElement : results){
-            newMaterialIngredientData.addEntry(MaterialIngredientEntry.CODEC.parse(JsonOps.INSTANCE, jsonElement).getOrThrow(IllegalStateException::new));
-        }
-
-        return newMaterialIngredientData;
-    }
-
     //Model Stuff
     /**
      * This code was taken from Smithee.

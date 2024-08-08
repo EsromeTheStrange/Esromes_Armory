@@ -4,6 +4,7 @@ import com.mojang.serialization.Lifecycle;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
 import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientData;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientEntrySerializer;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.minecraft.registry.Registry;
@@ -19,5 +20,6 @@ public class ArmoryRegistries {
 
     public static void registerRegistries() {
         DynamicRegistries.registerSynced(ArmoryRegistryKeys.MATERIAL, Material.CODEC);
+        DynamicRegistries.registerSynced(ArmoryRegistryKeys.MATERIAL_INGREDIENT_DATA, MaterialIngredientData.CODEC);
     }
 }

@@ -1,6 +1,7 @@
 package net.esromethestrange.esromes_armory;
 
 import net.esromethestrange.esromes_armory.data.material.Materials;
+import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredients;
 import net.esromethestrange.esromes_armory.datagen.*;
 import net.esromethestrange.esromes_armory.datagen.lang.ArmoryEnglishLangProvider;
 import net.esromethestrange.esromes_armory.datagen.tag.ArmoryBlockTagProvider;
@@ -29,11 +30,11 @@ public class EsromesArmoryDataGenerator implements DataGeneratorEntrypoint {
 
 		pack.addProvider(ArmoryMaterialProvider::new);
 		pack.addProvider(ArmoryHeatStateProvider::new);
-		pack.addProvider(ArmoryMaterialIngredientProvider::new);
 	}
 
 	@Override
 	public void buildRegistry(RegistryBuilder registryBuilder) {
 		registryBuilder.addRegistry(ArmoryRegistryKeys.MATERIAL, Materials::bootstrap);
+		registryBuilder.addRegistry(ArmoryRegistryKeys.MATERIAL_INGREDIENT_DATA, MaterialIngredients::bootstrap);
 	}
 }

@@ -3,11 +3,11 @@
   "ingredients": [
     {
       "fabric:type": "esromes_armory:material",
-      "ingredient": "esromes_armory:log"
+      "material_ingredient_data": "esromes_armory:log"
     },
     {
       "fabric:type": "esromes_armory:material",
-      "ingredient": "esromes_armory:log"
+      "material_ingredient_data": "esromes_armory:log"
     }
   ],
   "result": {

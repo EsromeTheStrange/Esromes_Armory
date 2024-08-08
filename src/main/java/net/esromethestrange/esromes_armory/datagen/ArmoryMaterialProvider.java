@@ -15,6 +15,7 @@ public class ArmoryMaterialProvider extends FabricDynamicRegistryProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
         entries.addAll(registries.getWrapperOrThrow(ArmoryRegistryKeys.MATERIAL));
+        entries.addAll(registries.getWrapperOrThrow(ArmoryRegistryKeys.MATERIAL_INGREDIENT_DATA));
     }
 
     @Override

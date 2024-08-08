@@ -3,11 +3,11 @@
   "ingredients": [
     {
       "fabric:type": "esromes_armory:material",
-      "ingredient": "esromes_armory:ingot"
+      "material_ingredient_data": "esromes_armory:ingot"
     },
     {
       "fabric:type": "esromes_armory:material",
-      "ingredient": "esromes_armory:ingot"
+      "material_ingredient_data": "esromes_armory:ingot"
     }
   ],
   "required_heat": "red",

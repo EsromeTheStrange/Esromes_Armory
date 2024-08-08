@@ -4,7 +4,6 @@ import net.esromethestrange.esromes_armory.block.ArmoryBlocks;
 import net.esromethestrange.esromes_armory.block.entity.ArmoryBlockEntities;
 import net.esromethestrange.esromes_armory.client.screen.ArmoryScreenHandlers;
 import net.esromethestrange.esromes_armory.compat.config.EsromesArmoryConfig;
-import net.esromethestrange.esromes_armory.data.ArmoryIngredientLoader;
 import net.esromethestrange.esromes_armory.data.HeatDataLoader;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResults;
 import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
@@ -32,7 +31,6 @@ public class EsromesArmory implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Loading Esrome's Armory...");
 
-		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ArmoryIngredientLoader());
 		ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new HeatDataLoader());
 
 		ArmoryRegistries.registerRegistries();

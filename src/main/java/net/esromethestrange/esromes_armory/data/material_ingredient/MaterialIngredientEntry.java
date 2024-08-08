@@ -8,20 +8,16 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 
 public abstract class MaterialIngredientEntry<T> {
-    public static Codec<MaterialIngredientEntry<?>> CODEC;
+    public static Codec<MaterialIngredientEntry<?>> CODEC = ArmoryRegistries.MATERIAL_INGREDIENT_ENTRY_SERIALIZERS.getCodec().dispatch(
+            "type",
+            MaterialIngredientEntry::getSerializer,
+            MaterialIngredientEntrySerializer::createCodec
+    );
 
-    protected RegistryKey<Material> material;
+    protected RegistryEntry<Material> material;
 
     public abstract boolean test(Object o, long requiredAmount);
     public abstract boolean hasObject(Object o);
     public abstract MaterialIngredientEntrySerializer<? extends MaterialIngredientEntry<T>> getSerializer();
-    public RegistryEntry<Material> getMaterial() { return Materials.get(material); }
-
-    public static void initializeCodec(){
-        CODEC = ArmoryRegistries.MATERIAL_INGREDIENT_ENTRY_SERIALIZERS.getCodec().dispatch(
-                "type",
-                MaterialIngredientEntry::getSerializer,
-                MaterialIngredientEntrySerializer::createCodec
-        );
-    }
+    public RegistryEntry<Material> getMaterial() { return material; }
 }

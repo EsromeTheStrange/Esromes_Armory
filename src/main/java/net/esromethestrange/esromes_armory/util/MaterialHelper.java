@@ -9,11 +9,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class MaterialHelper {
-    public static Identifier getItemModelIdentifier(Identifier materialId, Identifier itemId){
-        String path = itemId.getPath() + "_" + materialId.getNamespace() + "_" + materialId.getPath();
-        return Identifier.of(itemId.getNamespace(), path).withPrefixedPath("item/");
-    }
-
     public static boolean isSpecialFuel(ItemStack stack){
         if(stack.getItem() instanceof MaterialItem materialItem)
             return materialItem.getFuelTime(stack) > 0;

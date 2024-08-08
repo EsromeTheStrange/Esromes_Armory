@@ -5,7 +5,7 @@
   },
   "fluid": {
     "fabric:type": "esromes_armory:material",
-    "ingredient": "esromes_armory:molten_metal",
+    "material_ingredient_data": "esromes_armory:molten_metal",
     "amount": 18000
   },
   "result": {
