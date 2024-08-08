@@ -3,17 +3,17 @@
     {
       "result": {
         "type": "esromes_armory:item",
-        "item": "minecraft:netherite_block"
+        "item": "esromes_armory:steel_ingot"
       },
       "temperature": "room_temperature"
     },
     {
       "result": {
         "type": "esromes_armory:fluid",
-        "amount": 81000,
-        "fluid": "esromes_armory:molten_netherite"
+        "amount": 9000,
+        "fluid": "esromes_armory:molten_steel"
       },
-      "temperature": "white"
+      "temperature": "sparkling"
     }
   ]
 }

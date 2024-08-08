@@ -7,8 +7,8 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ArmoryMaterialProvider extends FabricDynamicRegistryProvider {
-    public ArmoryMaterialProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+public class ArmoryCustomProviders extends FabricDynamicRegistryProvider {
+    public ArmoryCustomProviders(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, registriesFuture);
     }
 
@@ -16,6 +16,7 @@ public class ArmoryMaterialProvider extends FabricDynamicRegistryProvider {
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
         entries.addAll(registries.getWrapperOrThrow(ArmoryRegistryKeys.MATERIAL));
         entries.addAll(registries.getWrapperOrThrow(ArmoryRegistryKeys.MATERIAL_INGREDIENT_DATA));
+        entries.addAll(registries.getWrapperOrThrow(ArmoryRegistryKeys.HEAT_DATA));
     }
 
     @Override

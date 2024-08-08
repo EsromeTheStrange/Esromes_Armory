@@ -3,17 +3,17 @@
     {
       "result": {
         "type": "esromes_armory:item",
-        "item": "minecraft:copper_ingot"
+        "item": "minecraft:gold_block"
       },
       "temperature": "room_temperature"
     },
     {
       "result": {
         "type": "esromes_armory:fluid",
-        "amount": 9000,
-        "fluid": "esromes_armory:molten_copper"
+        "amount": 81000,
+        "fluid": "esromes_armory:molten_gold"
       },
-      "temperature": "orange"
+      "temperature": "light_yellow"
     }
   ]
 }

@@ -1,10 +1,12 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
-import net.esromethestrange.esromes_armory.data.HeatDataLoader;
-import net.esromethestrange.esromes_armory.data.heat.*;
+import net.esromethestrange.esromes_armory.data.heat.HeatDataHelper;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.FluidHeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
+import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
+import net.esromethestrange.esromes_armory.item.component.HeatComponent;
 import net.esromethestrange.esromes_armory.recipe.ArmoryRecipes;
 import net.esromethestrange.esromes_armory.recipe.CastingRecipe;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
@@ -23,6 +25,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -63,20 +66,22 @@ public class SmelteryBlockEntity extends BlockEntity implements ImplementedInven
             markDirty();
             return;
         }
-        HeatData heatData = HeatDataLoader.getHeatData(inventory.get(0).getItem());
-        if(heatData != HeatData.EMPTY){
-            HeatingResult heatingResult = heatData.getResultFor(HeatLevel.WHITE);
 
-            if(heatingResult instanceof FluidHeatingResult fluidHeatingResult){
-                FluidVariant fluidVariant = FluidVariant.of(fluidHeatingResult.fluid);
-                if(fluidStorage.amount == 0 ||
-                        (fluidStorage.getAmount() + fluidHeatingResult.amount <= FLUID_CAPACITY &&
-                                fluidStorage.variant.equals(fluidVariant))){
-                    try(Transaction transaction = Transaction.openOuter()){
-                        fluidStorage.insert(fluidVariant, fluidHeatingResult.amount, transaction);
-                        inventory.set(0, ItemStack.EMPTY);
-                        transaction.commit();
-                    }
+        inventory.get(0).set(ArmoryComponents.HEAT, new HeatComponent(1500));
+        DynamicRegistryManager registryManager = world.getRegistryManager();
+        if(!HeatDataHelper.hasTransition(registryManager, inventory.get(0)))
+            return;
+        HeatingResult heatingResult = HeatDataHelper.getTransition(registryManager, inventory.get(0), HeatLevel.SPARKLING);
+
+        if(heatingResult instanceof FluidHeatingResult fluidHeatingResult){
+            FluidVariant fluidVariant = FluidVariant.of(fluidHeatingResult.fluid);
+            if(fluidStorage.amount == 0 ||
+                    (fluidStorage.getAmount() + fluidHeatingResult.amount <= FLUID_CAPACITY &&
+                            fluidStorage.variant.equals(fluidVariant))){
+                try(Transaction transaction = Transaction.openOuter()){
+                    fluidStorage.insert(fluidVariant, fluidHeatingResult.amount, transaction);
+                    inventory.set(0, ItemStack.EMPTY);
+                    transaction.commit();
                 }
             }
         }

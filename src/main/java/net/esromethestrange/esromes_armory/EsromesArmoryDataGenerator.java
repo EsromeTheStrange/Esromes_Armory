@@ -1,5 +1,6 @@
 package net.esromethestrange.esromes_armory;
 
+import net.esromethestrange.esromes_armory.data.heat.HeatDatas;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredients;
 import net.esromethestrange.esromes_armory.datagen.*;
@@ -28,13 +29,13 @@ public class EsromesArmoryDataGenerator implements DataGeneratorEntrypoint {
 
 		pack.addProvider(ArmoryEnglishLangProvider::new);
 
-		pack.addProvider(ArmoryMaterialProvider::new);
-		pack.addProvider(ArmoryHeatStateProvider::new);
+		pack.addProvider(ArmoryCustomProviders::new);
 	}
 
 	@Override
 	public void buildRegistry(RegistryBuilder registryBuilder) {
 		registryBuilder.addRegistry(ArmoryRegistryKeys.MATERIAL, Materials::bootstrap);
 		registryBuilder.addRegistry(ArmoryRegistryKeys.MATERIAL_INGREDIENT_DATA, MaterialIngredients::bootstrap);
+		registryBuilder.addRegistry(ArmoryRegistryKeys.HEAT_DATA, HeatDatas::bootstrap);
 	}
 }

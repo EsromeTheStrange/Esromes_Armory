@@ -5,20 +5,16 @@ import com.mojang.serialization.MapCodec;
 import net.esromethestrange.esromes_armory.registry.ArmoryRegistries;
 
 public abstract class HeatingResult{
-    public static Codec<HeatingResult> CODEC;
+    public static Codec<HeatingResult> CODEC = ArmoryRegistries.HEATING_RESULT_SERIALIZERS.getCodec().dispatch(
+            "type",
+            HeatingResult::getSerializer,
+            HeatingResult.HeatingResultSerializer::createCodec
+    );
 
     public abstract boolean matches(Object o);
     public abstract HeatingResultSerializer<? extends HeatingResult> getSerializer();
 
     public abstract static class HeatingResultSerializer<T extends HeatingResult> {
         public abstract MapCodec<T> createCodec();
-    }
-
-    public static void initializeCodec(){
-        CODEC = ArmoryRegistries.HEATING_RESULT_SERIALIZERS.getCodec().dispatch(
-                "type",
-                HeatingResult::getSerializer,
-                HeatingResult.HeatingResultSerializer::createCodec
-        );
     }
 }

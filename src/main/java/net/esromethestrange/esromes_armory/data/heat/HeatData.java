@@ -2,14 +2,9 @@ package net.esromethestrange.esromes_armory.data.heat;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.esromethestrange.esromes_armory.data.heat.heating_result.FluidHeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.ItemHeatingResult;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 
 import java.util.ArrayList;
@@ -17,24 +12,17 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HeatData {
-    public static final Codec<Pair<HeatLevel, HeatingResult>> ENTRY_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final Codec<Pair<HeatLevel, HeatingResult>> PAIR_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             HeatLevel.CODEC.fieldOf("temperature").forGetter(Pair::getLeft),
             HeatingResult.CODEC.fieldOf("result").forGetter(Pair::getRight)
     ).apply(instance, Pair::new));
     public static final Codec<HeatData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ENTRY_CODEC.listOf().fieldOf("entries").forGetter(HeatData::getPairedEntries)
+            PAIR_CODEC.listOf().fieldOf("entries").forGetter(HeatData::getPairedEntries)
     ).apply(instance, HeatData::new));
 
-    public static HeatData EMPTY = new HeatData(Identifier.of(EsromesArmory.MOD_ID, "empty"));
-
     private final HashMap<HeatLevel, HeatingResult> heatingResults = new HashMap<>();
-    public final Identifier id;
 
-    public HeatData(Identifier id){
-        this.id = id;
-    }
     public HeatData(List<Pair<HeatLevel, HeatingResult>> entries){
-        this(Identifier.of(EsromesArmory.MOD_ID, "temp_id"));
         for(Pair<HeatLevel, HeatingResult> entry : entries)
             addEntry(entry);
     }
@@ -46,21 +34,8 @@ public class HeatData {
         return pairs;
     }
 
-    public HeatData addEntry(Pair<HeatLevel, HeatingResult> entry){
+    public void addEntry(Pair<HeatLevel, HeatingResult> entry){
         heatingResults.put(entry.getLeft(), entry.getRight());
-        return this;
-    }
-
-    public HeatData addEntry(HeatLevel level, HeatingResult result){
-        return addEntry(new Pair<>(level, result));
-    }
-
-    public HeatData addEntry(HeatLevel level, Item item){
-        return addEntry(level, new ItemHeatingResult(item));
-    }
-
-    public HeatData addEntry(HeatLevel level, Fluid fluid, long amount){
-        return addEntry(level, new FluidHeatingResult(fluid, amount));
     }
 
     public HeatingResult getResultFor(HeatLevel heatLevel){
@@ -79,18 +54,5 @@ public class HeatData {
             if(heatingResult.matches(object))
                 return true;
         return false;
-    }
-
-    @Override
-    public String toString() {
-        if(heatingResults.isEmpty())
-            return "\"" + id.toString() + "\": {}";
-
-        StringBuilder output = new StringBuilder();
-        for(HeatLevel heatLevel : heatingResults.keySet()){
-            output.append(", ").append(heatLevel).append(": ").append(heatingResults.get(heatLevel));
-        }
-        output = new StringBuilder("{" + output.substring(2) + "}");
-        return "\"" + id.toString() + "\": " + output.toString();
     }
 }

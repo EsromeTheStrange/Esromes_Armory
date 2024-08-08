@@ -120,7 +120,9 @@ public class ArmoryEnglishLangProvider extends FabricLanguageProvider {
         addTranslation(HeatLevel.RED, "Red", translationBuilder);
         addTranslation(HeatLevel.ORANGE, "Orange", translationBuilder);
         addTranslation(HeatLevel.YELLOW, "Yellow", translationBuilder);
+        addTranslation(HeatLevel.LIGHT_YELLOW, "Light Yellow", translationBuilder);
         addTranslation(HeatLevel.WHITE, "White", translationBuilder);
+        addTranslation(HeatLevel.SPARKLING, "Sparkling", translationBuilder);
 
         //Armory Tags
         addTranslation(ArmoryTags.Items.BUCKETS, "Molten Metal Buckets", translationBuilder);

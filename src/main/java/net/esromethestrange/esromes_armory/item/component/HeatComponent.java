@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 import java.util.function.Consumer;
 
 public class HeatComponent implements TooltipAppender {
-    private int temperature;
+    private final int temperature;
 
     public HeatComponent(int temperature){
         this.temperature = temperature;

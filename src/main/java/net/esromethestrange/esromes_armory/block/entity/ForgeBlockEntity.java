@@ -1,9 +1,9 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.esromethestrange.esromes_armory.item.component.HeatComponent;
-import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
@@ -40,7 +40,7 @@ public class ForgeBlockEntity extends BlockEntity implements ImplementedInventor
         HeatComponent currentHeat = inventory.getStack(0).get(ArmoryComponents.HEAT);
         if(currentHeat == null) currentHeat = new HeatComponent(HeatLevel.ROOM_TEMPERATURE.temperature);
         inventory.getStack(0).set(ArmoryComponents.HEAT, new HeatComponent(
-                (int)Math.clamp(currentHeat.getTemperature() + 1, 0, HeatLevel.YELLOW.temperature)
+                (int)Math.clamp(currentHeat.getTemperature() + 1, 0, HeatLevel.SPARKLING.temperature)
         ));
         markDirty();
     }

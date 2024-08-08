@@ -2,6 +2,7 @@ package net.esromethestrange.esromes_armory.registry;
 
 import com.mojang.serialization.Lifecycle;
 import net.esromethestrange.esromes_armory.EsromesArmory;
+import net.esromethestrange.esromes_armory.data.heat.HeatData;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientData;
@@ -21,5 +22,6 @@ public class ArmoryRegistries {
     public static void registerRegistries() {
         DynamicRegistries.registerSynced(ArmoryRegistryKeys.MATERIAL, Material.CODEC);
         DynamicRegistries.registerSynced(ArmoryRegistryKeys.MATERIAL_INGREDIENT_DATA, MaterialIngredientData.CODEC);
+        DynamicRegistries.registerSynced(ArmoryRegistryKeys.HEAT_DATA, HeatData.CODEC);
     }
 }
