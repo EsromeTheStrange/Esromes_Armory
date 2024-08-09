@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -23,6 +24,7 @@ public interface MaterialItem {
     List<ItemStack> getDefaultStacks();
     List<RegistryEntry<Material>> getValidMaterials();
     int getBaseFuelTime();
+    void setupMaterials(RegistryWrapper.Impl<Material> materialRegistry);
 
     default int getFuelTime(ItemStack stack){
         return getBaseFuelTime() * getMaterial(stack).value().fuelTimeMultiplier();

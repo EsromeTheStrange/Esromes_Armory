@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
@@ -36,19 +37,27 @@ public class PartItem extends Item implements MaterialItem {
         CommonLifecycleEvents.TAGS_LOADED.register(this::onTagsLoaded);
     }
 
+    @Override
+    public void setupMaterials(RegistryWrapper.Impl<Material> materialRegistry){
+        addMaterials(materialRegistry.getOrThrow(defaultMaterials));
+    }
+
     protected void onTagsLoaded(DynamicRegistryManager registryManager, boolean client){
         materials.clear();
         materials.add(registryManager.get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get());
 
         Registry<Material> materialRegistry = registryManager.get(ArmoryRegistryKeys.MATERIAL);
         Optional<RegistryEntryList.Named<Material>> materialNamed = materialRegistry.getEntryList(defaultMaterials);
-        if(materialNamed.isPresent())
-            for(RegistryEntry<Material> material : materialNamed.get())
-                materials.add(material);
+        materialNamed.ifPresent(this::addMaterials);
 
         defaultStacks.clear();
         for(RegistryEntry<Material> material : materials)
             defaultStacks.add(getStack(material));
+    }
+
+    protected void addMaterials(RegistryEntryList.Named<Material> materialNamed){
+        for(RegistryEntry<Material> material : materialNamed)
+            materials.add(material);
     }
 
     @Override
