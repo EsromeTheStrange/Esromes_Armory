@@ -2,7 +2,6 @@ package net.esromethestrange.esromes_armory.item.tools;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
@@ -19,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
@@ -158,12 +157,10 @@ public abstract class ArmoryMiningToolItem extends MiningToolItem implements Par
     protected MaterialItem getHandleComponent() {return COMPONENT_HANDLE; }
 
     @Override
-    public List<ItemStack> getDefaultStacks(boolean includeNone) {
+    public List<ItemStack> getDefaultStacks() {
         List<ItemStack> defaultStacks = new ArrayList<>();
-        if(includeNone)
-            defaultStacks.add(setupDefaultStack(Materials.get(Materials.NONE)));
-        for(RegistryKey<Material> material : MaterialTypes.METAL)
-            defaultStacks.add(setupDefaultStack(Materials.get(material)));
+        for(RegistryEntry<Material> material : getHeadComponent().getValidMaterials())
+            defaultStacks.add(setupDefaultStack(material));
         return defaultStacks;
     }
 

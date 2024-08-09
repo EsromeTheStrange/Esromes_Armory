@@ -8,6 +8,7 @@ import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.item.material.PartBasedItem;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
@@ -46,7 +47,7 @@ public class ArmoryItemGroups {
         ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryItems.PICKAXE), "tools", (context, entries) ->{
             itemMap.clear();
             for(PartBasedItem partBasedItem : PartBasedItem.PART_BASED_ITEMS){
-                mapItems(partBasedItem.getDefaultStacks(true));
+                mapItems(partBasedItem.getDefaultStacks());
             }
             itemMap.keySet().forEach(material -> {
                 List<ItemStack> stacks = itemMap.get(material);
@@ -56,7 +57,7 @@ public class ArmoryItemGroups {
 
         ESROMES_ARMORY.addCustomTab(Icon.of(ArmoryItems.PICKAXE_HEAD), "tool_components", (context, entries) ->{
             for(MaterialItem materialItem : MaterialItem.MATERIAL_ITEMS){
-                entries.addAll(materialItem.getDefaultStacks(true));
+                entries.addAll(materialItem.getDefaultStacks());
             }
         }, false);
 

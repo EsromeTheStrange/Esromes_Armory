@@ -4,27 +4,51 @@ import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.material.Material;
 import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.esromethestrange.esromes_armory.util.MaterialHelper;
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PartItem extends Item implements MaterialItem {
-    public List<RegistryKey<Material>> defaultMaterials;
+    public TagKey<Material> defaultMaterials;
     protected int baseFuelTime = 200;
+    protected List<RegistryEntry<Material>> materials = new ArrayList<>();
+    protected List<ItemStack> defaultStacks = new ArrayList<>();
 
-    public PartItem(Settings settings, List<RegistryKey<Material>> defaultMaterials) {
+    public PartItem(Settings settings, TagKey<Material> defaultMaterials) {
         super(settings);
         this.defaultMaterials = defaultMaterials;
         MATERIAL_ITEMS.add(this);
+        CommonLifecycleEvents.TAGS_LOADED.register(this::onTagsLoaded);
+    }
+
+    protected void onTagsLoaded(DynamicRegistryManager registryManager, boolean client){
+        materials.clear();
+        materials.add(registryManager.get(ArmoryRegistryKeys.MATERIAL).getEntry(Materials.NONE).get());
+
+        Registry<Material> materialRegistry = registryManager.get(ArmoryRegistryKeys.MATERIAL);
+        Optional<RegistryEntryList.Named<Material>> materialNamed = materialRegistry.getEntryList(defaultMaterials);
+        if(materialNamed.isPresent())
+            for(RegistryEntry<Material> material : materialNamed.get())
+                materials.add(material);
+
+        defaultStacks.clear();
+        for(RegistryEntry<Material> material : materials)
+            defaultStacks.add(getStack(material));
     }
 
     @Override
@@ -42,24 +66,13 @@ public class PartItem extends Item implements MaterialItem {
     }
 
     @Override
-    public List<ItemStack> getDefaultStacks(boolean includeNone) {
-        List<ItemStack> defaultStacks = new ArrayList<>();
-        if(includeNone)
-            defaultStacks.add(getStack(Materials.get(Materials.NONE)));
-        for(RegistryKey<Material> material : defaultMaterials){
-            defaultStacks.add(getStack(Materials.get(material)));
-        }
+    public List<ItemStack> getDefaultStacks() {
         return defaultStacks;
     }
 
     @Override
-    public RegistryEntry<Material> getDefaultMaterial() {
-        return Materials.get(defaultMaterials.getFirst());
-    }
-
-    @Override
-    public List<RegistryKey<Material>> getValidMaterials() {
-        return defaultMaterials;
+    public List<RegistryEntry<Material>> getValidMaterials() {
+        return materials;
     }
 
     @Override

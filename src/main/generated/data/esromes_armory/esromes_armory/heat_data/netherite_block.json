@@ -2,18 +2,18 @@
   "entries": [
     {
       "result": {
-        "type": "esromes_armory:item",
-        "item": "minecraft:netherite_block"
-      },
-      "temperature": "room_temperature"
-    },
-    {
-      "result": {
         "type": "esromes_armory:fluid",
         "amount": 81000,
         "fluid": "esromes_armory:molten_netherite"
       },
       "temperature": "sparkling"
+    },
+    {
+      "result": {
+        "type": "esromes_armory:item",
+        "item": "minecraft:netherite_block"
+      },
+      "temperature": "room_temperature"
     }
   ]
 }

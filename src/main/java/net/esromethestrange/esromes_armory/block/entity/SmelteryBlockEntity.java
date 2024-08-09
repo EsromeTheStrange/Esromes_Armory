@@ -1,7 +1,7 @@
 package net.esromethestrange.esromes_armory.block.entity;
 
 import io.wispforest.owo.util.ImplementedInventory;
-import net.esromethestrange.esromes_armory.data.heat.HeatDataHelper;
+import net.esromethestrange.esromes_armory.util.HeatDataHelper;
 import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.FluidHeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;

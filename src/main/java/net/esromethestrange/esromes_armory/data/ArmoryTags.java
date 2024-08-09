@@ -1,7 +1,8 @@
 package net.esromethestrange.esromes_armory.data;
 
 import net.esromethestrange.esromes_armory.EsromesArmory;
-import net.minecraft.block.Block;
+import net.esromethestrange.esromes_armory.data.material.Material;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
@@ -9,11 +10,13 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 public class ArmoryTags {
-    public static class Blocks{
+    public static class Materials{
+        public static final TagKey<Material> WOOD = createTag("wood");
+        public static final TagKey<Material> METAL = createTag("metal");
+        public static final TagKey<Material> BINDING = createTag("binding");
 
-
-        private static TagKey<Block> createTag(String name){
-            return TagKey.of(RegistryKeys.BLOCK, Identifier.of(EsromesArmory.MOD_ID, name));
+        public static TagKey<Material> createTag(String name){
+            return TagKey.of(ArmoryRegistryKeys.MATERIAL, Identifier.of(EsromesArmory.MOD_ID, name));
         }
     }
 

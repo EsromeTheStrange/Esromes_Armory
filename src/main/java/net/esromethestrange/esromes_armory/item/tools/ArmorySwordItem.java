@@ -1,17 +1,11 @@
 package net.esromethestrange.esromes_armory.item.tools;
 
 import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.MaterialTypes;
-import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArmorySwordItem extends ArmoryMiningToolItem {
     protected static final MaterialItem SWORD_GRIP = (MaterialItem) ArmoryItems.SWORD_GRIP;

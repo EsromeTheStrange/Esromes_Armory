@@ -1,5 +1,7 @@
-package net.esromethestrange.esromes_armory.data.heat;
+package net.esromethestrange.esromes_armory.util;
 
+import net.esromethestrange.esromes_armory.data.heat.HeatData;
+import net.esromethestrange.esromes_armory.data.heat.HeatLevel;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.HeatingResult;
 import net.esromethestrange.esromes_armory.data.heat.heating_result.ItemHeatingResult;
 import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;

@@ -7,15 +7,21 @@ import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.fluid.ArmoryFluids;
 import net.esromethestrange.esromes_armory.item.ArmoryItems;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
+import net.esromethestrange.esromes_armory.registry.ArmoryRegistryKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 public class ArmoryModelProvider extends FabricModelProvider {
-    public ArmoryModelProvider(FabricDataOutput output) {
+    public ArmoryModelProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output);
     }
 
@@ -45,10 +51,8 @@ public class ArmoryModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ArmoryItems.SWORD_BLADE_MOLD, Models.GENERATED);
 
         Identifier noneId = Materials.NONE.getValue();
-        if(noneId == null){
-            EsromesArmory.LOGGER.error("Unable to get NONE material!");
-            return;
-        }
+
+        //TODO load tags so the models generate correctly.
 
         for(MaterialItem item : MaterialItem.MATERIAL_ITEMS){
             Models.GENERATED.upload(ModelIds.getItemModelId((Item)item),
@@ -56,8 +60,8 @@ public class ArmoryModelProvider extends FabricModelProvider {
                             .withSuffixedPath("_"+ EsromesArmory.MOD_ID +"_"+ noneId.getPath())
                             .withPrefixedPath("item/")),
                     itemModelGenerator.writer);
-            for(RegistryKey<Material> material : item.getValidMaterials()){
-                Identifier materialId = material.getValue();
+            for(RegistryEntry<Material> material : item.getValidMaterials()){
+                Identifier materialId = material.getKey().get().getValue();
                 itemModelGenerator.register((Item)item,
                         "_" + materialId.getNamespace() + "_" + materialId.getPath(),
                         Models.GENERATED);

@@ -17,7 +17,7 @@ public interface PartBasedItem {
     List<PartBasedItem> PART_BASED_ITEMS = new ArrayList<>();
 
     List<MaterialItem> getParts();
-    List<ItemStack> getDefaultStacks(boolean includeNone);
+    List<ItemStack> getDefaultStacks();
     RegistryEntry<Material> getPrimaryMaterial(ItemStack stack);
 
     default void setMaterial(ItemStack stack, MaterialItem part, RegistryEntry<Material> material){

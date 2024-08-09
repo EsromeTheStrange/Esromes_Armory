@@ -5,8 +5,8 @@ import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.item.component.ArmoryComponents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -20,9 +20,8 @@ public interface MaterialItem {
     ItemStack getStack(RegistryEntry<Material> material);
     void addMaterialTooltip(ItemStack stack, List<Text> tooltip, boolean partNameIncluded);
 
-    List<ItemStack> getDefaultStacks(boolean includeNone);
-    List<RegistryKey<Material>> getValidMaterials();
-    RegistryEntry<Material> getDefaultMaterial();
+    List<ItemStack> getDefaultStacks();
+    List<RegistryEntry<Material>> getValidMaterials();
     int getBaseFuelTime();
 
     default int getFuelTime(ItemStack stack){
@@ -44,6 +43,13 @@ public interface MaterialItem {
         if(stack.getComponents().contains(ArmoryComponents.ITEM_PARTS))
             material = stack.get(ArmoryComponents.ITEM_PARTS).getPart(this);
         return material;
+    }
+
+    default RegistryEntry<Material> getDefaultMaterial(){
+        for(RegistryEntry<Material> material : getValidMaterials())
+            if(!material.matchesKey(Materials.NONE))
+                return material;
+        return getValidMaterials().get(0);
     }
 
     default Identifier getRawIdentifier() {
