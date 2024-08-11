@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(AbstractFurnaceScreenHandler.class)
 public class EsromesArmoryAbstractFurnaceScreenHandlerMixin {
     @Inject(method = "isFuel", at = @At(value = "RETURN"), cancellable = true)
-    protected void esromes_armory$onIsFuel(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir){
+    protected void isFuel(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir){
         if(MaterialHelper.isSpecialFuel(itemStack)) cir.setReturnValue(true);
     }
 }

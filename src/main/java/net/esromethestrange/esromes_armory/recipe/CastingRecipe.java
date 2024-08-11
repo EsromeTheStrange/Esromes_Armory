@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.esromethestrange.esromes_armory.EsromesArmory;
 import net.esromethestrange.esromes_armory.data.material.Material;
-import net.esromethestrange.esromes_armory.data.material.Materials;
 import net.esromethestrange.esromes_armory.data.material_ingredient.MaterialIngredientFluidEntry;
 import net.esromethestrange.esromes_armory.item.material.MaterialItem;
 import net.esromethestrange.esromes_armory.recipe.ingredient.FluidIngredient;

@@ -24,7 +24,7 @@ public abstract class EsromesArmoryItemStackMixin {
     @Shadow protected abstract <T extends TooltipAppender> void appendTooltip(ComponentType<T> componentType, Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type);
 
     @Inject(method="getTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendTooltip(Lnet/minecraft/component/ComponentType;Lnet/minecraft/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/item/tooltip/TooltipType;)V", ordinal = 0))
-    private void esromes_armory$onGetTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type,
+    private void getTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type,
                                              CallbackInfoReturnable<List<Text>> cir, @Local Consumer<Text> consumer) {
         appendTooltip(ArmoryComponents.HEAT, context, consumer, type);
     }

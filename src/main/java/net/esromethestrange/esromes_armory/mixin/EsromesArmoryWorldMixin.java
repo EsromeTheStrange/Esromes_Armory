@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 @Mixin(World.class)
 public class EsromesArmoryWorldMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
-    public void esromes_armory$init(MutableWorldProperties properties, RegistryKey registryRef, DynamicRegistryManager registryManager,
+    public void init(MutableWorldProperties properties, RegistryKey registryRef, DynamicRegistryManager registryManager,
                      RegistryEntry dimensionEntry, Supplier profiler, boolean isClient, boolean debugWorld,
                      long biomeAccess, int maxChainedNeighborUpdates, CallbackInfo ci){
         Materials.INSTANCE = new Materials(registryManager.get(ArmoryRegistryKeys.MATERIAL));
