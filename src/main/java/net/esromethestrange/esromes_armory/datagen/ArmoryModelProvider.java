@@ -53,8 +53,6 @@ public class ArmoryModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(ArmoryItems.STEEL_INGOT, Models.GENERATED);
-
         itemModelGenerator.register(ArmoryItems.SHOVEL_HEAD_MOLD, Models.GENERATED);
         itemModelGenerator.register(ArmoryItems.AXE_HEAD_MOLD, Models.GENERATED);
         itemModelGenerator.register(ArmoryItems.HOE_HEAD_MOLD, Models.GENERATED);

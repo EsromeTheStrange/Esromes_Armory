@@ -16,7 +16,6 @@
   "client": [
     "EsromesArmoryItemColorsMixin",
     "override.EsromesArmoryBakedModelOverrideMixin",
-    "override.EsromesArmoryJasonUnbakedModelMixin",
     "override.EsromesArmoryModelOverrideDeserializerMixin",
     "override.EsromesArmoryModelOverrideListMixin",
     "override.EsromesArmoryModelOverrideMixin"

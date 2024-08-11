@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "esromes_armory:item/steel_ingot"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "heat_level": {
+          "minimumHeat": "very_hot",
+          "maximumHeat": "red"
+        }
+      },
+      "model": "esromes_armory:item/steel_ingot_very_hot"
+    },
+    {
+      "predicate": {
+        "heat_level": {
+          "minimumHeat": "red",
+          "maximumHeat": "orange"
+        }
+      },
+      "model": "esromes_armory:item/steel_ingot_red"
+    },
+    {
+      "predicate": {
+        "heat_level": {
+          "minimumHeat": "orange"
+        }
+      },
+      "model": "esromes_armory:item/steel_ingot_orange"
+    }
+  ]
+}
